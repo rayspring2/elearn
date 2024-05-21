@@ -1,0 +1,19 @@
+{
+	"files.associations": {
+		"iostream": "cpp",
+		"vector": "cpp",
+		"ostream": "cpp",
+		"*.tcc": "cpp",
+		"compare": "cpp",
+		"concepts": "cpp",
+		"string": "cpp",
+		"string_view": "cpp",
+		"typeinfo": "cpp",
+		"chrono": "cpp",
+		"iosfwd": "cpp",
+		"fstream": "cpp",
+		"sstream": "cpp",
+		"new": "cpp",
+		"stdexcept": "cpp"
+	}
+}
