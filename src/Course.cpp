@@ -1,12 +1,12 @@
 #include "Course.hpp"
 
-Course::Course(int cid, string name, int credit, int prerequisite, vector<int> majors_id )
-: cid(cid), name(name), credit(credit), prerequisite(prerequisite), majors_id(majors_id){
+Course::Course(int id, string name, int credit, int prerequisite, vector<int> majors_id )
+: id(id), name(name), credit(credit), prerequisite(prerequisite), majors_id(majors_id){
 	
 }
 
 void Course::print(){
-	cout << "cid= " << cid << endl;
+	cout << "id= " << id << endl;
 	cout << "name= " << name <<endl;
 	cout << "credit= " << credit <<endl;
 	cout << "prerequisties= " << prerequisite << endl;
@@ -15,4 +15,8 @@ void Course::print(){
 		cout << x << " ";
 	}
 	cout << endl;
+}
+
+void Course::shortPrint(){
+	cout << id << ' ' << name << endl;
 }

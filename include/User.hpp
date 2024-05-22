@@ -3,10 +3,10 @@
 
 class User{
 protected:
-    string name;
-    string password;
 
 public:
+    string name;
+    string password;
     int id;
     //
     User(int id, string name, string password);

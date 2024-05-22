@@ -1,14 +1,14 @@
 #include "Global.hpp"
 
 vector<vector<string>> readCSVLine( string line ){
-	stringstream streamline(line);
     //cerr << "line---------------------------------\n*****" << line <<endl;
     char x;
     vector<vector<string>> input;
     vector<string> sametype;
     string s = "";
-    while( streamline.get(x) ){
-        
+    while( !line.empty() ){
+        char x = line[0];
+        line.erase(line.begin());
         if( x != ';' && x != ',' && x != '\n' ){
             s = s + x;
             //cerr <<s<<endl;
@@ -28,4 +28,25 @@ vector<vector<string>> readCSVLine( string line ){
 	input.push_back(sametype);
     //cerr << "line---------------------------------\n";
     return input;
+}
+
+
+string divString( string &input , char delim){
+    string x = "";
+    while( input != ""){
+        if(input[0] == ' ')
+            input.erase(input.begin());
+        else
+            break;
+    }
+    while(input != "") {
+        if( input[0] == delim )
+            break;
+        x = x + input[0];
+        input.erase(input.begin());
+    }
+    if( x == ""){
+        throw runtime_error( BADREQUEST );
+    }
+    return x;
 }

@@ -1,61 +1,22 @@
 #include "System.hpp"
 
 void System::run(){
-    stringstream commandline;
-    while(inputCommand(commandline)){
-        string cmd_type;
-        commandline >> cmd_type;
-        string command;
-        char delim;
-        commandline >> command >> delim;
-        if(delim != REQUESTDELIMITER){
-            cerr << BADREQUEST;
-            continue;
-        }
-
-        if(cmd_type == GETCMD){
-            try{
-                getCmd(commandline, command);
-            }
-            catch(const runtime_error& e){
-                cout << e.what();
-                continue;
-            }
-        }
-        else if(cmd_type == PUTCMD)
-            putCmd(commandline, command);
-        
-        else if(cmd_type == POSTCMD){
-            try{
-                postCmd(commandline, command);
-            }
-            catch(const runtime_error& e){
-                cout << e.what();
-                continue;
-            }
-        }
-        
-        else if(cmd_type == DELETECMD)
-            deleteCmd(commandline, command);
-        
-        else
-            cerr << BADREQUEST;
-        
-    }
+	
 }
 
-istream& System::inputCommand(stringstream &command){
-    string input;
-    istream& cnt = getline(cin, input);
-    command = stringstream(input);
-    return cnt;
-}
-
-void System::readData( ifstream &majors_file, ifstream &courses_file, ifstream &professors_file, ifstream &students_file){
+void System::readData( char* argv[]){
+	ifstream majors_file(MAJORSPATH);
+    ifstream courses_file(COURSESPATH);
+    ifstream professors_file(PROFESSORPATH);
+    ifstream students_file(STUDENTPATH);
+	ofstream ouput("output.txt");
     readMajorData(majors_file);
     readCourseData(courses_file);
     readProfessorData(professors_file);
     readStudentData(students_file);
+    for(User* u:users){
+        ouput << "+" << int((*u).password.back()) << "+" << endl;
+    }
 }
 
 void System::readMajorData(ifstream &major_file){
@@ -117,35 +78,36 @@ void System::readStudentData(ifstream &student_file){
     }
 }
 
-
-void System::getCmd(stringstream &commandline, string command){
-    if( command == COURSES_STR ){
-        if(commandline.str().empty())
-            printCourseList();   
+void System::logout(string &commandline){
+    if( !commandline.empty() ){
+        throw runtime_error(BADREQUEST);
     }
-
-}
-void System::printCourseList(){
-    
-}
-void System::postCmd(stringstream &commandline, string command){
-    if(command == LOGIN_STR){
-        login(commandline);
+    if(!isLoggedIn()){
+        throw runtime_error(PERMISSIONDENIED);
     }
-    else if (command == LOGOUT_STR){
-        logout(commandline);
-    }
-    else{
-        throw runtime_error(NOTFOUND);
-    }
+    current_user = NOT_LOGIN;
 }
 
-void System::login(stringstream &commandline){
-    int id;
-    string password;
-    getIdPassword( commandline, id, password );
+bool System::isLoggedIn(){
+    return !(current_user == nullptr);
+}
 
+
+void System::addMajor(Major* m){
+    majors.push_back(m);
+}
+void System::addCourse(Course* c){
+    courses.push_back(c);
+}
+void System::addUser(User * u){
+    users.push_back(u);
+}
+
+void System::login(LoginInfo login_info){
+    int id = login_info.id;
+    string password = login_info.password;
     if(isLoggedIn()){
+        cerr << "enteredd here really ? \n";
         throw runtime_error(PERMISSIONDENIED);
     }
 
@@ -159,65 +121,18 @@ void System::login(stringstream &commandline){
     if(user == USER_NOTFPUND){
         throw runtime_error(NOTFOUND); 
     }
-    if(user->PasswordisEqualTo(password)){
+    if(!(user->PasswordisEqualTo(password))){
+        //cout <<"*"<< password <<"*"<< endl;
+        cout << "#" << user->password << "#" << endl;
+        //cout << "&" << user->id << "&" << endl;
+        
         throw runtime_error(PERMISSIONDENIED); 
     }
-
     current_user = user;
-    cout << OKINPUT;
-
 }
 
-void System::getIdPassword(stringstream &commandline , int &id , string &password){
-    string type;
-    string value;
-    for(int i = 0; i < 2; i++){
-        commandline >> type;
-        if(type == ID_FLAG){
-            commandline >> value;
-            try{
-                id = stoi (value);
-            }
-            catch(const invalid_argument& e){
-                throw runtime_error(BADREQUEST);
-            }
-        }
-        else if(type == PASSWORD_FLAG)
-            commandline >> password;
-        else
-            throw runtime_error(BADREQUEST);
+void System::printCourseList(){
+    for( Course * c : courses ){
+        c->shortPrint();
     }
-}
-
-void System::logout(stringstream &commandline){
-    if( !commandline.str().empty() ){
-        // error ! should be empty
-        exit(-1);
-    }
-    if(!isLoggedIn()){
-        // permission denied already loged out
-        exit(-1);
-    }
-    current_user = NOT_LOGIN;
-}
-
-bool System::isLoggedIn(){
-    return !(current_user == nullptr);
-}
-void System::deleteCmd(stringstream &commandline, string command){
-
-}
-void System::putCmd(stringstream &commandline, string command){
-    
-}
-
-
-void System::addMajor(Major* m){
-    majors.push_back(m);
-}
-void System::addCourse(Course* c){
-    courses.push_back(c);
-}
-void System::addUser(User * u){
-    users.push_back(u);
 }

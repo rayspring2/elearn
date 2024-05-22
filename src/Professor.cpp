@@ -2,7 +2,6 @@
 
 Professor::Professor(int id, string name, int major_id, string pos, string password) :
     major_id(major_id) , User(id, name, password) {
-
     setPositionByString(pos);
 }
 void Professor::setPositionByString(string pos){
@@ -14,7 +13,6 @@ void Professor::setPositionByString(string pos){
         position = ASSOCIATEPROF;
     else if(pos == PROF_STR){
         position = PROF;
-        cerr << "wasset\n";
     }
         
     //else should be written
