@@ -18,11 +18,10 @@ const string NOTFOUND = "Not Found\n";
 const string BADREQUEST = "Bad Request\n";
 const string PERMISSIONDENIED = "Permission Denied\n";
 
-const char CMD_SEPERATOR = ' '; 
+const char DEFALUT_CMD_DELIM = ' '; 
+const char DEFAULT_MESSAGE_DELIM = '\"';
 
-struct LoginInfo{
-    int id;
-    string password;
-};
 vector<vector<string>> readCSVLine( string line );
-string divString( string &input , char delim);
+string divString( string &input , char delim = DEFALUT_CMD_DELIM , char message_delim = DEFAULT_MESSAGE_DELIM);
+string findGetValue( string word , string &str , char delim = DEFALUT_CMD_DELIM , char message_delim = DEFAULT_MESSAGE_DELIM);
+

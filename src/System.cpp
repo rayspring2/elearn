@@ -14,9 +14,6 @@ void System::readData( char* argv[]){
     readCourseData(courses_file);
     readProfessorData(professors_file);
     readStudentData(students_file);
-    for(User* u:users){
-        ouput << "+" << int((*u).password.back()) << "+" << endl;
-    }
 }
 
 void System::readMajorData(ifstream &major_file){
@@ -71,7 +68,6 @@ void System::readStudentData(ifstream &student_file){
     
     while(getline(student_file , line)) {
         input = readCSVLine( line );
-
         Student* new_student = new Student( stoi( input[0][0] ), input[1][0],
         stoi(input[2][0]), stoi(input[3][0]), input[4][0] );
         addUser(new_student);
@@ -103,11 +99,8 @@ void System::addUser(User * u){
     users.push_back(u);
 }
 
-void System::login(LoginInfo login_info){
-    int id = login_info.id;
-    string password = login_info.password;
+void System::login(int id, string password){
     if(isLoggedIn()){
-        cerr << "enteredd here really ? \n";
         throw runtime_error(PERMISSIONDENIED);
     }
 
@@ -122,10 +115,6 @@ void System::login(LoginInfo login_info){
         throw runtime_error(NOTFOUND); 
     }
     if(!(user->PasswordisEqualTo(password))){
-        //cout <<"*"<< password <<"*"<< endl;
-        cout << "#" << user->password << "#" << endl;
-        //cout << "&" << user->id << "&" << endl;
-        
         throw runtime_error(PERMISSIONDENIED); 
     }
     current_user = user;
@@ -135,4 +124,10 @@ void System::printCourseList(){
     for( Course * c : courses ){
         c->shortPrint();
     }
+}
+
+void System::addPost( string title, string message){
+    if(!isLoggedIn())
+        throw runtime_error(PERMISSIONDENIED);
+    current_user->addNewPost(title, message);
 }

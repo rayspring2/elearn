@@ -31,8 +31,9 @@ public:
     void addMajor(Major* m);
     void addCourse(Course* c);
     void addUser(User* u);
+    void addPost(string title, string message);
     bool isLoggedIn();
-    void login(LoginInfo login_info);
+    void login(int id, string password);
     void logout(string &commandline);
     void printCourseList();
 };
