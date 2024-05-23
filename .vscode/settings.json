@@ -16,6 +16,8 @@
 		"new": "cpp",
 		"stdexcept": "cpp",
 		"deque": "cpp",
-		"unordered_map": "cpp"
+		"unordered_map": "cpp",
+		"array": "cpp",
+		"initializer_list": "cpp"
 	}
 }

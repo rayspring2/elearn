@@ -5,6 +5,7 @@
 #include "Major.hpp"
 #include "Professor.hpp"
 #include "Student.hpp"
+#include "Admin.hpp"
 
 #define NOT_LOGIN nullptr
 #define USER_NOTFPUND nullptr
@@ -25,6 +26,7 @@ private:
     void readProfessorData(ifstream &professor_file);
     void readStudentData(ifstream &student_file);
     Major* findMajor(int id);
+    User* findUser(int id);
 
 public:
 	void run();
@@ -39,4 +41,7 @@ public:
     void printCourseList();
     void deletePost(int id);
     void getPersonalPage(int id);
+    void viewPost(int user_id, int post_id);
+    void connect(int id);
+    void viewNotification();
 };

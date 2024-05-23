@@ -1,5 +1,5 @@
 #include "User.hpp"
-
+const string User::NEW_POST_STR = "New Post";
 User::User(int id, string name, string password) : id(id), name(name), password(password) {}
 
 void User::print(){
@@ -24,6 +24,14 @@ void User::addNewPost(string title, string message){
 }
 
 void User::sendNotification(){
+    Notification* new_notif = new Notification(id, name, NEW_POST_STR);
+    for( User* u : connections){
+        u->addNotification(new_notif);
+    }
+}
+
+void User::addNotification( Notification* notif){
+    notifications.push_back(notif);
 }
 
 int User::getId(){
@@ -33,11 +41,32 @@ string User::getName(){
     return name;
 }
 void User::deletePost(int id){
+    Post* post = findPost(id);
+    delete post;
+    posts.erase(find(posts.begin(), posts.end(), post));
+}
+Post* User::findPost(int id){
     auto it = find_if(posts.begin(), posts.end(), [id]( Post* &p ){
         return p->getId() == id;
     });
     if(it == posts.end())
         throw runtime_error(NOTFOUND);
-    delete *it;
-    posts.erase(it);
+    return *it;
+}
+
+void User::printPost(int id){
+    Post* post = findPost(id);
+    post->print();
+}
+void User::connect(User* user){
+    auto it = find(connections.begin(), connections.end(), user);
+    if( it != connections.end())
+        throw runtime_error(BADREQUEST);
+    connections.push_back(user);
+}
+
+void User::viewNotifications(){
+    for(int i = notifications.size()-1 ; i>=0; i--){
+        notifications[i]->print();
+    }
 }

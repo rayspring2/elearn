@@ -10,15 +10,18 @@ const string IO::LOGIN_STR = "login";
 const string IO::LOGOUT_STR = "logout";
 const string IO::POST_STR = "post";
 const string IO::ID_FLAG = "id";
+const string IO::POSTID_FLAG = "post_id";
 const string IO::PASSWORD_FLAG = "password";
 const string IO::TITLE_FLAG = "title";
 const string IO::MESSAGE_FLAG = "message";
 const string IO::COURSES_STR = "courses";
 const string IO::PERSONALPAGE_STR = "personal_page";
-
-
-void IO::run( char* argv[]){
+const string IO::CONNECT_STR = "connect";
+const string IO::NOTIFICATION_STR = "notification";
+IO::IO(char* argv[]){
     utms.readData(argv);
+}
+void IO::run(){
     string commandline;
     while(getline(cin, commandline)){
         try{
@@ -58,11 +61,24 @@ void IO::getCmd(string &commandline, string command){
             throw runtime_error(BADREQUEST);    
         utms.printCourseList();
     }
-    if( command == PERSONALPAGE_STR ){
+    else if( command == PERSONALPAGE_STR ){
         int id = stoi(findGetValue(ID_FLAG, commandline));
-                //cerr << "eneteredpersnoalkjf\n";
-
+        if(!isempty(commandline))
+            throw runtime_error(BADREQUEST);  
         utms.getPersonalPage(id);
+    }
+    else if( command == POST_STR){
+        int user_id = stoi(findGetValue(ID_FLAG, commandline));
+        int post_id = stoi(findGetValue(ID_FLAG, commandline));
+        if(!isempty(commandline))
+            throw runtime_error(BADREQUEST);  
+        utms.viewPost(user_id, post_id);
+    }
+    else if( command == NOTIFICATION_STR){
+        if(!isempty(commandline))
+            throw runtime_error(BADREQUEST); 
+        utms.viewNotification();
+        
     }
     else
         throw runtime_error(NOTFOUND);
@@ -70,7 +86,7 @@ void IO::getCmd(string &commandline, string command){
 
 void IO::postCmd(string &commandline, string command){
     if(command == LOGIN_STR){
-        int id = stoi(findGetValue(ID_FLAG, commandline)) ;
+        int id = stoi(findGetValue(ID_FLAG, commandline));
         string password = findGetValue(PASSWORD_FLAG, commandline);
         if(!isempty(commandline))
             throw runtime_error(BADREQUEST);
@@ -87,6 +103,10 @@ void IO::postCmd(string &commandline, string command){
         if( !isempty(commandline) )
             throw runtime_error(BADREQUEST);
         utms.addPost( title, message );
+    }
+    else if(command == CONNECT_STR){
+        int id = stoi(findGetValue(ID_FLAG, commandline));
+        utms.connect(id);
     }
     else{
         throw runtime_error(NOTFOUND);

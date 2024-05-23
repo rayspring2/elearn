@@ -1,7 +1,8 @@
 #include "System.hpp"
 
-void System::run(){
-	
+System::System(){
+    User* admin = new Admin();
+    addUser(admin);
 }
 
 void System::readData( char* argv[]){
@@ -152,12 +153,34 @@ void System::deletePost(int id){
     current_user->deletePost(id);
 }
 void System::getPersonalPage(int id){
+    User* user = findUser(id);
+    user->getPersonalPage(); 
+}
+
+User* System::findUser(int id){
     auto it = find_if(users.begin(), users.end(), [id]( User* & u ){
         return u->getId() == id;
     });
-
     if(it == users.end())
         throw runtime_error(NOTFOUND);
-    User* user = *it;
-    user->getPersonalPage(); 
+    return *it;
 }
+void System::viewPost(int user_id, int post_id){
+    User* user = findUser(user_id);
+    user->print();
+    user->printPost(post_id);
+}
+
+void System::connect(int id){
+    if(!isLoggedIn())
+        throw runtime_error(PERMISSIONDENIED);
+    User* user = findUser(id);
+    current_user->connect(user);
+}
+
+void System::viewNotification(){
+    if(!isLoggedIn())
+        throw runtime_error(PERMISSIONDENIED);
+    current_user->viewNotifications();
+}
+

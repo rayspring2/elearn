@@ -1,13 +1,17 @@
 #pragma once
 #include "Post.hpp"
-
+#include "Notification.hpp"
 class User{
+private:
+    static const string NEW_POST_STR;
+private:
+    Post* findPost(int id);
 protected:
     int id;
     string name;
     string password;
     vector<Post*> posts;
-    vector<Post*> notifications;
+    vector<Notification*> notifications;
     vector<User*>  connections;
 
 public:
@@ -21,4 +25,9 @@ public:
     int getId();
     string getName();
     virtual void print();
+    void printPost(int id);
+    void connect(User* user);
+    void viewNotifications();
+    void addNotification( Notification* notif);
+
 };
