@@ -24,5 +24,20 @@ void User::addNewPost(string title, string message){
 }
 
 void User::sendNotification(){
-    
+}
+
+int User::getId(){
+    return id;
+}
+string User::getName(){
+    return name;
+}
+void User::deletePost(int id){
+    auto it = find_if(posts.begin(), posts.end(), [id]( Post* &p ){
+        return p->getId() == id;
+    });
+    if(it == posts.end())
+        throw runtime_error(NOTFOUND);
+    delete *it;
+    posts.erase(it);
 }

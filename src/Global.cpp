@@ -89,3 +89,13 @@ string findGetValue( string word , string &str , char delim , char message_delim
 	str = str_l + str_r;
     return value;
 }
+
+bool isempty(string s , char delim){
+    if(s.empty())
+        return true;
+    for(char c : s){
+        if( c != delim)
+            return false;
+    }
+    return true;
+}

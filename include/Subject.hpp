@@ -1,7 +1,7 @@
 #pragma once
 #include "Global.hpp"
 
-class Course {
+class Subject {
 private:
 	int id;
 	string name;
@@ -9,7 +9,8 @@ private:
 	int prerequisite;
 	vector<int> majors_id;
 public:
-	Course(int id, string name, int credit, int prerequisite, vector<int> majors_id );
+	Subject(int id, string name, int credit, int prerequisite, vector<int> majors_id );
+	string getName();
 	void print();
 	void shortPrint();
 };

@@ -24,4 +24,5 @@ const char DEFAULT_MESSAGE_DELIM = '\"';
 vector<vector<string>> readCSVLine( string line );
 string divString( string &input , char delim = DEFALUT_CMD_DELIM , char message_delim = DEFAULT_MESSAGE_DELIM);
 string findGetValue( string word , string &str , char delim = DEFALUT_CMD_DELIM , char message_delim = DEFAULT_MESSAGE_DELIM);
+bool isempty(string s , char delim = DEFALUT_CMD_DELIM);
 

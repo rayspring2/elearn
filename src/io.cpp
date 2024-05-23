@@ -14,6 +14,7 @@ const string IO::PASSWORD_FLAG = "password";
 const string IO::TITLE_FLAG = "title";
 const string IO::MESSAGE_FLAG = "message";
 const string IO::COURSES_STR = "courses";
+const string IO::PERSONALPAGE_STR = "personal_page";
 
 
 void IO::run( char* argv[]){
@@ -53,21 +54,39 @@ void IO::run( char* argv[]){
 
 void IO::getCmd(string &commandline, string command){
     if( command == COURSES_STR ){
-        if(!commandline.empty())
+        if(!isempty(commandline))
             throw runtime_error(BADREQUEST);    
         utms.printCourseList();
     }
+    if( command == PERSONALPAGE_STR ){
+        int id = stoi(findGetValue(ID_FLAG, commandline));
+                //cerr << "eneteredpersnoalkjf\n";
+
+        utms.getPersonalPage(id);
+    }
+    else
+        throw runtime_error(NOTFOUND);
 }
 
 void IO::postCmd(string &commandline, string command){
     if(command == LOGIN_STR){
-        utms.login(stoi(findGetValue(ID_FLAG, commandline)) , findGetValue(PASSWORD_FLAG, commandline));
+        int id = stoi(findGetValue(ID_FLAG, commandline)) ;
+        string password = findGetValue(PASSWORD_FLAG, commandline);
+        if(!isempty(commandline))
+            throw runtime_error(BADREQUEST);
+        utms.login(id, password);
     }
     else if(command == LOGOUT_STR){
-        utms.logout(commandline);
+        if( !isempty(commandline) )
+            throw runtime_error(BADREQUEST);
+        utms.logout();
     }
     else if(command == POST_STR){
-        utms.addPost(findGetValue(TITLE_FLAG, commandline), findGetValue(MESSAGE_FLAG, commandline) );
+        string title = findGetValue(TITLE_FLAG, commandline);
+        string message = findGetValue(MESSAGE_FLAG, commandline);
+        if( !isempty(commandline) )
+            throw runtime_error(BADREQUEST);
+        utms.addPost( title, message );
     }
     else{
         throw runtime_error(NOTFOUND);
@@ -76,7 +95,12 @@ void IO::postCmd(string &commandline, string command){
 
 
 void IO::deleteCmd(string &commandline, string command){
-
+    if(command == POST_STR){
+        int id = stoi(findGetValue(ID_FLAG, commandline)) ;
+        if(!isempty(commandline))
+            throw runtime_error(BADREQUEST);
+        utms.deletePost(id);
+    }
 }
 void IO::putCmd(string &commandline, string command){
     

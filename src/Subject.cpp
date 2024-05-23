@@ -1,11 +1,15 @@
-#include "Course.hpp"
+#include "Subject.hpp"
 
-Course::Course(int id, string name, int credit, int prerequisite, vector<int> majors_id )
+Subject::Subject(int id, string name, int credit, int prerequisite, vector<int> majors_id )
 : id(id), name(name), credit(credit), prerequisite(prerequisite), majors_id(majors_id){
 	
 }
 
-void Course::print(){
+string Subject::getName(){
+	return name;
+}
+
+void Subject::print(){
 	cout << "id= " << id << endl;
 	cout << "name= " << name <<endl;
 	cout << "credit= " << credit <<endl;
@@ -17,6 +21,6 @@ void Course::print(){
 	cout << endl;
 }
 
-void Course::shortPrint(){
+void Subject::shortPrint(){
 	cout << id << ' ' << name << endl;
 }

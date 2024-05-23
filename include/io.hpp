@@ -18,6 +18,7 @@ private:
     static const string TITLE_FLAG;
     static const string MESSAGE_FLAG;
     static const string COURSES_STR;
+    static const string PERSONALPAGE_STR;
 private:
     System utms;
     void getCmd(string &commandline, string command); //output al list or with id ouput details

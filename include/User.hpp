@@ -16,5 +16,9 @@ public:
     bool PasswordisEqualTo( string password_2);
     void addNewPost(string title, string message);
     void sendNotification();
+    virtual void getPersonalPage(){};
+    void deletePost(int id);
+    int getId();
+    string getName();
     virtual void print();
 };

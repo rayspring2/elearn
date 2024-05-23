@@ -1,3 +1,4 @@
+#pragma once
 #include "Global.hpp"
 
 class Major{
@@ -7,5 +8,7 @@ private:
 
 public:
     Major(int id, string name);
+    int getId();
+    string getName();
     void print();
 };

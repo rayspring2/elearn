@@ -1,13 +1,15 @@
 #pragma once
 #include "Global.hpp"
 #include "User.hpp"
-#include "Course.hpp"
+#include "Subject.hpp"
+#include "Major.hpp"
 class Student : public User{
 private:
-    int major_id;
+    Major* major;
     int semester;
-    vector<Course*> courses;
+    vector<Subject*> subjects;
 public:
-    Student(int id, string name, int major_id, int semester, string password);
+    Student(int id, string name, Major* major, int semester, string password);
+    void getPersonalPage();
     void print();
 };
