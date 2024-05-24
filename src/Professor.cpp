@@ -4,6 +4,7 @@ Professor::Professor(int id, string name, int major_id, string pos, string passw
     major_id(major_id) , User(id, name, password) {
     setPositionByString(pos);
 }
+
 void Professor::setPositionByString(string pos){
     if(pos == INSTRUCTOR_STR)
         position = INSTRUCTOR;
@@ -17,6 +18,7 @@ void Professor::setPositionByString(string pos){
         
     //else should be written
 }
+
 string Professor::getPositionAsString(){
     string pos;
     if(position == INSTRUCTOR)
@@ -29,7 +31,9 @@ string Professor::getPositionAsString(){
         pos = PROF_STR;
     return pos;
 }
-
+int Professor::getMajorId(){
+    return major_id;
+}
 void Professor::print(){
     User::print();
     cout << "major_id = " << major_id << endl;

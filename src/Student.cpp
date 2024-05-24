@@ -5,9 +5,9 @@ major(major), semester(semester), User(id, name, password){}
 
 void Student::print(){
     cout << name << ' ' << major->getName() << ' ' << semester;
-    for(Subject* s : subjects){
+    for(Course* s : courses){
         cout << s->getName();
-        if(s != subjects.back())
+        if(s != courses.back())
             cout << ',';
     }
     cout << endl;

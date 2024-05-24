@@ -15,9 +15,17 @@ const string IO::PASSWORD_FLAG = "password";
 const string IO::TITLE_FLAG = "title";
 const string IO::MESSAGE_FLAG = "message";
 const string IO::COURSES_STR = "courses";
+const string IO::COURSE_OFFER_STR = "course_offer";
 const string IO::PERSONALPAGE_STR = "personal_page";
 const string IO::CONNECT_STR = "connect";
 const string IO::NOTIFICATION_STR = "notification";
+const string IO::COURSE_ID_FLAG = "course_id";
+const string IO::PROFESSOR_ID_FLAG = "professor_id";
+const string IO::CAPACITY_FLAG = "capacity";
+const string IO::TIME_FLAG = "time";
+const string IO::CLASS_NUMBER_FLAG = "class_number";
+const string IO::EXAM_DATE_FLAG = "exam_date";
+
 IO::IO(char* argv[]){
     utms.readData(argv);
 }
@@ -69,7 +77,7 @@ void IO::getCmd(string &commandline, string command){
     }
     else if( command == POST_STR){
         int user_id = stoi(findGetValue(ID_FLAG, commandline));
-        int post_id = stoi(findGetValue(ID_FLAG, commandline));
+        int post_id = stoi(findGetValue(POSTID_FLAG, commandline));
         if(!isempty(commandline))
             throw runtime_error(BADREQUEST);  
         utms.viewPost(user_id, post_id);
@@ -106,7 +114,20 @@ void IO::postCmd(string &commandline, string command){
     }
     else if(command == CONNECT_STR){
         int id = stoi(findGetValue(ID_FLAG, commandline));
+        if( !isempty(commandline) )
+            throw runtime_error(BADREQUEST);
         utms.connect(id);
+    }
+    else if(command == COURSE_OFFER_STR){
+        int course_id = stoi(findGetValue(COURSE_ID_FLAG, commandline));
+        int professor_id = stoi(findGetValue(PROFESSOR_ID_FLAG, commandline));
+        int capacity = stoi(findGetValue(CAPACITY_FLAG, commandline));
+        Time time(findGetValue(TIME_FLAG , commandline));
+        Date exame_date(findGetValue(EXAM_DATE_FLAG , commandline));
+        int class_numebr = stoi(findGetValue(CLASS_NUMBER_FLAG , commandline));
+        if( !isempty(commandline) )
+            throw runtime_error(BADREQUEST);
+        utms.courseOffer(course_id, professor_id, capacity, time, exame_date, class_numebr );
     }
     else{
         throw runtime_error(NOTFOUND);
@@ -116,7 +137,7 @@ void IO::postCmd(string &commandline, string command){
 
 void IO::deleteCmd(string &commandline, string command){
     if(command == POST_STR){
-        int id = stoi(findGetValue(ID_FLAG, commandline)) ;
+        int id = stoi(findGetValue(ID_FLAG, commandline));
         if(!isempty(commandline))
             throw runtime_error(BADREQUEST);
         utms.deletePost(id);

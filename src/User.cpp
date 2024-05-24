@@ -20,11 +20,11 @@ void User::addNewPost(string title, string message){
     
     Post* new_post = new Post(id, title, message );
     posts.push_back(new_post);
-    sendNotification();
+    sendNotification(NEW_POST_STR);
 }
 
-void User::sendNotification(){
-    Notification* new_notif = new Notification(id, name, NEW_POST_STR);
+void User::sendNotification( string type){
+    Notification* new_notif = new Notification(id, name, type);
     for( User* u : connections){
         u->addNotification(new_notif);
     }
@@ -66,7 +66,11 @@ void User::connect(User* user){
 }
 
 void User::viewNotifications(){
-    for(int i = notifications.size()-1 ; i>=0; i--){
+    if(notifications.empty())
+        throw runtime_error(EMPTYLIST);
+    
+    for(int i = notifications.size() - 1 ; i >= 0; i--){
         notifications[i]->print();
     }
+    notifications.clear();
 }

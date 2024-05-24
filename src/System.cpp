@@ -1,23 +1,23 @@
 #include "System.hpp"
-
+const string System::NEW_COURSE_OFFERING_STR = "New Course Offering";
 System::System(){
-    User* admin = new Admin();
     addUser(admin);
 }
 
 void System::readData( char* argv[]){
 	ifstream majors_file(MAJORSPATH);
-    ifstream subject_file(SUBJECTSPATH);
+    ifstream course_file(COURSESPATH);
     ifstream professors_file(PROFESSORPATH);
     ifstream students_file(STUDENTPATH);
 	ofstream ouput("output.txt");
     readMajorData(majors_file);
-    readSubjectData(subject_file);
+    readCourseData(course_file);
     readProfessorData(professors_file);
     readStudentData(students_file);
 
     for(User* u : users){
-        cerr << u->getName() << endl;
+        User* admin = users[0];
+        admin->connect(u);
     }
 }
 
@@ -33,21 +33,21 @@ void System::readMajorData(ifstream &major_file){
 }
 
 
-void System::readSubjectData(ifstream &subject_file){
+void System::readCourseData(ifstream &course_file){
     string line;
-    getline( subject_file, line );
+    getline( course_file, line );
     vector<vector<string>> input;
     
-    while(getline(subject_file , line)) {
+    while(getline(course_file , line)) {
         input = readCSVLine( line );
         vector<int> majors_id;
         
         transform(input[4].begin(), input[4].end(), back_inserter(majors_id),
                [](const string& str) { return stoi(str); });
                
-        Subject* new_subject = new Subject( stoi( input[0][0] ) , input[1][0],
+        Course* new_course = new Course( stoi( input[0][0] ) , input[1][0],
         stoi(input[2][0]), stoi(input[3][0]), majors_id);
-        addSubject(new_subject);
+        addCourse(new_course);
     }
 }
 
@@ -107,8 +107,8 @@ bool System::isLoggedIn(){
 void System::addMajor(Major* m){
     majors.push_back(m);
 }
-void System::addSubject(Subject* c){
-    subjects.push_back(c);
+void System::addCourse(Course* c){
+    courses.push_back(c);
 }
 void System::addUser(User * u){
     users.push_back(u);
@@ -136,7 +136,7 @@ void System::login(int id, string password){
 }
 
 void System::printCourseList(){
-    for( Subject * c : subjects ){
+    for( Course * c : courses ){
         c->shortPrint();
     }
 }
@@ -182,5 +182,44 @@ void System::viewNotification(){
     if(!isLoggedIn())
         throw runtime_error(PERMISSIONDENIED);
     current_user->viewNotifications();
+}
+
+void System::courseOffer(int course_id, int professor_id,int capacity, Time time, Date exame_date, int class_numebr ){
+    if(current_user != admin)
+        throw runtime_error(PERMISSIONDENIED);
+    
+    Course* course = findCourse(course_id);
+    User* user = findUser(professor_id);
+    Professor* professor = dynamic_cast<Professor*>(user);
+
+    if(!professor)
+        throw runtime_error(PERMISSIONDENIED);
+    OfferedCourse* new_offered_course = new OfferedCourse(course, professor, capacity, time, exame_date, class_numebr);
+    if( prevCourseshasConflictWith(new_offered_course)){
+        throw runtime_error(PERMISSIONDENIED);
+    }
+    offered_courses.push_back(new_offered_course);
+    professor->sendNotification(NEW_COURSE_OFFERING_STR);
+}
+
+bool System::prevCourseshasConflictWith(OfferedCourse* new_course){
+    for(OfferedCourse* oc : offered_courses){
+        if(oc->getProfessorId() != new_course->getProfessorId())
+            continue;
+        if(oc->hasTimeConflict(new_course))
+            return 1;
+    }
+    return 0;
+}
+
+Course* System::findCourse(int id){
+    auto it = find_if(courses.begin(), courses.end(), [id](Course* & c){
+        return c->getId() == id;
+    });
+
+    if(it == courses.end())
+        throw runtime_error(NOTFOUND);
+    
+    return *it;
 }
 
