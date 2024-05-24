@@ -37,14 +37,17 @@ void User::addNotification( Notification* notif){
 int User::getId(){
     return id;
 }
+
 string User::getName(){
     return name;
 }
+
 void User::deletePost(int id){
     Post* post = findPost(id);
     delete post;
     posts.erase(find(posts.begin(), posts.end(), post));
 }
+
 Post* User::findPost(int id){
     auto it = find_if(posts.begin(), posts.end(), [id]( Post* &p ){
         return p->getId() == id;
@@ -58,6 +61,7 @@ void User::printPost(int id){
     Post* post = findPost(id);
     post->print();
 }
+
 void User::connect(User* user){
     auto it = find(connections.begin(), connections.end(), user);
     if( it != connections.end())

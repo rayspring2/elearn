@@ -11,4 +11,5 @@ public:
     int end_time;
     Time(string time_str);
     bool hasConflict(Time time);
+    void print();
 };

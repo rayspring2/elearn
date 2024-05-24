@@ -9,19 +9,22 @@ private:
     static const string POST;
     static const string DELETE; 
     static const string REQUESTDELIMITER;
+
     static const string LOGIN_STR;
     static const string LOGOUT_STR;
     static const string POST_STR;
-    static const string ID_FLAG;
-    static const string POSTID_FLAG;
-    static const string PASSWORD_FLAG;
-    static const string TITLE_FLAG;
-    static const string MESSAGE_FLAG;
     static const string COURSES_STR;
     static const string COURSE_OFFER_STR;
     static const string PERSONALPAGE_STR;
     static const string CONNECT_STR;
     static const string NOTIFICATION_STR;
+    static const string MYCOURSES_STR;
+
+    static const string ID_FLAG;
+    static const string POSTID_FLAG;
+    static const string PASSWORD_FLAG;
+    static const string TITLE_FLAG;
+    static const string MESSAGE_FLAG;
     static const string COURSE_ID_FLAG;
     static const string PROFESSOR_ID_FLAG;
     static const string CAPACITY_FLAG;

@@ -34,3 +34,6 @@ bool Course::majorHas(int id){
 	}
 	return 0;
 }
+int Course::getPrequisite(){
+	return prerequisite;
+}

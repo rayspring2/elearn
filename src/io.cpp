@@ -6,19 +6,22 @@ const string IO::PUT = "PUT";
 const string IO::POST = "POST";
 const string IO::DELETE = "DELETE"; 
 const string IO::REQUESTDELIMITER = "?";
+
 const string IO::LOGIN_STR = "login";
 const string IO::LOGOUT_STR = "logout";
 const string IO::POST_STR = "post";
-const string IO::ID_FLAG = "id";
-const string IO::POSTID_FLAG = "post_id";
-const string IO::PASSWORD_FLAG = "password";
-const string IO::TITLE_FLAG = "title";
-const string IO::MESSAGE_FLAG = "message";
 const string IO::COURSES_STR = "courses";
 const string IO::COURSE_OFFER_STR = "course_offer";
 const string IO::PERSONALPAGE_STR = "personal_page";
 const string IO::CONNECT_STR = "connect";
 const string IO::NOTIFICATION_STR = "notification";
+const string IO::MYCOURSES_STR = "my_course";
+
+const string IO::ID_FLAG = "id";
+const string IO::POSTID_FLAG = "post_id";
+const string IO::PASSWORD_FLAG = "password";
+const string IO::TITLE_FLAG = "title";
+const string IO::MESSAGE_FLAG = "message";
 const string IO::COURSE_ID_FLAG = "course_id";
 const string IO::PROFESSOR_ID_FLAG = "professor_id";
 const string IO::CAPACITY_FLAG = "capacity";
@@ -85,8 +88,12 @@ void IO::getCmd(string &commandline, string command){
     else if( command == NOTIFICATION_STR){
         if(!isempty(commandline))
             throw runtime_error(BADREQUEST); 
-        utms.viewNotification();
-        
+        utms.viewNotification();  
+    }
+    else if(command == MYCOURSES_STR){
+        if(!isempty(commandline))
+            throw runtime_error(BADREQUEST); 
+        utms.viewMyCourses();
     }
     else
         throw runtime_error(NOTFOUND);
@@ -142,8 +149,24 @@ void IO::deleteCmd(string &commandline, string command){
             throw runtime_error(BADREQUEST);
         utms.deletePost(id);
     }
+    else if(command == MYCOURSES_STR){
+        int id = stoi(findGetValue(ID_FLAG, commandline));
+        utms.deleteCourse(id);   
+    }
+    else{
+        throw runtime_error(NOTFOUND);
+    }
 }
 void IO::putCmd(string &commandline, string command){
-    
+    if(command == MYCOURSES_STR ){
+        int id = stoi(findGetValue(ID_FLAG, commandline));
+        if(!isempty(commandline))
+            throw runtime_error(BADREQUEST);
+        utms.addStudentCourse(id);
+    }
+    else{
+        throw runtime_error(NOTFOUND);
+    }
 }
+
 

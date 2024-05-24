@@ -16,3 +16,21 @@ int OfferedCourse::getProfessorId(){
 bool OfferedCourse::hasTimeConflict(OfferedCourse* course){
     return time.hasConflict(course->time);
 }
+bool OfferedCourse::hasExamDayConflict(OfferedCourse* course){
+    return exame_date.isEqual(course -> exame_date);
+}
+int OfferedCourse::getCourseId(){
+    return course->getId();
+}
+Course* OfferedCourse::getCourse(){
+    return course;
+}
+
+void OfferedCourse::print(){
+    cout << course->getId() << ' ' << course->getName() << ' ' << capacity <<
+    professor->getName() << ' ';
+    time.print();
+    cout <<' ';
+    exame_date.print();
+    cout << ' ' << class_numebr << endl;
+}

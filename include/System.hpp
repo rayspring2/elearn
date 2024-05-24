@@ -36,6 +36,8 @@ private:
     User* findUser(int id);
     Course* findCourse(int id);
     bool prevCourseshasConflictWith(OfferedCourse* new_course);
+    OfferedCourse* findOfferedCourse(int course_id);
+
 
 public:
     System();
@@ -55,4 +57,8 @@ public:
     void connect(int id);
     void viewNotification();
     void courseOffer(int course_id, int professor_id,int capacity, Time time, Date exame_date, int class_numebr);
+    void addStudentCourse(int course_id);
+    void deleteCourse(int id);
+    void viewMyCourses();
+
 };

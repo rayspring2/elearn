@@ -16,4 +16,9 @@ public:
     OfferedCourse(Course* course, Professor* professor, int capacity,Time time, Date exame_date, int class_numebr);
     int getProfessorId();
     bool hasTimeConflict(OfferedCourse* course);
+    int getCourseId();
+    Course* getCourse();
+    bool hasExamDayConflict(OfferedCourse* course);
+    void print();
+
 };

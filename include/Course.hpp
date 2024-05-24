@@ -15,4 +15,5 @@ public:
 	void print();
 	void shortPrint();
 	bool majorHas(int id);
+	int getPrequisite();
 };

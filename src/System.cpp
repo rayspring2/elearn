@@ -223,3 +223,35 @@ Course* System::findCourse(int id){
     return *it;
 }
 
+void System::addStudentCourse(int course_id){
+    if(!isLoggedIn() || !dynamic_cast<Student*>(current_user))
+        throw runtime_error(PERMISSIONDENIED);
+    Student* current_student = dynamic_cast<Student*>(current_user);
+    OfferedCourse* offered_course = findOfferedCourse(course_id);
+    current_student->addCourse(offered_course);     
+}
+
+OfferedCourse* System::findOfferedCourse(int course_id){
+    for(auto c : offered_courses){
+        if(course_id == c->getCourseId()){
+            return c;
+        }
+    }
+    throw runtime_error(NOTFOUND);
+}
+
+void System::deleteCourse(int id){
+    if(!isLoggedIn() || !dynamic_cast<Student*>(current_user))
+        throw runtime_error(PERMISSIONDENIED);
+    
+    Student* current_student = dynamic_cast<Student*>(current_user);
+    current_student->deleteCourse(id);
+}
+
+void System::viewMyCourses(){
+    if(!isLoggedIn() || !dynamic_cast<Student*>(current_user))
+        throw runtime_error(PERMISSIONDENIED);
+    Student* current_student = dynamic_cast<Student*>(current_user);
+    current_student->viewCourses();
+}
+
