@@ -22,5 +22,6 @@ public:
     Professor(int id, string name, int major_id, string position, string password);
     void setPositionByString(string pos);
     string getPositionAsString();
+    int getMajorId();
     void print();
 };

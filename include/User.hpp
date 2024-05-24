@@ -19,7 +19,7 @@ public:
     bool idIsEqualTo(int id_2);
     bool PasswordisEqualTo( string password_2);
     void addNewPost(string title, string message);
-    void sendNotification();
+    void sendNotification(string type);
     virtual void getPersonalPage(){};
     void deletePost(int id);
     int getId();
