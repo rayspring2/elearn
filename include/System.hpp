@@ -51,6 +51,8 @@ public:
     void login(int id, string password);
     void logout();
     void printCourseList();
+    void printCourse(int id); 
+
     void deletePost(int id);
     void getPersonalPage(int id);
     void viewPost(int user_id, int post_id);
@@ -60,5 +62,9 @@ public:
     void addStudentCourse(int course_id);
     void deleteCourse(int id);
     void viewMyCourses();
+    bool userIsStudent();
+    bool userIsProfessor();
+    bool userIsAdmin();
+
 
 };

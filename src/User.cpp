@@ -3,9 +3,7 @@ const string User::NEW_POST_STR = "New Post";
 User::User(int id, string name, string password) : id(id), name(name), password(password) {}
 
 void User::print(){
-    cout << "id = " << id << endl;
-    cout << "name = " << name << endl;
-    cout << "password = " << password << endl;
+    cout << name << endl;
 }
 bool User::idIsEqualTo(int id_2){
     return id == id_2;
@@ -29,7 +27,11 @@ void User::sendNotification( string type){
         u->addNotification(new_notif);
     }
 }
-
+void User::sendNotification(Notification* new_notif){
+    for( User* u : connections){
+        u->addNotification(new_notif);
+    }
+}
 void User::addNotification( Notification* notif){
     notifications.push_back(notif);
 }

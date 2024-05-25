@@ -4,7 +4,7 @@ Student::Student(int id, string name, Major* major, int semester, string passwor
 major(major), semester(semester), User(id, name, password){}
 
 void Student::print(){
-    cout << name << ' ' << major->getName() << ' ' << semester;
+    cout << name << ' ' << major->getName() << ' ' << semester << ' ';
     for(OfferedCourse* s : courses){
         cout << s->getCourse()->getName();
         if(s != courses.back())
@@ -36,13 +36,12 @@ void Student::addCourse(OfferedCourse* offered_course){
 
 void Student::deleteCourse(int id){
     OfferedCourse* course = findCourse(id);
-    delete course;
     courses.erase(find(courses.begin(), courses.end(), course ));
 }
 
 OfferedCourse* Student::findCourse(int id){
     auto it = find_if(courses.begin(), courses.end(), [id](OfferedCourse* c){
-        return c->getCourseId() == id;
+        return c->getId() == id;
     });
 
     if(it == courses.end())
@@ -55,7 +54,7 @@ void Student::viewCourses(){
     if(courses.empty())
         throw runtime_error(EMPTYLIST);
     for(auto c : courses){
-        c->print();
+        c->detailedPrint();
     }
 }
 

@@ -7,7 +7,6 @@ Time::Time(string time_str){
     }
 
     day = time_str.substr(0, pos);
-    transform(day.begin(), day.end(), day.begin(), [](char c){return tolower(c);});
     time_str = time_str.substr(pos+1);
     if(find(WEEKDAYS.begin(), WEEKDAYS.end(), day) == WEEKDAYS.end()){
         throw runtime_error(BADREQUEST);
@@ -18,8 +17,8 @@ Time::Time(string time_str){
         throw runtime_error(BADREQUEST);
     }
 
-    begin_time = stoi( time_str.substr(0 , pos));
-    end_time = stoi( time_str.substr( pos+1 ));
+    begin_time = getNatrualNumb( time_str.substr(0 , pos));
+    end_time = getNatrualNumb( time_str.substr( pos+1 ));
 }
 
 bool Time::hasConflict(Time time){

@@ -4,8 +4,6 @@
 class User{
 private:
     static const string NEW_POST_STR;
-private:
-    Post* findPost(int id);
 protected:
     int id;
     string name;
@@ -16,10 +14,13 @@ protected:
 
 public:
     User(int id, string name, string password);
+    Post* findPost(int id);
     bool idIsEqualTo(int id_2);
     bool PasswordisEqualTo( string password_2);
     void addNewPost(string title, string message);
     void sendNotification(string type);
+    void sendNotification(Notification* new_notif);
+
     virtual void getPersonalPage(){};
     void deletePost(int id);
     int getId();
@@ -29,5 +30,6 @@ public:
     void connect(User* user);
     void viewNotifications();
     void addNotification( Notification* notif);
+    
 
 };

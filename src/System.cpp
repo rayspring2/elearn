@@ -9,7 +9,6 @@ void System::readData( char* argv[]){
     ifstream course_file(COURSESPATH);
     ifstream professors_file(PROFESSORPATH);
     ifstream students_file(STUDENTPATH);
-	ofstream ouput("output.txt");
     readMajorData(majors_file);
     readCourseData(course_file);
     readProfessorData(professors_file);
@@ -93,9 +92,6 @@ Major* System::findMajor(int id){
     return *it;
 }
 void System::logout(){
-    if(!isLoggedIn()){
-        throw runtime_error(PERMISSIONDENIED);
-    }
     current_user = NOT_LOGIN;
 }
 
@@ -115,9 +111,6 @@ void System::addUser(User * u){
 }
 
 void System::login(int id, string password){
-    if(isLoggedIn()){
-        throw runtime_error(PERMISSIONDENIED);
-    }
 
     User* user = USER_NOTFPUND;
     for(User* u : users){
@@ -136,20 +129,38 @@ void System::login(int id, string password){
 }
 
 void System::printCourseList(){
-    for( Course * c : courses ){
+    if(offered_courses.empty())
+        throw runtime_error(EMPTYLIST);
+    for( OfferedCourse * c : offered_courses ){
         c->shortPrint();
     }
 }
+bool System::userIsStudent(){
+    if(dynamic_cast<Student*>(current_user))
+        return 1;
+    return 0;
+
+}
+bool System::userIsProfessor(){
+    if(dynamic_cast<Professor*>(current_user))
+        return 1;
+    return 0;
+}
+bool System::userIsAdmin(){
+    if(dynamic_cast<Admin*>(current_user))
+        return 1;
+    return 0;
+}
+void System::printCourse(int id){
+    OfferedCourse* course =  findOfferedCourse(id);
+    course->detailedPrint();
+} 
+
 
 void System::addPost( string title, string message){
-    if(!isLoggedIn())
-        throw runtime_error(PERMISSIONDENIED);
     current_user->addNewPost(title, message);
 }
 void System::deletePost(int id){
-    if(!isLoggedIn())
-        throw runtime_error(PERMISSIONDENIED);
-
     current_user->deletePost(id);
 }
 void System::getPersonalPage(int id){
@@ -167,8 +178,9 @@ User* System::findUser(int id){
 }
 void System::viewPost(int user_id, int post_id){
     User* user = findUser(user_id);
+    Post* post = user->findPost(post_id);
     user->print();
-    user->printPost(post_id);
+    post->print();
 }
 
 void System::connect(int id){
@@ -179,27 +191,23 @@ void System::connect(int id){
 }
 
 void System::viewNotification(){
-    if(!isLoggedIn())
-        throw runtime_error(PERMISSIONDENIED);
     current_user->viewNotifications();
 }
 
 void System::courseOffer(int course_id, int professor_id,int capacity, Time time, Date exame_date, int class_numebr ){
-    if(current_user != admin)
-        throw runtime_error(PERMISSIONDENIED);
-    
     Course* course = findCourse(course_id);
     User* user = findUser(professor_id);
     Professor* professor = dynamic_cast<Professor*>(user);
 
     if(!professor)
         throw runtime_error(PERMISSIONDENIED);
-    OfferedCourse* new_offered_course = new OfferedCourse(course, professor, capacity, time, exame_date, class_numebr);
+    OfferedCourse* new_offered_course = new OfferedCourse(offered_courses.size() + 1, course, professor, capacity, time, exame_date, class_numebr);
     if( prevCourseshasConflictWith(new_offered_course)){
         throw runtime_error(PERMISSIONDENIED);
     }
     offered_courses.push_back(new_offered_course);
-    professor->sendNotification(NEW_COURSE_OFFERING_STR);
+    Notification* new_notif = new Notification(professor_id, professor->getName(), NEW_COURSE_OFFERING_STR  );
+    admin->sendNotification(new_notif);
 }
 
 bool System::prevCourseshasConflictWith(OfferedCourse* new_course){
@@ -224,8 +232,6 @@ Course* System::findCourse(int id){
 }
 
 void System::addStudentCourse(int course_id){
-    if(!isLoggedIn() || !dynamic_cast<Student*>(current_user))
-        throw runtime_error(PERMISSIONDENIED);
     Student* current_student = dynamic_cast<Student*>(current_user);
     OfferedCourse* offered_course = findOfferedCourse(course_id);
     current_student->addCourse(offered_course);     
@@ -233,7 +239,7 @@ void System::addStudentCourse(int course_id){
 
 OfferedCourse* System::findOfferedCourse(int course_id){
     for(auto c : offered_courses){
-        if(course_id == c->getCourseId()){
+        if(course_id == c->getId()){
             return c;
         }
     }
@@ -241,16 +247,11 @@ OfferedCourse* System::findOfferedCourse(int course_id){
 }
 
 void System::deleteCourse(int id){
-    if(!isLoggedIn() || !dynamic_cast<Student*>(current_user))
-        throw runtime_error(PERMISSIONDENIED);
-    
     Student* current_student = dynamic_cast<Student*>(current_user);
     current_student->deleteCourse(id);
 }
 
 void System::viewMyCourses(){
-    if(!isLoggedIn() || !dynamic_cast<Student*>(current_user))
-        throw runtime_error(PERMISSIONDENIED);
     Student* current_student = dynamic_cast<Student*>(current_user);
     current_student->viewCourses();
 }

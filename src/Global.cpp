@@ -1,7 +1,6 @@
-#include "../include/Global.hpp"
+#include "Global.hpp"
 
 vector<vector<string>> readCSVLine( string line ){
-    //cerr << "line---------------------------------\n*****" << line <<endl;
     vector<vector<string>> input;
     vector<string> sametype;
     string s = "";
@@ -10,13 +9,11 @@ vector<vector<string>> readCSVLine( string line ){
         line.erase(line.begin());
         if( x != ';' && x != ',' && x != '\n' ){
             s = s + x;
-            //cerr <<s<<endl;
 			continue;
         }   
         if( x == ';' || x == ',' || x == '\n'){
             sametype.push_back(s);
             //
-            //cerr << (int)s[s.size()-1] << "+++" << s[s.size()-1] <<  endl;
             s = "";
         }
 		
@@ -26,9 +23,7 @@ vector<vector<string>> readCSVLine( string line ){
         }
     }
 	sametype.push_back(s);
-    //cerr << (int)s[s.size()-1] << "+++" << s[s.size()-1] <<  endl;
 	input.push_back(sametype);
-    //cerr << "line---------------------------------\n";
     return input;
 }
 
@@ -86,6 +81,34 @@ bool isempty(string s , char delim){
     }
     return true;
 }
+
+
+int getNatrualNumb(string s){
+    try{
+        size_t pos;
+        int x = stoi(s, &pos);
+        if(x <= 0 || pos != s.length() )
+            throw runtime_error(BADREQUEST);
+        return x;
+    }
+    catch(invalid_argument & e){
+        throw runtime_error(BADREQUEST);
+    } 
+}
+
+int getWholeNumb(string s){
+    try{
+        size_t pos;
+        int x = stoi(s, &pos);
+        if(x<0 || pos != s.length() )
+            throw runtime_error(BADREQUEST);
+        return x;
+    }
+    catch(invalid_argument & e){
+        throw runtime_error(BADREQUEST);
+    }
+}
+
 
 // int main(){
 //     string input;

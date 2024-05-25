@@ -1,5 +1,6 @@
 #pragma once
 
+
 #include <iostream>
 #include <sstream>
 #include <istream>
@@ -25,4 +26,6 @@ vector<vector<string>> readCSVLine( string line );
 string divString( string &input , char delim = DEFALUT_CMD_DELIM , char message_delim = DEFAULT_MESSAGE_DELIM);
 string findGetValue( string word , string &str , char delim = DEFALUT_CMD_DELIM , char message_delim = DEFAULT_MESSAGE_DELIM);
 bool isempty(string s , char delim = DEFALUT_CMD_DELIM);
+int getNatrualNumb(string s);
+int getWholeNumb(string s);
 

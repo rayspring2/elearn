@@ -3,7 +3,7 @@
 
 class Time{
 private:
-    const vector<string> WEEKDAYS {"sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"};
+    const vector<string> WEEKDAYS {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
 
 public:
     string day;
