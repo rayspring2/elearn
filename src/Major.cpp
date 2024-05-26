@@ -8,7 +8,3 @@ int Major::getId(){
 string Major::getName(){
 	return name;
 }
-void Major::print(){
-	cout <<"id= " << id <<endl;
-	cout << "name=" << name << endl;
-}

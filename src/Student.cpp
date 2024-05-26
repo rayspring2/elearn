@@ -3,21 +3,20 @@
 Student::Student(int id, string name, Major* major, int semester, string password) :
 major(major), semester(semester), User(id, name, password){}
 
-void Student::print(){
-    cout << name << ' ' << major->getName() << ' ' << semester << ' ';
+string Student::getPrint(){
+    string outstr =  name + ' ' + major->getName() + ' ' + to_string(semester) + ' ';
     for(OfferedCourse* s : courses){
-        cout << s->getCourse()->getName();
+        outstr = outstr + s -> getCourse() -> getName();
         if(s != courses.back())
-            cout << ',';
+            outstr = outstr + ',';
     }
-    cout << endl;
+    outstr = outstr + '\n';
+    return outstr;
 }
 
-void Student::getPersonalPage(){
-    print();
-    for(Post* p : posts){
-        p->shortPrint();
-    }
+void Student::getPersonalPage(vector<string> &output){
+    output.push_back(getPrint());
+    printAllPosts(output);
 }
 
 void Student::addCourse(OfferedCourse* offered_course){
@@ -50,11 +49,11 @@ OfferedCourse* Student::findCourse(int id){
     return *it;
 }
 
-void Student::viewCourses(){
+void Student::viewCourses(vector<string> &output){
     if(courses.empty())
         throw runtime_error(EMPTYLIST);
     for(auto c : courses){
-        c->detailedPrint();
+        c->detailedPrint(output);
     }
 }
 

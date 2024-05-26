@@ -80,13 +80,13 @@ Sadegh Computer Engineering 2 Advanced Programming
 Not Found
 Bad Request
 UT_account
-1 "T1" "M1" // 72
-Not Found  // 73
+1 "T1" "M1" 
+Not Found  
 Not Found
-Bad Request //75
+Bad Request 
 Bad Request
-UT_account  //77
-2 "T2" "M2" //77
+UT_account  
+2 "T2" "M2" 
 1 Advanced Programming 70 Kambiz Afrooz
 2 Advanced Programming 70 Kambiz Afrooz
 3 Advanced Programming 120 Ramtin Khosravi
@@ -95,32 +95,32 @@ UT_account  //77
 3 Advanced Programming 120 Ramtin Khosravi Monday:13-15 1403/4/5 8
 Not Found
 Bad Request
-Empty //84
+Empty 
 Empty
 Empty
 Empty
 Empty
-Not Found //89
-Bad Request //90
+Not Found 
+Bad Request 
 OK
-Permission Denied //92
+Permission Denied 
 Bad Request
-OK  //94
-Permission Denied //95
+OK  
+Permission Denied 
 Not Found
 Bad Request
 OK
 OK
 OK
 OK
-UT_account //102
+UT_account 
 2 "T2"
 1 "T1"
 Elahe Computer Engineering 2 Advanced Programming,Advanced Programming
 2 "ST2"
-Nesa Electrical Engineering 4 //104
+Nesa Electrical Engineering 4 
 Not Found
-Bad Request // 106
+Bad Request 
 Kambiz Afrooz Computer Engineering professor Advanced Programming,Advanced Programming
 Ramtin Khosravi Computer Engineering fereshte Advanced Programming
 Sadegh Computer Engineering 2 Advanced Programming

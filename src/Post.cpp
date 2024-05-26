@@ -3,11 +3,11 @@
 Post::Post(int id, string title, string message):
  id(id), title(title), message(message){}
 
-void Post::shortPrint(){
-	cout << id << ' ' << title << endl;  
+string Post::getShortPrint(){
+	return to_string(id) + ' ' + '\"' + title + '\"' + '\n';  
 }
-void Post::print(){
-	cout <<id << ' ' << "\"" << title << "\"" << ' ' << "\"" << message << "\""<< endl;
+string Post::print(){
+	return to_string(id) + ' ' + "\"" + title + "\"" + ' ' + "\"" + message + "\"" + '\n';
 }
 int Post::getId(){
 	return id;

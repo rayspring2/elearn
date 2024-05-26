@@ -28,6 +28,6 @@ bool Time::hasConflict(Time time){
         return 0;
     return 1;
 }
-void Time::print(){
-    cout << day << ':' << begin_time <<'-' << end_time;
+string Time::getPrint(){
+    return  day + ':' + to_string(begin_time) + '-' + to_string(end_time);
 }

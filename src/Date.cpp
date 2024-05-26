@@ -8,8 +8,8 @@ Date::Date(string date_str){
 bool Date::isEqual(Date x){
     return (day == x.day) && (month == x.month) && (year == x.year);
 }
-void Date::print(){
-    cout << year <<'/' << month << '/' << day;
+string Date::getPrint(){
+    return  to_string(year) + '/' + to_string(month) + '/' + to_string(day);
 }
 
 

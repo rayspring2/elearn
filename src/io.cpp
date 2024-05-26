@@ -30,11 +30,14 @@ const string IO::CLASS_NUMBER_FLAG = "class_number";
 const string IO::EXAM_DATE_FLAG = "exam_date";
 
 IO::IO(char* argv[]){
+    file_out.open(outputfile_name);
     utms.readData(argv);
 }
 void IO::run(){
     string commandline;
     while(getline(cin, commandline)){
+        if(commandline == "*")
+            return;
         try{
             string cmd_type = divString( commandline );
             string command = divString( commandline );
@@ -52,18 +55,22 @@ void IO::run(){
                     deleteCmd(commandline, command);
                 else
                     throw runtime_error(BADREQUEST);
-                cout << OK;
+                output.push_back(OK);
             }
         }
         catch(const runtime_error& e){
-            cout << e.what();
+            output.push_back(e.what());
         }  
-        catch(const invalid_argument& e){
-            cout << BADREQUEST;
-        }
+        printOutput();
     }
 }
 
+
+void IO::printOutput(){
+    for(string s : output )
+        file_out << s << std::flush;
+    output.clear(); 
+}
 
 
 void IO::getCmd(string &commandline, string command){
@@ -76,24 +83,31 @@ void IO::getCmd(string &commandline, string command){
             throw runtime_error(PERMISSIONDENIED);
 
         if(isempty(commandline))   
-            utms.printCourseList();
+            utms.printCourseList(output);
         else{
             int id = getNatrualNumb(findGetValue(ID_FLAG, commandline));
             if(!isempty(commandline))
                 throw runtime_error(BADREQUEST);
-            utms.printCourse(id); 
+            utms.printCourse(id, output); 
 
         }
     }
 
 
     else if( command == PERSONALPAGE_STR ){
-        if(!utms.isLoggedIn() || utms.userIsAdmin())
-            throw runtime_error(PERMISSIONDENIED);           
-        int id = getNatrualNumb(findGetValue(ID_FLAG, commandline));
+        if(!utms.isLoggedIn() || utms.userIsAdmin()){
+            cerr <<11111111<<endl;
+            throw runtime_error(PERMISSIONDENIED);
+        }   
+        cerr <<2222222<<endl;
+        int id = getWholeNumb(findGetValue(ID_FLAG, commandline));
+        cerr <<333333<<endl;
+
         if(!isempty(commandline))
-            throw runtime_error(BADREQUEST);  
-        utms.getPersonalPage(id);
+            throw runtime_error(BADREQUEST); 
+        cerr <<4444444<<endl;
+        utms.getPersonalPage(id, output);
+        cerr <<555555<<endl;
     }
 
 
@@ -104,7 +118,7 @@ void IO::getCmd(string &commandline, string command){
         int post_id = getNatrualNumb(findGetValue(POSTID_FLAG, commandline));
         if(!isempty(commandline))
             throw runtime_error(BADREQUEST);  
-        utms.viewPost(user_id, post_id);
+        utms.viewPost(user_id, post_id, output);
     }
 
 
@@ -113,7 +127,7 @@ void IO::getCmd(string &commandline, string command){
             throw runtime_error(PERMISSIONDENIED);
         if(!isempty(commandline))
             throw runtime_error(BADREQUEST); 
-        utms.viewNotification();  
+        utms.viewNotification(output);  
     }
 
 
@@ -122,7 +136,7 @@ void IO::getCmd(string &commandline, string command){
             throw runtime_error(PERMISSIONDENIED);
         if(!isempty(commandline))
             throw runtime_error(BADREQUEST); 
-        utms.viewMyCourses();
+        utms.viewMyCourses(output);
     } 
 }
 

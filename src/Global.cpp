@@ -66,9 +66,8 @@ string findGetValue( string word , string &str , char delim , char message_delim
     }
     string str_r = str.substr(pos + word.length());
     string str_l = str.substr(0 , pos);
-    
     string value = divString( str_r , delim , message_delim);
-	str = str_l + str_r;
+    str = str_l + str_r;
     return value;
 }
 
@@ -86,6 +85,8 @@ bool isempty(string s , char delim){
 int getNatrualNumb(string s){
     try{
         size_t pos;
+        if(s.length() >= 10)
+            throw runtime_error(BADREQUEST);
         int x = stoi(s, &pos);
         if(x <= 0 || pos != s.length() )
             throw runtime_error(BADREQUEST);
@@ -99,6 +100,8 @@ int getNatrualNumb(string s){
 int getWholeNumb(string s){
     try{
         size_t pos;
+        if(s.length() >= 10)
+            throw runtime_error(BADREQUEST);
         int x = stoi(s, &pos);
         if(x<0 || pos != s.length() )
             throw runtime_error(BADREQUEST);
@@ -113,6 +116,4 @@ int getWholeNumb(string s){
 // int main(){
 //     string input;
 //     getline(cin, input);
-//     cout << divString(input)  <<"|"<< endl;
-
 // }

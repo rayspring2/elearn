@@ -12,8 +12,7 @@ public:
 	Course(int id, string name, int credit, int prerequisite, vector<int> majors_id );
 	string getName();
 	int getId();
-	void print();
-	void shortPrint();
+	string getShortPrint();
 	bool majorHas(int id);
 	int getPrequisite();
 };

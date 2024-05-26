@@ -1,16 +1,13 @@
 #include "OfferedCourse.hpp"
 
-OfferedCourse::OfferedCourse(int id, Course* course, Professor* professor, int capacity,Time time, Date exame_date, int class_numebr):
-id(id), course(course), professor(professor), capacity(capacity), time(time), exame_date(exame_date), class_numebr(class_numebr){
-    
-    if(!course->majorHas(professor->getMajorId())){
-        throw runtime_error(PERMISSIONDENIED);
-    }
-
+OfferedCourse::OfferedCourse(int id, Course* course, int professor_id, 
+string professor_name, int capacity,Time time, Date exame_date, int class_numebr):
+id(id), course(course), professor_id(professor_id), professor_name(professor_name), 
+capacity(capacity), time(time), exame_date(exame_date), class_numebr(class_numebr){
 }
 
 int OfferedCourse::getProfessorId(){
-    return professor->getId();
+    return professor_id;
 }
 
 bool OfferedCourse::hasTimeConflict(OfferedCourse* course){
@@ -26,17 +23,14 @@ Course* OfferedCourse::getCourse(){
     return course;
 }
 
-void OfferedCourse::shortPrint(){
-    cout << id << ' ' << course->getName() << ' ' << capacity << ' ' <<
-    professor->getName() << endl;
-    
+void OfferedCourse::shortPrint(vector<string> &output){
+    string outstr = to_string(id) + ' ' + course->getName() + ' ' + to_string(capacity) + ' ' + professor_name + '\n';
+    output.push_back(outstr);
 }
-void OfferedCourse::detailedPrint(){
-    cout << id << ' ' << course->getName() << ' ' << capacity <<' ' <<
-    professor->getName() << ' ';
+void OfferedCourse::detailedPrint(vector<string> &output){
+    string outstr =  to_string(id) + ' ' + course->getName() + ' ' + to_string(capacity) + ' ' +
+    professor_name + ' ' + time.getPrint() + ' ' + exame_date.getPrint() +
+    ' ' + to_string(class_numebr) + '\n';
+    output.push_back(outstr);
 
-    time.print();
-    cout <<' ';
-    exame_date.print();
-    cout << ' ' << class_numebr << endl;
 }

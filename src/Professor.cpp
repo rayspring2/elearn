@@ -1,7 +1,8 @@
 #include "Professor.hpp"
 
-Professor::Professor(int id, string name, int major_id, string pos, string password) :
-    major_id(major_id) , User(id, name, password) {
+
+Professor::Professor(int id, string name, Major* major, string pos, string password) :
+    major(major) , User(id, name, password) {
     setPositionByString(pos);
 }
 
@@ -32,10 +33,22 @@ string Professor::getPositionAsString(){
     return pos;
 }
 int Professor::getMajorId(){
-    return major_id;
+    return major->getId();
 }
-void Professor::print(){
-    User::print();
-    cout << "major_id = " << major_id << endl;
-    cout << "position = " << getPositionAsString() << endl;
+string Professor::getPrint(){
+    string outstr =  name + ' ' + major->getName() + ' ' + getPositionAsString() + ' ';
+    for(OfferedCourse* s : courses){
+        outstr = outstr + s -> getCourse() -> getName();
+        if(s != courses.back())
+            outstr = outstr + ',';
+    }
+    outstr = outstr + '\n';
+    return outstr;
+}
+void Professor::getPersonalPage(vector<string> &output){
+    output.push_back(getPrint());
+    printAllPosts(output);
+}
+void Professor::addCourse(OfferedCourse* course){
+    courses.push_back(course);
 }

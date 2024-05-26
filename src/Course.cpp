@@ -11,20 +11,9 @@ string Course::getName(){
 int Course::getId(){
 	return id;
 }
-void Course::print(){
-	cout << "id= " << id << endl;
-	cout << "name= " << name <<endl;
-	cout << "credit= " << credit <<endl;
-	cout << "prerequisties= " << prerequisite << endl;
-	cout << "majors_id= " << endl;
-	for(auto x : majors_id){
-		cout << x << " ";
-	}
-	cout << endl;
-}
 
-void Course::shortPrint(){
-	cout << id << ' ' << name << endl;
+string Course::getShortPrint(){
+	return to_string(id) + ' ' + name + '\n';
 }
 bool Course::majorHas(int id){
 	for(int i : majors_id ){

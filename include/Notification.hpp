@@ -9,5 +9,5 @@ private:
     string type;
 public:
     Notification(int id, string name, string type);
-    void print();
+    string getPrint();
 };

@@ -1,7 +1,8 @@
 #pragma once
 #include "Global.hpp"
 #include "User.hpp"
-
+#include "Major.hpp"
+#include "OfferedCourse.hpp"
 const string INSTRUCTOR_STR = "instructor";
 const string ASSISTANTPROF_STR = "assistant professor";
 const string ASSOCIATEPROF_STR =  "associate professor";
@@ -15,13 +16,19 @@ enum ProfPos{
 
 //instructor، assistant professor، associate professor, professor
 class Professor : public User{
+
 private:
-    int major_id; 
+    Major* major; 
     ProfPos position; 
+    vector<OfferedCourse*> courses;
 public:
-    Professor(int id, string name, int major_id, string position, string password);
+    Professor(int id, string name, Major* major, string position, string password);
     void setPositionByString(string pos);
     string getPositionAsString();
     int getMajorId();
-    void print();
+    string getPrint();
+    void getPersonalPage(vector<string> &output);
+    void addCourse(OfferedCourse* course);
+
+
 };

@@ -20,16 +20,18 @@ public:
     void addNewPost(string title, string message);
     void sendNotification(string type);
     void sendNotification(Notification* new_notif);
-
-    virtual void getPersonalPage(){};
+    void sendNotification(int id, string name, string type);
+    virtual void getPersonalPage(vector<string> &output){}
     void deletePost(int id);
     int getId();
     string getName();
-    virtual void print();
+    virtual string getPrint(){};
     void printPost(int id);
     void connect(User* user);
-    void viewNotifications();
+    void viewNotifications(vector<string> &output);
     void addNotification( Notification* notif);
+    void printAllPosts(vector<string> &output);
+
     
 
 };

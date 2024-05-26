@@ -33,7 +33,7 @@ POST login ? id 810102588 password lablablab
 POST connect ? id 810102612
 POST post ? message "im sady!" title "who am i   ???  "
 POST connect ? id 810102342
-POST post ? title "empty sady" message ""
+POST post ? title "empty sady" message " "
 PUT my_courses ? id 2 
 DELETE my_courses ? id 2
 PUT my_courses ? id 2 

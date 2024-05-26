@@ -21,6 +21,7 @@
 class System{
 private:
     static const string NEW_COURSE_OFFERING_STR;
+
 private:
     Admin* admin = new Admin();
     User* current_user = NOT_LOGIN;
@@ -50,18 +51,18 @@ public:
     bool isLoggedIn();
     void login(int id, string password);
     void logout();
-    void printCourseList();
-    void printCourse(int id); 
+    void printCourseList(vector<string> &output);
+    void printCourse(int id, vector<string> &output); 
 
     void deletePost(int id);
-    void getPersonalPage(int id);
-    void viewPost(int user_id, int post_id);
+    void getPersonalPage(int id, vector<string> &output);
+    void viewPost(int user_id, int post_id, vector<string> &output);
     void connect(int id);
-    void viewNotification();
+    void viewNotification(vector<string> &output);
     void courseOffer(int course_id, int professor_id,int capacity, Time time, Date exame_date, int class_numebr);
     void addStudentCourse(int course_id);
     void deleteCourse(int id);
-    void viewMyCourses();
+    void viewMyCourses(vector<string> &output);
     bool userIsStudent();
     bool userIsProfessor();
     bool userIsAdmin();

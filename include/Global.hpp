@@ -18,6 +18,7 @@ const string EMPTYLIST = "Empty\n";
 const string NOTFOUND = "Not Found\n";
 const string BADREQUEST = "Bad Request\n";
 const string PERMISSIONDENIED = "Permission Denied\n";
+const int MAX_ID_LENGTH = 10;
 
 const char DEFALUT_CMD_DELIM = ' '; 
 const char DEFAULT_MESSAGE_DELIM = '\"';

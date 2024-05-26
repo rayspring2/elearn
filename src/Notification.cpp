@@ -4,6 +4,6 @@ Notification::Notification(int id, string name, string type):
 id(id) , name(name), type(type) {
     
 }
-void Notification::print(){
-    cout << id << ' ' << name << ": " << type << endl;
+string Notification::getPrint(){
+    return  to_string(id) + ' ' + name + ": " + type + '\n';
 }

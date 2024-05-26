@@ -47,21 +47,9 @@ public:
 // }
 
 int main(){
-    while(1){
-        string s;
-        getline(cin, s);
-        try{
-            Time time(s);
-            cout << "day =" << time.day << endl;
-            cout << "begin =" << time.begin_time << " end=" << time.end_time << endl;
-        }
-        catch (runtime_error & e){
-            cout << e.what();
-        }
-        catch(invalid_argument & e){
-            cout << e.what();
-        }
-    }
+    ofstream myfile;
+    myfile.open("hii.txt");
+    myfile << "helooooooo\n";
 }
 
 

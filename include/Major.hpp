@@ -10,5 +10,4 @@ public:
     Major(int id, string name);
     int getId();
     string getName();
-    void print();
 };

@@ -1,5 +1,6 @@
 #include "System.hpp"
 const string System::NEW_COURSE_OFFERING_STR = "New Course Offering";
+
 System::System(){
     addUser(admin);
 }
@@ -58,8 +59,11 @@ void System::readProfessorData(ifstream &professor_file){
     
     while(getline(professor_file , line)) {
         input = readCSVLine( line );
+
+        int major_id = stoi(input[2][0]);
+        Major* major = findMajor(major_id);
         Professor* new_professor = new Professor( stoi( input[0][0] ), input[1][0],
-        stoi(input[2][0]), input[3][0], input[4][0] );
+        major, input[3][0], input[4][0] );
         addUser(new_professor);
     }
 }
@@ -128,11 +132,11 @@ void System::login(int id, string password){
     current_user = user;
 }
 
-void System::printCourseList(){
+void System::printCourseList(vector<string> &output){
     if(offered_courses.empty())
         throw runtime_error(EMPTYLIST);
     for( OfferedCourse * c : offered_courses ){
-        c->shortPrint();
+        c->shortPrint(output);
     }
 }
 bool System::userIsStudent(){
@@ -151,9 +155,9 @@ bool System::userIsAdmin(){
         return 1;
     return 0;
 }
-void System::printCourse(int id){
+void System::printCourse(int id, vector<string> &output){
     OfferedCourse* course =  findOfferedCourse(id);
-    course->detailedPrint();
+    course->detailedPrint(output);
 } 
 
 
@@ -163,9 +167,9 @@ void System::addPost( string title, string message){
 void System::deletePost(int id){
     current_user->deletePost(id);
 }
-void System::getPersonalPage(int id){
+void System::getPersonalPage(int id, vector<string> &output){
     User* user = findUser(id);
-    user->getPersonalPage(); 
+    user->getPersonalPage(output); 
 }
 
 User* System::findUser(int id){
@@ -176,11 +180,11 @@ User* System::findUser(int id){
         throw runtime_error(NOTFOUND);
     return *it;
 }
-void System::viewPost(int user_id, int post_id){
+void System::viewPost(int user_id, int post_id, vector<string> &output){
     User* user = findUser(user_id);
     Post* post = user->findPost(post_id);
-    user->print();
-    post->print();
+    output.push_back(user->getPrint());
+    output.push_back(post->print());
 }
 
 void System::connect(int id){
@@ -190,8 +194,8 @@ void System::connect(int id){
     current_user->connect(user);
 }
 
-void System::viewNotification(){
-    current_user->viewNotifications();
+void System::viewNotification(vector<string> &output){
+    current_user->viewNotifications(output);
 }
 
 void System::courseOffer(int course_id, int professor_id,int capacity, Time time, Date exame_date, int class_numebr ){
@@ -201,13 +205,21 @@ void System::courseOffer(int course_id, int professor_id,int capacity, Time time
 
     if(!professor)
         throw runtime_error(PERMISSIONDENIED);
-    OfferedCourse* new_offered_course = new OfferedCourse(offered_courses.size() + 1, course, professor, capacity, time, exame_date, class_numebr);
+
+
+    if(!course->majorHas(professor->getMajorId())){
+        throw runtime_error(PERMISSIONDENIED);
+    }
+
+    OfferedCourse* new_offered_course = new OfferedCourse(offered_courses.size() + 1, course, professor->getId() ,
+    professor->getName(), capacity, time, exame_date, class_numebr);
     if( prevCourseshasConflictWith(new_offered_course)){
         throw runtime_error(PERMISSIONDENIED);
     }
     offered_courses.push_back(new_offered_course);
-    Notification* new_notif = new Notification(professor_id, professor->getName(), NEW_COURSE_OFFERING_STR  );
-    admin->sendNotification(new_notif);
+    professor->addCourse(new_offered_course);
+    admin->sendNotification(professor->getId(), professor->getName(), NEW_COURSE_OFFERING_STR);
+
 }
 
 bool System::prevCourseshasConflictWith(OfferedCourse* new_course){
@@ -251,8 +263,8 @@ void System::deleteCourse(int id){
     current_student->deleteCourse(id);
 }
 
-void System::viewMyCourses(){
+void System::viewMyCourses(vector<string> &output){
     Student* current_student = dynamic_cast<Student*>(current_user);
-    current_student->viewCourses();
+    current_student->viewCourses(output);
 }
 

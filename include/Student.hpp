@@ -11,9 +11,9 @@ private:
     OfferedCourse* findCourse(int id);
 public:
     Student(int id, string name, Major* major, int semester, string password);
-    void getPersonalPage();
-    void print();
+    void getPersonalPage(vector<string> &output);
+    string getPrint();
     void addCourse(OfferedCourse* offered_course);
     void deleteCourse(int id);
-    void viewCourses();
+    void viewCourses(vector<string> &output);
 };

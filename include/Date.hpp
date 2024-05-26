@@ -8,5 +8,5 @@ private:
 public:
     Date(string date_str);
     bool isEqual(Date x);
-    void print();
+    string getPrint();
 };
