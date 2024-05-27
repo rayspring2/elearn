@@ -6,7 +6,7 @@ CXXFLAGS = -std=c++20 -Wall -Wextra -Wall -I./include #-fsanitize=address -fsani
 SRCDIR = src
 OBJDIR = obj
 #BINDIR = .
-EXECUTABLE = UTms.out #$(BINDIR)/
+EXECUTABLE = utms.out #$(BINDIR)/
 MEDIA_PATH = ./files/
 
 SOURCES := $(wildcard $(SRCDIR)/*.cpp)
@@ -25,4 +25,4 @@ clean:
 	rm -rf $(OBJDIR)/*.o $(EXECUTABLE)
 
 run: $(EXECUTABLE)
-	./$(EXECUTABLE) majors.csv courses.csv professors.csv students.csv
+	./$(EXECUTABLE) majors.csv courses.csv teachers.csv students.csv

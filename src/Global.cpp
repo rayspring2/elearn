@@ -7,17 +7,16 @@ vector<vector<string>> readCSVLine( string line ){
     while( !line.empty() ){
         char x = line[0];
         line.erase(line.begin());
-        if( x != ';' && x != ',' && x != '\n' ){
+        if( x != SEMICOLON && x != COMMA && x != NEXTLINE ){
             s = s + x;
 			continue;
         }   
-        if( x == ';' || x == ',' || x == '\n'){
+        if( x == SEMICOLON || x == COMMA || x == NEXTLINE){
             sametype.push_back(s);
-            //
             s = "";
         }
 		
-        if( x == ',' || x == '\n' ){
+        if( x == COMMA || x == NEXTLINE ){
             input.push_back(sametype);
             sametype.clear();
         }
@@ -30,9 +29,9 @@ vector<vector<string>> readCSVLine( string line ){
 
 string divString( string &input , char delim, char message_delim){
     string x = "";
-    input = input + ' ';
+    input = input + SPACE;
     while( !input.empty()){
-        if(input[0] == ' ')
+        if(input[0] == SPACE)
             input.erase(input.begin());
         else
             break;
@@ -85,7 +84,7 @@ bool isempty(string s , char delim){
 int getNatrualNumb(string s){
     try{
         size_t pos;
-        if(s.length() >= 10)
+        if(s.length() >= MAX_ID_LENGTH)
             throw runtime_error(BADREQUEST);
         int x = stoi(s, &pos);
         if(x <= 0 || pos != s.length() )
@@ -100,7 +99,7 @@ int getNatrualNumb(string s){
 int getWholeNumb(string s){
     try{
         size_t pos;
-        if(s.length() >= 10)
+        if(s.length() >= MAX_ID_LENGTH)
             throw runtime_error(BADREQUEST);
         int x = stoi(s, &pos);
         if(x<0 || pos != s.length() )
@@ -112,8 +111,3 @@ int getWholeNumb(string s){
     }
 }
 
-
-// int main(){
-//     string input;
-//     getline(cin, input);
-// }

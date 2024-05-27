@@ -36,13 +36,13 @@ int Professor::getMajorId(){
     return major->getId();
 }
 string Professor::getPrint(){
-    string outstr =  name + ' ' + major->getName() + ' ' + getPositionAsString() + ' ';
+    string outstr =  name + SPACE + major->getName() + SPACE + getPositionAsString() + SPACE;
     for(OfferedCourse* s : courses){
         outstr = outstr + s -> getCourse() -> getName();
         if(s != courses.back())
-            outstr = outstr + ',';
+            outstr = outstr + COMMA;
     }
-    outstr = outstr + '\n';
+    outstr = outstr + NEXTLINE;
     return outstr;
 }
 void Professor::getPersonalPage(vector<string> &output){

@@ -24,13 +24,13 @@ Course* OfferedCourse::getCourse(){
 }
 
 void OfferedCourse::shortPrint(vector<string> &output){
-    string outstr = to_string(id) + ' ' + course->getName() + ' ' + to_string(capacity) + ' ' + professor_name + '\n';
+    string outstr = to_string(id) + SPACE + course->getName() + SPACE + to_string(capacity) + SPACE + professor_name + NEXTLINE;
     output.push_back(outstr);
 }
 void OfferedCourse::detailedPrint(vector<string> &output){
-    string outstr =  to_string(id) + ' ' + course->getName() + ' ' + to_string(capacity) + ' ' +
-    professor_name + ' ' + time.getPrint() + ' ' + exame_date.getPrint() +
-    ' ' + to_string(class_numebr) + '\n';
+    string outstr =  to_string(id) + SPACE + course->getName() + SPACE + to_string(capacity) + SPACE +
+    professor_name + SPACE + time.getPrint() + SPACE + exame_date.getPrint() +
+    SPACE + to_string(class_numebr) + NEXTLINE;
     output.push_back(outstr);
 
 }

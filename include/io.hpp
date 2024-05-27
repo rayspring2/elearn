@@ -34,8 +34,6 @@ private:
 
 private:
     System utms;
-    const std::string outputfile_name = "outt.txt";
-    ofstream file_out;
     const vector<string> getcommands = {COURSES_STR, PERSONALPAGE_STR, POST_STR, NOTIFICATION_STR, MYCOURSES_STR };
     const vector<string> postcommands = {LOGIN_STR, LOGOUT_STR, POST_STR, CONNECT_STR, COURSE_OFFER_STR };
     const vector<string> deletecommands = {POST_STR, MYCOURSES_STR};
@@ -46,6 +44,24 @@ private:
     void deleteCmd(string &commandline, string command);
     void putCmd(string &commandline, string command); 
     void printOutput();
+
+    void getCourse(string &commandline);
+    void getPersonalPage(string &commandline);
+    void getPost(string &commandline);
+    void getNotification(string &commandline);
+    void getMyCourses(string &commandline);
+    
+    void postLogin(string &commandline);
+    void postLogout(string &commandline);
+    void postPost(string &commandline);
+    void postConnect(string &commandline);
+    void postCourseOffer(string &commandline);
+
+    void deletePost(string &commandline);
+    void deleteMycourse(string &commandline);
+    void putMyCourse(string &commandline);
+
+
 public:
     IO(char* argv[]);
     void run();

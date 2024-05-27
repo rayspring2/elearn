@@ -194,13 +194,13 @@ POST login ? id 0 password UT_account
 POST post ? title "T_LAST   " message "   M_LAST"
 PUT my_courses ? id 2
 DELETE my_courses ? id 1 
-POST course_offer ? course_id 7 professor_id 831013132 capacity 700 time Sunday:10-11 exam_date 14113/4/4 class_number 22
-POST course_offer ? course_id 3 professor_id 810000000 capacity 70 time Shanbe:10-11 exam_date 1411/4/4 class_number 21
-POST course_offer ? course_id 4 professor_id 831013132 capacity 7 time YekShanbe:10-11 exam_date 14011/4/4 class_number 231
-POST course_offer ? course_id 5 professor_id 831013132 capacity 17 time DoShanbe:10-11 exam_date 14011/4/4 class_number 13
-POST course_offer ? course_id 5 professor_id 831013132 capacity 27 time Jomee:1-10 exam_date 4011/4/5 class_number 11
-POST course_offer ? course_id 3 professor_id 831013132 capacity 79 time Shanbe:1-10 exam_date 1011/4/5 class_number 14
-POST course_offer ? course_id 2 professor_id 810000000 capacity 710 time Shanbe:21-22 exam_date 1402/4/4 class_number 41
+POST course_offer ? course_id 7 professor_id 831013132 capacity 700 time Sunday:10-11 exam_date 1413/4/4 class_number 22
+POST course_offer ? course_id 3 professor_id 810000000 capacity 70 time Saturday:10-11 exam_date 1411/4/4 class_number 21
+POST course_offer ? course_id 4 professor_id 831013132 capacity 7 time Sunday:10-11 exam_date 14011/4/4 class_number 231
+POST course_offer ? course_id 5 professor_id 831013132 capacity 17 time Monday:10-11 exam_date 14011/4/4 class_number 13
+POST course_offer ? course_id 5 professor_id 831013132 capacity 27 time Thursday:1-10 exam_date 4011/4/5 class_number 11
+POST course_offer ? course_id 3 professor_id 831013132 capacity 79 time Saturday:1-10 exam_date 1011/4/5 class_number 14
+POST course_offer ? course_id 2 professor_id 810000000 capacity 710 time Saturday:21-22 exam_date 1402/4/4 class_number 41
 POST logout ?
 POST login ? id 810102588 password lablablab
 GET notification ? 

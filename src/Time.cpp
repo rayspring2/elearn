@@ -1,7 +1,7 @@
 #include "Time.hpp"
 
 Time::Time(string time_str){
-    auto pos = time_str.find(":");
+    auto pos = time_str.find(COLON);
     if(pos == string::npos){
         throw runtime_error(BADREQUEST);
     }
@@ -12,7 +12,7 @@ Time::Time(string time_str){
         throw runtime_error(BADREQUEST);
     }
 
-    pos = time_str.find("-");
+    pos = time_str.find(DASH);
     if(pos == string::npos){
         throw runtime_error(BADREQUEST);
     }
@@ -29,5 +29,5 @@ bool Time::hasConflict(Time time){
     return 1;
 }
 string Time::getPrint(){
-    return  day + ':' + to_string(begin_time) + '-' + to_string(end_time);
+    return  day + COLON + to_string(begin_time) + DASH + to_string(end_time);
 }

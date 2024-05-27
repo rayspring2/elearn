@@ -5,13 +5,13 @@ Student::Student(int id, string name, Major* major, int semester, string passwor
 major(major), semester(semester), User(id, name, password){}
 
 string Student::getPrint(){
-    string outstr =  name + ' ' + major->getName() + ' ' + to_string(semester) + ' ';
+    string outstr =  name + SPACE + major->getName() + SPACE + to_string(semester) + SPACE;
     for(OfferedCourse* s : courses){
         outstr = outstr + s -> getCourse() -> getName();
         if(s != courses.back())
-            outstr = outstr + ',';
+            outstr = outstr + COMMA;
     }
-    outstr = outstr + '\n';
+    outstr = outstr + NEXTLINE;
     return outstr;
 }
 
@@ -31,6 +31,8 @@ void Student::addCourse(OfferedCourse* offered_course){
         if(c->hasExamDayConflict(offered_course))
             throw runtime_error(PERMISSIONDENIED);
     }
+    if(!course->majorHas(major->getId()))
+        throw runtime_error(PERMISSIONDENIED);
     courses.push_back(offered_course);
     sendNotification(GET_COURSE_STR);
 }

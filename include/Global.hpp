@@ -11,6 +11,7 @@
 #include <iterator>
 #include <stdexcept>
 #include <exception>
+
 using namespace std;
 
 const string OK = "OK\n";
@@ -20,8 +21,15 @@ const string BADREQUEST = "Bad Request\n";
 const string PERMISSIONDENIED = "Permission Denied\n";
 const int MAX_ID_LENGTH = 10;
 
-const char DEFALUT_CMD_DELIM = ' '; 
-const char DEFAULT_MESSAGE_DELIM = '\"';
+const char SPACE =' ';
+const char QUATATION = '\"';
+const char NEXTLINE = '\n';
+const char COMMA = ',';
+const char SEMICOLON = ';';
+const char COLON = ':';
+const char DASH = '-';
+const char DEFALUT_CMD_DELIM = SPACE; 
+const char DEFAULT_MESSAGE_DELIM = QUATATION;
 
 vector<vector<string>> readCSVLine( string line );
 string divString( string &input , char delim = DEFALUT_CMD_DELIM , char message_delim = DEFAULT_MESSAGE_DELIM);

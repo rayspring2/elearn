@@ -42,7 +42,6 @@ private:
 
 public:
     System();
-	void run();
     void readData( char* argv[] );
     void addMajor(Major* m);
     void addCourse(Course* c);

@@ -13,7 +13,7 @@ int Course::getId(){
 }
 
 string Course::getShortPrint(){
-	return to_string(id) + ' ' + name + '\n';
+	return to_string(id) + SPACE + name + NEXTLINE;
 }
 bool Course::majorHas(int id){
 	for(int i : majors_id ){

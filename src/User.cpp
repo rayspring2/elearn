@@ -67,12 +67,12 @@ void User::connect(User* user){
     if( it != connections.end())
         throw runtime_error(BADREQUEST);
     connections.push_back(user);
+    user->connections.push_back(this);
 }
 
 void User::viewNotifications(vector<string> &output){
     if(notifications.empty())
         throw runtime_error(EMPTYLIST);
-    
     for(int i = notifications.size() - 1 ; i >= 0; i--){
         output.push_back(notifications[i]->getPrint());
     }

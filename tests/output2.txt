@@ -40,9 +40,9 @@ OK
 810420500 Ramtin Khosravi: New Course Offering
 810420432 Kambiz Afrooz: New Course Offering
 810420432 Kambiz Afrooz: New Course Offering
-0 admin: New Post
-0 admin: New Post
-0 admin: New Post
+0 UT_account: New Post
+0 UT_account: New Post
+0 UT_account: New Post
 Empty
 OK
 OK
@@ -76,7 +76,7 @@ Elahe Computer Engineering 2
 Sadegh Computer Engineering 2 Advanced Programming
 1 "who am i   ???  " "im sady!"
 Sadegh Computer Engineering 2 Advanced Programming
-2 "empty sady" ""
+2 "empty sady" " "
 Not Found
 Bad Request
 UT_account
@@ -119,7 +119,7 @@ UT_account
 Elahe Computer Engineering 2 Advanced Programming,Advanced Programming
 2 "ST2"
 Nesa Electrical Engineering 4 
-Not Found //105
+Not Found
 Bad Request 
 Kambiz Afrooz Computer Engineering professor Advanced Programming,Advanced Programming
 Ramtin Khosravi Computer Engineering fereshte Advanced Programming
@@ -134,9 +134,9 @@ Sadegh Computer Engineering 2 Advanced Programming
 810420500 Ramtin Khosravi: New Course Offering
 810420432 Kambiz Afrooz: New Course Offering
 810420432 Kambiz Afrooz: New Course Offering
-0 admin: New Post
-0 admin: New Post
-0 admin: New Post
+0 UT_account: New Post
+0 UT_account: New Post
+0 UT_account: New Post
 Empty
 OK
 OK
@@ -155,9 +155,9 @@ OK
 810420500 Ramtin Khosravi: New Course Offering
 810420432 Kambiz Afrooz: New Course Offering
 810420432 Kambiz Afrooz: New Course Offering
-0 admin: New Post
-0 admin: New Post
-0 admin: New Post
+0 UT_account: New Post
+0 UT_account: New Post
+0 UT_account: New Post
 OK
 OK
 Nesa Electrical Engineering 4 
@@ -193,9 +193,9 @@ OK
 810420500 Ramtin Khosravi: New Course Offering
 810420432 Kambiz Afrooz: New Course Offering
 810420432 Kambiz Afrooz: New Course Offering
-0 admin: New Post
-0 admin: New Post
-0 admin: New Post
+0 UT_account: New Post
+0 UT_account: New Post
+0 UT_account: New Post
 Empty
 Ramtin Khosravi Computer Engineering fereshte Advanced Programming
 Permission Denied
@@ -288,7 +288,7 @@ OK
 831013132 Dash Majid: New Course Offering
 831013132 Dash Majid: New Course Offering
 810000000 Agha Majid: New Course Offering
-0 admin: New Post
+0 UT_account: New Post
 810102342 Nesa: New Post
 810102342 Nesa: New Post
 810102612 Elahe: Get Course
@@ -328,7 +328,7 @@ OK
 831013132 Dash Majid: New Course Offering
 831013132 Dash Majid: New Course Offering
 810000000 Agha Majid: New Course Offering
-0 admin: New Post
+0 UT_account: New Post
 1 Advanced Programming 70 Kambiz Afrooz
 2 Advanced Programming 70 Kambiz Afrooz
 3 Advanced Programming 120 Ramtin Khosravi
@@ -356,7 +356,7 @@ OK
 831013132 Dash Majid: New Course Offering
 831013132 Dash Majid: New Course Offering
 810000000 Agha Majid: New Course Offering
-0 admin: New Post
+0 UT_account: New Post
 810420432 Kambiz Afrooz: New Post
 810420432 Kambiz Afrooz: New Post
 810420432 Kambiz Afrooz: New Post
@@ -403,13 +403,13 @@ OK
 831013132 Dash Majid: New Course Offering
 831013132 Dash Majid: New Course Offering
 810000000 Agha Majid: New Course Offering
-0 admin: New Post
+0 UT_account: New Post
 810420500 Ramtin Khosravi: New Course Offering
 810420432 Kambiz Afrooz: New Course Offering
 810420432 Kambiz Afrooz: New Course Offering
-0 admin: New Post
-0 admin: New Post
-0 admin: New Post
+0 UT_account: New Post
+0 UT_account: New Post
+0 UT_account: New Post
 OK
 OK
 810102612 Elahe: Get Course
@@ -425,13 +425,13 @@ OK
 831013132 Dash Majid: New Course Offering
 831013132 Dash Majid: New Course Offering
 810000000 Agha Majid: New Course Offering
-0 admin: New Post
+0 UT_account: New Post
 810420500 Ramtin Khosravi: New Course Offering
 810420432 Kambiz Afrooz: New Course Offering
 810420432 Kambiz Afrooz: New Course Offering
-0 admin: New Post
-0 admin: New Post
-0 admin: New Post
+0 UT_account: New Post
+0 UT_account: New Post
+0 UT_account: New Post
 OK
 OK
 810102612 Elahe: Get Course

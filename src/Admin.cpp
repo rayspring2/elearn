@@ -10,5 +10,5 @@ void Admin::getPersonalPage(vector<string> &output){
     printAllPosts(output);
 }
 string Admin::getPrint(){
-    return name+'\n';
+    return name + NEXTLINE;
 }
