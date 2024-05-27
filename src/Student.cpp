@@ -1,5 +1,6 @@
 #include "Student.hpp"
-
+const string Student::GET_COURSE_STR = "Get Course"; 
+const string Student::DELETE_COURSE_STR = "Delete Course";
 Student::Student(int id, string name, Major* major, int semester, string password) :
 major(major), semester(semester), User(id, name, password){}
 
@@ -31,11 +32,13 @@ void Student::addCourse(OfferedCourse* offered_course){
             throw runtime_error(PERMISSIONDENIED);
     }
     courses.push_back(offered_course);
+    sendNotification(GET_COURSE_STR);
 }
 
 void Student::deleteCourse(int id){
     OfferedCourse* course = findCourse(id);
     courses.erase(find(courses.begin(), courses.end(), course ));
+    sendNotification(DELETE_COURSE_STR);
 }
 
 OfferedCourse* Student::findCourse(int id){

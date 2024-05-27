@@ -5,6 +5,10 @@
 #include "Major.hpp"
 class Student : public User{
 private:
+    static const string GET_COURSE_STR; 
+    static const string DELETE_COURSE_STR; 
+
+private:
     Major* major;
     int semester;
     vector<OfferedCourse*> courses;

@@ -28,7 +28,7 @@ const string IO::CAPACITY_FLAG = "capacity";
 const string IO::TIME_FLAG = "time";
 const string IO::CLASS_NUMBER_FLAG = "class_number";
 const string IO::EXAM_DATE_FLAG = "exam_date";
-
+int cnt = 0;
 IO::IO(char* argv[]){
     file_out.open(outputfile_name);
     utms.readData(argv);
@@ -36,6 +36,7 @@ IO::IO(char* argv[]){
 void IO::run(){
     string commandline;
     while(getline(cin, commandline)){
+        cnt++;
         if(commandline == "*")
             return;
         try{
@@ -67,8 +68,11 @@ void IO::run(){
 
 
 void IO::printOutput(){
-    for(string s : output )
+    file_out << cnt <<"***";
+    for(string s : output ){
         file_out << s << std::flush;
+        cerr << s << std::flush;
+    }
     output.clear(); 
 }
 
@@ -96,18 +100,13 @@ void IO::getCmd(string &commandline, string command){
 
     else if( command == PERSONALPAGE_STR ){
         if(!utms.isLoggedIn() || utms.userIsAdmin()){
-            cerr <<11111111<<endl;
             throw runtime_error(PERMISSIONDENIED);
         }   
-        cerr <<2222222<<endl;
         int id = getWholeNumb(findGetValue(ID_FLAG, commandline));
-        cerr <<333333<<endl;
 
         if(!isempty(commandline))
             throw runtime_error(BADREQUEST); 
-        cerr <<4444444<<endl;
         utms.getPersonalPage(id, output);
-        cerr <<555555<<endl;
     }
 
 

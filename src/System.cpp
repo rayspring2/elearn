@@ -115,17 +115,8 @@ void System::addUser(User * u){
 }
 
 void System::login(int id, string password){
-
-    User* user = USER_NOTFPUND;
-    for(User* u : users){
-        if( u->idIsEqualTo( id ) ){
-            user = u;
-            break;
-        }
-    }
-    if(user == USER_NOTFPUND){
-        throw runtime_error(NOTFOUND); 
-    }
+    
+    User* user = findUser(id);
     if(!(user->PasswordisEqualTo(password))){
         throw runtime_error(PERMISSIONDENIED); 
     }
@@ -182,7 +173,9 @@ User* System::findUser(int id){
 }
 void System::viewPost(int user_id, int post_id, vector<string> &output){
     User* user = findUser(user_id);
+    cout <<"user info ==" << user->getPrint() << endl;
     Post* post = user->findPost(post_id);
+    cout <<"post info == " << post->print() << endl;
     output.push_back(user->getPrint());
     output.push_back(post->print());
 }

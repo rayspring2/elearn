@@ -5,6 +5,7 @@ class User{
 private:
     static const string NEW_POST_STR;
 protected:
+    int cnt_posts = 0;
     int id;
     string name;
     string password;

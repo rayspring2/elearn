@@ -8,10 +8,8 @@ bool User::PasswordisEqualTo( string password_2){
     return password == password_2;
 }
 void User::addNewPost(string title, string message){
-    int id =(int)posts.size() + 1;
-    if(!posts.empty())
-        id = max(id , posts.back()->getId() + 1);
-    
+    cnt_posts++;
+    int id = cnt_posts;
     Post* new_post = new Post(id, title, message );
     posts.push_back(new_post);
     sendNotification(NEW_POST_STR);
@@ -82,7 +80,7 @@ void User::viewNotifications(vector<string> &output){
 }
 
 void User::printAllPosts(vector<string> &output){
-    for(Post* p : posts){
-        output.push_back(p->getShortPrint());
+    for( int i = posts.size()-1 ; i>=0; i-- ){
+        output.push_back(posts[i]->getShortPrint());
     }
 }
