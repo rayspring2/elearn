@@ -20,6 +20,8 @@ const string IO::PROFILE_PHOTO_STR = "profile_photo";
 const string IO::COURSE_POST_STR = "course_post";
 const string IO::COURSE_CHANNEL_STR = "course_channel";
 const string IO::TA_FORM_STR = "ta_form";
+const string IO::CLOSE_TA_FORM_STR = "close_ta_form";
+const string IO::TA_REQUEST_STR = "ta_request";
 
 const string IO::ID_FLAG = "id";
 const string IO::PHOTO_FLAG = "photo";
@@ -34,6 +36,8 @@ const string IO::CAPACITY_FLAG = "capacity";
 const string IO::TIME_FLAG = "time";
 const string IO::CLASS_NUMBER_FLAG = "class_number";
 const string IO::EXAM_DATE_FLAG = "exam_date";
+const string IO::FORM_ID_FLAG = "form_id";
+
 
 IO::IO(char* argv[]){
     utms.readData(argv);
@@ -128,8 +132,14 @@ void IO::postCmd(string &commandline, string command){
     else if(command == COURSE_POST_STR)
         postCoursePost(commandline);
     
-    else if (command == TA_FORM_STR)
+    else if(command == TA_FORM_STR)
         postTAForm(commandline);
+    
+    else if(command == CLOSE_TA_FORM_STR)
+        postCloseTAForm(commandline);
+    
+    else if(command == TA_REQUEST_STR)
+        postTaRequest(commandline);
     
     
 }
@@ -317,6 +327,23 @@ void IO::postTAForm(string &commandline){
     if( !isempty(commandline) )
         throw runtime_error(BADREQUEST);
     utms.addTAForm(course_id, message);
+}
+
+void IO::postCloseTAForm(string &commandline){
+    if(!utms.userIsProfessor())
+        throw runtime_error(PERMISSIONDENIED);
+    int ta_form_id = getNatrualNumb(findGetValue(ID_FLAG, commandline));
+    if( !isempty(commandline) )
+        throw runtime_error(BADREQUEST);
+    utms.closeTAForm(ta_form_id);
+}
+
+void IO::postTaRequest(string &commandline){
+    if(!utms.userIsStudent())
+        throw runtime_error(PERMISSIONDENIED);
+    int professor_id = getNatrualNumb(findGetValue(PROFESSOR_ID_FLAG, commandline));
+    int form_id = getNatrualNumb(findGetValue(FORM_ID_FLAG, commandline));
+    utms.addTaRequest(professor_id, form_id);
 }
 
 

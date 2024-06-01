@@ -144,6 +144,31 @@ bool System::userIsAdmin(){
         return 1;
     return 0;
 }
+
+
+bool System::isStudent(User* user){
+    if(dynamic_cast<Student*>(user))
+        return 1;
+    return 0;
+
+}
+bool System::isProfessor(User* user){
+    if(dynamic_cast<Professor*>(user))
+        return 1;
+    return 0;
+}
+bool System::isAdmin(User* user){
+    if(dynamic_cast<Admin*>(user))
+        return 1;
+    return 0;
+}
+bool System::isTaForm(Post* post){
+    if(dynamic_cast<TAFormPost*>(post))
+        return 1;
+    return 0;
+}
+
+
 void System::printCourse(int id, vector<string> &output){
     OfferedCourse* course =  findOfferedCourse(id);
     output.push_back(course->getDetailedPrint());
@@ -287,10 +312,28 @@ void System::addTAForm(int course_id, string message){
     OfferedCourse* course = findOfferedCourse(course_id);
     if(!course->isAParticipant(current_user->getId()))
         throw runtime_error(PERMISSIONDENIED);
-    Professor* professor = static_cast<Professor*>(current_user);
+    Professor* professor = dynamic_cast<Professor*>(current_user);
     professor->addTAForm(course, message);
      
 }
 
+void System::closeTAForm(int id){
+    
+}
+
+void System::addTaRequest(int professor_id, int form_id){
+    Student* student = dynamic_cast<Student*>(current_user);
+    User* user = findUser(professor_id);
+    if(!isProfessor(user))
+        throw runtime_error(NOTFOUND);
+    Professor* professor = dynamic_cast<Professor*>(user);
+    
+    Post* post = user->findPost(form_id);
+    if(!isTaForm(post))
+        throw runtime_error(NOTFOUND);
+    TAFormPost* ta_form = dynamic_cast<TAFormPost*>(post);
+    
+    ta_form->addApplicant(student->getId(), student->getName(), student->getSemester());
+}
 
 

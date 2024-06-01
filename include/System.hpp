@@ -38,6 +38,11 @@ private:
     Course* findCourse(int id);
     bool prevCourseshasConflictWith(OfferedCourse* new_course);
     OfferedCourse* findOfferedCourse(int course_id);
+    bool isStudent(User* user);
+    bool isProfessor(User* user);
+    bool isAdmin(User* user);
+    bool isTaForm(Post* post);
+
 
 
 public:
@@ -72,5 +77,7 @@ public:
     void ViewCourseChannelPost(int course_id, int post_id, vector<string> &output);
     
     void addTAForm(int course_id, string message);
-    
+    void closeTAForm(int id);
+    void addTaRequest(int professor_id, int form_id);
+
 };

@@ -56,9 +56,10 @@ void Professor::addCourse(OfferedCourse* course){
 }
 void Professor::addTAForm(OfferedCourse* offered_course, string message){
     cnt_posts++;
+    Course* course = offered_course->getCourse();
     string professor_info = getPrint();
     string course_info = offered_course->getDetailedPrint();
-    TAFormPost* new_ta_form = new TAFormPost(course_info, offered_course->getCourse()->getName(), cnt_posts, message);
+    TAFormPost* new_ta_form = new TAFormPost(course_info, course->getName(), cnt_posts, message, course->getPrequisite());
     posts.push_back(new_ta_form);
     sendNotification(NEW_FORM_STR);
 }

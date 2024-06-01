@@ -15,6 +15,10 @@ string Student::getPrint(){
     return outstr;
 }
 
+int Student::getSemester(){
+    return semester;
+}
+
 void Student::getPersonalPage(vector<string> &output){
     output.push_back(getPrint());
     printAllPosts(output);
