@@ -7,9 +7,16 @@ capacity(capacity), time(time), exame_date(exame_date), class_numebr(class_numeb
     addParticipant(professor_id);
 }
 
-void OfferedCourse::addParticipant(int id){
-    participant_ids.push_back(id);
+void OfferedCourse::addStudent(int id){
+    participants.push_back({id, role});
 }
+void OfferedCourse::addProfessor(int id){
+    
+}
+void OfferedCourse::addTA(int id){
+    
+}
+
 int OfferedCourse::getProfessorId(){
     return professor_id;
 }
@@ -17,12 +24,15 @@ int OfferedCourse::getProfessorId(){
 bool OfferedCourse::hasTimeConflict(OfferedCourse* course){
     return time.hasConflict(course->time);
 }
+
 bool OfferedCourse::hasExamDayConflict(OfferedCourse* course){
     return exame_date.isEqual(course -> exame_date);
 }
+
 int OfferedCourse::getId(){
     return id;
 }
+
 Course* OfferedCourse::getCourse(){
     return course;
 }
@@ -39,11 +49,9 @@ string OfferedCourse::getDetailedPrint(){
 }
 
 void OfferedCourse::deleteParticipant(int id){
-    participant_ids.erase(find(participant_ids.begin(), participant_ids.end(), id));
-}
-
-vector<int> OfferedCourse::getParticipantIds(){
-    return participant_ids;
+    participants.erase(find_if(participants.begin(), participants.end(), [id](Participant &p){
+        return p.id == id;
+    }));
 }
 
 void OfferedCourse::addPost(int sender_id, string title, 
@@ -57,8 +65,8 @@ string message, string image_path){
 }
 
 bool OfferedCourse::isAParticipant(int id){
-    for(int i : participant_ids){
-        if(id == i)
+    for(auto i : participants){
+        if(id == i.id)
             return 1;
     }
     return 0;

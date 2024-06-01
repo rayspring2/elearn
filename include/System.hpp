@@ -79,5 +79,6 @@ public:
     void addTAForm(int course_id, string message);
     void closeTAForm(int id);
     void addTaRequest(int professor_id, int form_id);
+    void applyAcceptedTa(vector<bool> applicants_acceptance_status);
 
 };

@@ -318,6 +318,12 @@ void System::addTAForm(int course_id, string message){
 }
 
 void System::closeTAForm(int id){
+    Professor* professor = dynamic_cast<Professor*>(current_user);
+    TAFormPost* ta_form = professor->findTaForm(id);
+    deletePost(id);
+}
+
+void System::applyAcceptedTa(vector<bool> applicants_acceptance_status){
     
 }
 
@@ -328,10 +334,7 @@ void System::addTaRequest(int professor_id, int form_id){
         throw runtime_error(NOTFOUND);
     Professor* professor = dynamic_cast<Professor*>(user);
     
-    Post* post = user->findPost(form_id);
-    if(!isTaForm(post))
-        throw runtime_error(NOTFOUND);
-    TAFormPost* ta_form = dynamic_cast<TAFormPost*>(post);
+    TAFormPost* ta_form = professor->findTaForm(form_id);
     
     ta_form->addApplicant(student->getId(), student->getName(), student->getSemester());
 }

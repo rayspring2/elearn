@@ -5,6 +5,16 @@
 #include "Date.hpp"
 #include "ChannelPost.hpp"
 #include "User.hpp"
+enum Role{
+    PROFESSOR, STUDENT, TA
+};
+
+struct Participant{
+    Role role;
+    int id;
+    Participant(int id, Role Role): id(id), role(role){}
+};
+
 class OfferedCourse{
 private:   
     int id;
@@ -15,7 +25,7 @@ private:
     Time time;
     Date exame_date;
     int class_numebr;
-    vector<int> participant_ids;
+    vector<Participant> participants;
     int cnt_channel_posts = 0;
     vector<ChannelPost*> channel_posts;
     ChannelPost* findPost(int post_id);
@@ -23,7 +33,7 @@ private:
 public:
     OfferedCourse(int id, Course* course,int professor_id, string professor_name, int capacity,Time time, Date exame_date, int class_numebr);
     bool isAParticipant(int id);
-    void addParticipant(int id);
+    void addParticipant(int id, string role);
     int getProfessorId();
     bool hasTimeConflict(OfferedCourse* course);
     int getId();
@@ -32,7 +42,6 @@ public:
     string getShortPrint();
     string getDetailedPrint();
     void deleteParticipant(int id);
-    vector<int> getParticipantIds();
     void addPost(int sender_id, string title, string message, string image_path);
     string getChannelPrint(vector<User*> &users);
     string getChannelPostPrint(int post_id, vector<User*> &users);

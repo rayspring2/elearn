@@ -63,3 +63,24 @@ void Professor::addTAForm(OfferedCourse* offered_course, string message){
     posts.push_back(new_ta_form);
     sendNotification(NEW_FORM_STR);
 }
+
+TAFormPost* Professor::findTaForm(int id){
+    auto it = find_if(posts.begin(), posts.end(), [id]( Post* &p ){
+        return p->getId() == id;
+    });
+    if(it == posts.end())
+        throw runtime_error(NOTFOUND);
+    if(dynamic_cast<TAFormPost*>(*it))
+        return dynamic_cast<TAFormPost*>(*it);
+    else 
+        throw runtime_error(NOTFOUND);
+}
+
+Post* User::findPost(int id){
+    auto it = find_if(posts.begin(), posts.end(), [id]( Post* &p ){
+        return p->getId() == id;
+    });
+    if(it == posts.end())
+        throw runtime_error(NOTFOUND);
+    return *it;
+}
