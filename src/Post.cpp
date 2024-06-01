@@ -12,3 +12,7 @@ string Post::print(){
 int Post::getId(){
 	return id;
 }
+
+string Post::getTitle(){
+	return title;
+}

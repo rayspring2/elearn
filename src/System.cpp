@@ -125,7 +125,7 @@ void System::printCourseList(vector<string> &output){
     if(offered_courses.empty())
         throw runtime_error(EMPTYLIST);
     for( OfferedCourse * c : offered_courses ){
-        c->shortPrint(output);
+        output.push_back(c->getShortPrint());
     }
 }
 bool System::userIsStudent(){
@@ -146,7 +146,7 @@ bool System::userIsAdmin(){
 }
 void System::printCourse(int id, vector<string> &output){
     OfferedCourse* course =  findOfferedCourse(id);
-    course->detailedPrint(output);
+    output.push_back(course->getDetailedPrint());
 } 
 
 
@@ -272,5 +272,11 @@ string message, string image_path){
     OfferedCourse* course = findOfferedCourse(offered_course_id);
     course->addPost(current_user->getId(), title, message, image_path);
 }
+
+void System::viewCourseChannel(int course_id, vector<string> &output){
+    OfferedCourse* course = findOfferedCourse(course_id);
+    output.push_back(course->getChannelPrint(users));
+}
+
 
 

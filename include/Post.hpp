@@ -11,4 +11,5 @@ public:
 	string getShortPrint();
 	string print();
 	int getId();
+	string getTitle();
 };

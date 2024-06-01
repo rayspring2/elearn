@@ -58,7 +58,7 @@ void Student::viewCourses(vector<string> &output){
     if(courses.empty())
         throw runtime_error(EMPTYLIST);
     for(auto c : courses){
-        c->detailedPrint(output);
+        output.push_back(c->getDetailedPrint());
     }
 }
 

@@ -27,15 +27,15 @@ Course* OfferedCourse::getCourse(){
     return course;
 }
 
-void OfferedCourse::shortPrint(vector<string> &output){
+string OfferedCourse::getShortPrint(){
     string outstr = to_string(id) + SPACE + course->getName() + SPACE + to_string(capacity) + SPACE + professor_name + NEXTLINE;
-    output.push_back(outstr);
+    return outstr;
 }
-void OfferedCourse::detailedPrint(vector<string> &output){
+string OfferedCourse::getDetailedPrint(){
     string outstr =  to_string(id) + SPACE + course->getName() + SPACE + to_string(capacity) + SPACE +
     professor_name + SPACE + time.getPrint() + SPACE + exame_date.getPrint() +
     SPACE + to_string(class_numebr) + NEXTLINE;
-    output.push_back(outstr);
+    return outstr;
 
 }
 
@@ -64,4 +64,20 @@ bool OfferedCourse::isAParticipant(int id){
     }
     return 0;
 }
+
+string OfferedCourse::getChannelPrint(vector<User*> users){
+    string outstr = getDetailedPrint();
+    for(ChannelPost* p : channel_posts ){
+        int sender_id = p->getSenderId();
+        auto user = find_if(users.begin(), users.end(), [sender_id](User* &u){
+           return u->getId() == sender_id; 
+        } );
+        
+        outstr += to_string(p->getId()) + SPACE + (*user)->getName() + p->getTitle() + NEXTLINE;
+    }
+    return outstr;
+}
+
+
+
 

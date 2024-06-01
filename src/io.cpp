@@ -18,6 +18,7 @@ const string IO::NOTIFICATION_STR = "notification";
 const string IO::MYCOURSES_STR = "my_courses";
 const string IO::PROFILE_PHOTO_STR = "profile_photo";
 const string IO::COURSE_POST_STR = "course_post";
+const string IO::COURSE_CHANNEL_STR = "course_channel";
 
 const string IO::ID_FLAG = "id";
 const string IO::PHOTO_FLAG = "photo";
@@ -107,6 +108,10 @@ void IO::getCmd(string &commandline, string command){
     
     else if(command == MYCOURSES_STR)
         getMyCourses(commandline);
+    
+    else if(command == COURSE_CHANNEL_STR)
+        getCourseChannel(commandline);
+    
 }
 
 
@@ -197,6 +202,16 @@ void IO::getMyCourses(string &commandline){
     utms.viewMyCourses(output);
 }
 
+void IO::getCourseChannel(string &commandline){
+    if(!utms.isLoggedIn() || utms.userIsAdmin())
+        throw runtime_error(PERMISSIONDENIED);
+    int id = getWholeNumb(findGetValue(ID_FLAG, commandline));
+    if(!isempty(commandline))
+        throw runtime_error(BADREQUEST);
+    
+    utms.viewCourseChannel(id, output);
+}
+
 
 
 
@@ -261,6 +276,8 @@ void IO::postProfilePhoto(string &commandline){
     if(!utms.isLoggedIn() || utms.userIsAdmin())
         throw runtime_error(PERMISSIONDENIED);
     string profile_photo_path = findGetValue(PHOTO_FLAG, commandline);
+    if( !isempty(commandline) )
+        throw runtime_error(BADREQUEST);
     utms.setProfilePhoto(profile_photo_path);
 }
 
@@ -274,7 +291,8 @@ void IO::postCoursePost(string &commandline){
     string image_path = EMPTYPIC;
     if(stringContainsSeperateWord(IMAGE_FLAG, commandline))
         image_path = findGetValue(IMAGE_FLAG, commandline);
-    
+    if( !isempty(commandline) )
+        throw runtime_error(BADREQUEST);
     utms.addCoursePost(offered_course_id, title, message, image_path);
 }
 

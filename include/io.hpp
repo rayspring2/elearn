@@ -21,6 +21,7 @@ private:
     static const string MYCOURSES_STR;
     static const string PROFILE_PHOTO_STR;
     static const string COURSE_POST_STR;
+    static const string COURSE_CHANNEL_STR;
 
     static const string ID_FLAG;
     static const string PHOTO_FLAG;
@@ -40,13 +41,13 @@ private:
 private:
     System utms;
     const vector<string> getcommands = {COURSES_STR, PERSONALPAGE_STR, POST_STR,
-     NOTIFICATION_STR, MYCOURSES_STR };
+     NOTIFICATION_STR, MYCOURSES_STR, COURSE_CHANNEL_STR };
     const vector<string> postcommands = {LOGIN_STR, LOGOUT_STR, POST_STR,
      CONNECT_STR, COURSE_OFFER_STR, PROFILE_PHOTO_STR, COURSE_POST_STR };
     const vector<string> deletecommands = {POST_STR, MYCOURSES_STR};
     const vector<string> putcommands = {MYCOURSES_STR};
     vector<string> output;   
-    void getCmd(string &commandline, string command); //output al list or with id ouput details
+    void getCmd(string &commandline, string command);
     void postCmd(string &commandline, string command);
     void deleteCmd(string &commandline, string command);
     void putCmd(string &commandline, string command); 
@@ -57,6 +58,8 @@ private:
     void getPost(string &commandline);
     void getNotification(string &commandline);
     void getMyCourses(string &commandline);
+    void getCourseChannel(string &commandline);
+
     
     void postLogin(string &commandline);
     void postLogout(string &commandline);
