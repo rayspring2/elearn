@@ -22,7 +22,7 @@ private:
     static const string PROFILE_PHOTO_STR;
     static const string COURSE_POST_STR;
     static const string COURSE_CHANNEL_STR;
-
+    static const string TA_FORM_STR;
     static const string ID_FLAG;
     static const string PHOTO_FLAG;
     static const string POSTID_FLAG;
@@ -43,7 +43,7 @@ private:
     const vector<string> getcommands = {COURSES_STR, PERSONALPAGE_STR, POST_STR,
      NOTIFICATION_STR, MYCOURSES_STR, COURSE_CHANNEL_STR };
     const vector<string> postcommands = {LOGIN_STR, LOGOUT_STR, POST_STR,
-     CONNECT_STR, COURSE_OFFER_STR, PROFILE_PHOTO_STR, COURSE_POST_STR };
+     CONNECT_STR, COURSE_OFFER_STR, PROFILE_PHOTO_STR, COURSE_POST_STR, TA_FORM_STR };
     const vector<string> deletecommands = {POST_STR, MYCOURSES_STR};
     const vector<string> putcommands = {MYCOURSES_STR};
     vector<string> output;   
@@ -68,6 +68,7 @@ private:
     void postCourseOffer(string &commandline);
     void postProfilePhoto(string &commandline);
     void postCoursePost(string &commandline);
+    void postTAForm(string &commandline);
 
 
     void deletePost(string &commandline);

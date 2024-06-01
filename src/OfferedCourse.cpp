@@ -65,7 +65,7 @@ bool OfferedCourse::isAParticipant(int id){
     return 0;
 }
 
-string OfferedCourse::getChannelPrint(vector<User*> users){
+string OfferedCourse::getChannelPrint(vector<User*> &users){
     string outstr = getDetailedPrint();
     for(ChannelPost* p : channel_posts ){
         int sender_id = p->getSenderId();
@@ -73,9 +73,39 @@ string OfferedCourse::getChannelPrint(vector<User*> users){
            return u->getId() == sender_id; 
         } );
         
-        outstr += to_string(p->getId()) + SPACE + (*user)->getName() + p->getTitle() + NEXTLINE;
+        outstr += to_string(p->getId()) + SPACE +
+        (*user)->getName() + SPACE +
+        QUATATION + p->getTitle() + QUATATION + NEXTLINE;
     }
     return outstr;
+}
+
+string OfferedCourse::getChannelPostPrint(int post_id, vector<User*> &users){
+    string outstr = getDetailedPrint();
+    ChannelPost* post = findPost(post_id);
+    int sender_id = post->getSenderId();
+    auto user = find_if(users.begin(), users.end(), [sender_id](User* &u){
+        return u->getId() == sender_id; 
+    } );
+    
+    outstr += to_string(post->getId()) + SPACE +
+    (*user)->getName() + SPACE +
+    QUATATION + post->getTitle() + QUATATION +
+    QUATATION + post->getMessage() + QUATATION + NEXTLINE;
+    
+    return outstr;
+}
+
+ChannelPost* OfferedCourse::findPost(int post_id){
+    auto it = find_if(channel_posts.begin(), channel_posts.end(), [post_id](ChannelPost* &c){
+       return c->getId() == post_id ; 
+    });
+    
+    return *it;
+}
+
+void OfferedCourse::addTAForm(string message){
+    
 }
 
 

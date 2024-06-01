@@ -18,10 +18,11 @@ private:
     vector<int> participant_ids;
     int cnt_channel_posts = 0;
     vector<ChannelPost*> channel_posts;
-    bool isAParticipant(int id);
+    ChannelPost* findPost(int post_id);
 
 public:
     OfferedCourse(int id, Course* course,int professor_id, string professor_name, int capacity,Time time, Date exame_date, int class_numebr);
+    bool isAParticipant(int id);
     void addParticipant(int id);
     int getProfessorId();
     bool hasTimeConflict(OfferedCourse* course);
@@ -33,6 +34,7 @@ public:
     void deleteParticipant(int id);
     vector<int> getParticipantIds();
     void addPost(int sender_id, string title, string message, string image_path);
-    string getChannelPrint(vector<User*> users);
-
+    string getChannelPrint(vector<User*> &users);
+    string getChannelPostPrint(int post_id, vector<User*> &users);
+    void addTAForm(string message);
 };

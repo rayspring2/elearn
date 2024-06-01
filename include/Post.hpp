@@ -12,4 +12,5 @@ public:
 	string print();
 	int getId();
 	string getTitle();
+	string getMessage();
 };

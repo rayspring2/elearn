@@ -19,6 +19,7 @@ const string IO::MYCOURSES_STR = "my_courses";
 const string IO::PROFILE_PHOTO_STR = "profile_photo";
 const string IO::COURSE_POST_STR = "course_post";
 const string IO::COURSE_CHANNEL_STR = "course_channel";
+const string IO::TA_FORM_STR = "ta_form";
 
 const string IO::ID_FLAG = "id";
 const string IO::PHOTO_FLAG = "photo";
@@ -75,20 +76,6 @@ void IO::printOutput(){
     output.clear(); 
 }
 
-void IO::getCourse(string &commandline){
-    if(!utms.isLoggedIn() || utms.userIsAdmin())
-            throw runtime_error(PERMISSIONDENIED);
-
-        if(isempty(commandline))   
-            utms.printCourseList(output);
-        else{
-            int id = getNatrualNumb(findGetValue(ID_FLAG, commandline));
-            if(!isempty(commandline))
-                throw runtime_error(BADREQUEST);
-            utms.printCourse(id, output); 
-
-    }
-}
 
 void IO::getCmd(string &commandline, string command){
     if(find(getcommands.begin(), getcommands.end(), command ) == getcommands.end())
@@ -104,13 +91,14 @@ void IO::getCmd(string &commandline, string command){
         getPost(commandline);
     
     else if( command == NOTIFICATION_STR)
-         getNotification(commandline);
+        getNotification(commandline);
     
     else if(command == MYCOURSES_STR)
         getMyCourses(commandline);
     
     else if(command == COURSE_CHANNEL_STR)
         getCourseChannel(commandline);
+        
     
 }
 
@@ -139,6 +127,11 @@ void IO::postCmd(string &commandline, string command){
     
     else if(command == COURSE_POST_STR)
         postCoursePost(commandline);
+    
+    else if (command == TA_FORM_STR)
+        postTAForm(commandline);
+    
+    
 }
 
 void IO::deleteCmd(string &commandline, string command){
@@ -164,6 +157,19 @@ void IO::putCmd(string &commandline, string command){
 
 
 
+void IO::getCourse(string &commandline){
+    if(!utms.isLoggedIn() || utms.userIsAdmin())
+            throw runtime_error(PERMISSIONDENIED);
+
+    if(isempty(commandline))   
+        utms.printCourseList(output);
+    else{
+        int id = getNatrualNumb(findGetValue(ID_FLAG, commandline));
+        if(!isempty(commandline))
+            throw runtime_error(BADREQUEST);
+        utms.printCourse(id, output); 
+    }
+}
 
 void IO::getPersonalPage(string &commandline){
     if(!utms.isLoggedIn() || utms.userIsAdmin()){
@@ -207,10 +213,16 @@ void IO::getCourseChannel(string &commandline){
         throw runtime_error(PERMISSIONDENIED);
     int id = getWholeNumb(findGetValue(ID_FLAG, commandline));
     if(!isempty(commandline))
-        throw runtime_error(BADREQUEST);
-    
-    utms.viewCourseChannel(id, output);
+        utms.viewCourseChannel(id, output);    
+    else{
+        int post_id = getNatrualNumb(findGetValue(POSTID_FLAG, commandline));
+        if(!isempty(commandline))
+            throw runtime_error(BADREQUEST);
+        utms.ViewCourseChannelPost(id, post_id, output);
+    }
 }
+
+
 
 
 
@@ -294,6 +306,18 @@ void IO::postCoursePost(string &commandline){
     if( !isempty(commandline) )
         throw runtime_error(BADREQUEST);
     utms.addCoursePost(offered_course_id, title, message, image_path);
+}
+
+void IO::postTAForm(string &commandline){
+    if(!utms.userIsProfessor())
+        throw runtime_error(PERMISSIONDENIED);
+    
+    int course_id = getNatrualNumb(findGetValue(COURSE_ID_FLAG, commandline));
+    string message = findGetValue(MESSAGE_FLAG, commandline);
+    if( !isempty(commandline) )
+        throw runtime_error(BADREQUEST);
+    utms.addTAForm(course_id, message);
+
 }
 
 

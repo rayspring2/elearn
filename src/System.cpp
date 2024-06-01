@@ -277,6 +277,18 @@ void System::viewCourseChannel(int course_id, vector<string> &output){
     OfferedCourse* course = findOfferedCourse(course_id);
     output.push_back(course->getChannelPrint(users));
 }
+void System::ViewCourseChannelPost(int course_id, int post_id, vector<string> &output){
+    OfferedCourse* course = findOfferedCourse(course_id);
+    output.push_back(course->getChannelPostPrint(post_id, users));
+
+}
+
+void System::addTAForm(int course_id, string message){
+    OfferedCourse* course = findOfferedCourse(course_id);
+    if(!course->isAParticipant(current_user->getId()))
+        throw runtime_error(PERMISSIONDENIED);
+    course->addTAForm(message); 
+}
 
 
 

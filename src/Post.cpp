@@ -16,3 +16,6 @@ int Post::getId(){
 string Post::getTitle(){
 	return title;
 }
+string Post::getMessage(){
+	return message;
+}
