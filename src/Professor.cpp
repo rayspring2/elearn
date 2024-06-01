@@ -1,5 +1,7 @@
 #include "Professor.hpp"
 
+const string Professor::NEW_FORM_STR = "New Form";
+
 
 Professor::Professor(int id, string name, Major* major, string pos, string password) :
     major(major) , User(id, name, password) {
@@ -51,4 +53,12 @@ void Professor::getPersonalPage(vector<string> &output){
 }
 void Professor::addCourse(OfferedCourse* course){
     courses.push_back(course);
+}
+void Professor::addTAForm(OfferedCourse* offered_course, string message){
+    cnt_posts++;
+    string professor_info = getPrint();
+    string course_info = offered_course->getDetailedPrint();
+    TAFormPost* new_ta_form = new TAFormPost(course_info, offered_course->getCourse()->getName(), cnt_posts, message);
+    posts.push_back(new_ta_form);
+    sendNotification(NEW_FORM_STR);
 }

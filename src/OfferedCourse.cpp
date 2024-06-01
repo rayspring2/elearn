@@ -36,7 +36,6 @@ string OfferedCourse::getDetailedPrint(){
     professor_name + SPACE + time.getPrint() + SPACE + exame_date.getPrint() +
     SPACE + to_string(class_numebr) + NEXTLINE;
     return outstr;
-
 }
 
 void OfferedCourse::deleteParticipant(int id){
@@ -104,9 +103,6 @@ ChannelPost* OfferedCourse::findPost(int post_id){
     return *it;
 }
 
-void OfferedCourse::addTAForm(string message){
-    
-}
 
 
 

@@ -36,5 +36,4 @@ public:
     void addPost(int sender_id, string title, string message, string image_path);
     string getChannelPrint(vector<User*> &users);
     string getChannelPostPrint(int post_id, vector<User*> &users);
-    void addTAForm(string message);
 };

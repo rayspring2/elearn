@@ -287,7 +287,9 @@ void System::addTAForm(int course_id, string message){
     OfferedCourse* course = findOfferedCourse(course_id);
     if(!course->isAParticipant(current_user->getId()))
         throw runtime_error(PERMISSIONDENIED);
-    course->addTAForm(message); 
+    Professor* professor = static_cast<Professor*>(current_user);
+    professor->addTAForm(course, message);
+     
 }
 
 

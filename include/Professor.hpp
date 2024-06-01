@@ -3,6 +3,7 @@
 #include "User.hpp"
 #include "Major.hpp"
 #include "OfferedCourse.hpp"
+#include "TAFormPost.hpp"
 const string INSTRUCTOR_STR = "instructor";
 const string ASSISTANTPROF_STR = "assistant professor";
 const string ASSOCIATEPROF_STR =  "associate professor";
@@ -16,7 +17,8 @@ enum ProfPos{
 
 //instructor، assistant professor، associate professor, professor
 class Professor : public User{
-
+private:
+    static const string NEW_FORM_STR;
 private:
     Major* major; 
     ProfPos position; 
@@ -29,6 +31,6 @@ public:
     string getPrint();
     void getPersonalPage(vector<string> &output);
     void addCourse(OfferedCourse* course);
-
+    void addTAForm(OfferedCourse* course, string message);
 
 };

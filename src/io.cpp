@@ -317,7 +317,6 @@ void IO::postTAForm(string &commandline){
     if( !isempty(commandline) )
         throw runtime_error(BADREQUEST);
     utms.addTAForm(course_id, message);
-
 }
 
 

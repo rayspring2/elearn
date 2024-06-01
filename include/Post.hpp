@@ -2,14 +2,14 @@
 #include "Global.hpp"
 
 class Post{
-private:
+protected:
 	int id;
 	string title, message;
 	string picpath = EMPTYPIC;
 public:
-	Post(int id, string title, string message, string picpath);
+	Post(int id, string title, string message, string picpath=EMPTYPIC);
 	string getShortPrint();
-	string print();
+	virtual string print();
 	int getId();
 	string getTitle();
 	string getMessage();

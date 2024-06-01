@@ -1,6 +1,6 @@
 #include "Post.hpp"
 
-Post::Post(int id, string title, string message, string picpath = EMPTYPIC):
+Post::Post(int id, string title, string message, string picpath):
  id(id), title(title), message(message), picpath(picpath) {}
 
 string Post::getShortPrint(){
