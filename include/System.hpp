@@ -46,7 +46,7 @@ public:
     void addMajor(Major* m);
     void addCourse(Course* c);
     void addUser(User* u);
-    void addPost(string title, string message);
+    void addPost(string title, string message, string image_path);
     bool isLoggedIn();
     void login(int id, string password);
     void logout();
@@ -66,5 +66,7 @@ public:
     bool userIsProfessor();
     bool userIsAdmin();
 
+    void setProfilePhoto(string profile_photo_path);
+    void addCoursePost(int offered_course_id, string title, string message, string image_path);
 
 };

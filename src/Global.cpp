@@ -7,6 +7,8 @@ vector<vector<string>> readCSVLine( string line ){
     while( !line.empty() ){
         char x = line[0];
         line.erase(line.begin());
+        if(x == '\r')
+            continue;
         if( x != SEMICOLON && x != COMMA && x != NEXTLINE ){
             s = s + x;
 			continue;
@@ -29,7 +31,7 @@ vector<vector<string>> readCSVLine( string line ){
 
 string divString( string &input , char delim, char message_delim){
     string x = "";
-    input = input + SPACE;
+    input = input + delim;
     while( !input.empty()){
         if(input[0] == SPACE)
             input.erase(input.begin());
@@ -47,7 +49,8 @@ string divString( string &input , char delim, char message_delim){
     
     x = input.substr(0, pos);
     input = input.substr(pos+1);
-
+    if(input.back() == delim)
+        input.erase(input.length()-1);
     if(x.empty()){
 		throw runtime_error( BADREQUEST );
     }
@@ -110,4 +113,16 @@ int getWholeNumb(string s){
         throw runtime_error(BADREQUEST);
     }
 }
+
+bool stringContainsSeperateWord(string word, string str){
+    str = SPACE + str + SPACE;
+    word = SPACE + word + SPACE;
+
+    size_t pos = str.find(word);
+    if(pos == string::npos){
+		return 0;
+    }
+    return 1;
+}
+
 

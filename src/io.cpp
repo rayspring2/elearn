@@ -16,12 +16,16 @@ const string IO::PERSONALPAGE_STR = "personal_page";
 const string IO::CONNECT_STR = "connect";
 const string IO::NOTIFICATION_STR = "notification";
 const string IO::MYCOURSES_STR = "my_courses";
+const string IO::PROFILE_PHOTO_STR = "profile_photo";
+const string IO::COURSE_POST_STR = "course_post";
 
 const string IO::ID_FLAG = "id";
+const string IO::PHOTO_FLAG = "photo";
 const string IO::POSTID_FLAG = "post_id";
 const string IO::PASSWORD_FLAG = "password";
 const string IO::TITLE_FLAG = "title";
 const string IO::MESSAGE_FLAG = "message";
+const string IO::IMAGE_FLAG = "image";
 const string IO::COURSE_ID_FLAG = "course_id";
 const string IO::PROFESSOR_ID_FLAG = "professor_id";
 const string IO::CAPACITY_FLAG = "capacity";
@@ -125,6 +129,11 @@ void IO::postCmd(string &commandline, string command){
     else if(command == COURSE_OFFER_STR)
         postCourseOffer(commandline);
     
+    else if(command == PROFILE_PHOTO_STR)
+        postProfilePhoto(commandline);
+    
+    else if(command == COURSE_POST_STR)
+        postCoursePost(commandline);
 }
 
 void IO::deleteCmd(string &commandline, string command){
@@ -145,6 +154,11 @@ void IO::putCmd(string &commandline, string command){
     if(command == MYCOURSES_STR )
         putMyCourse(commandline);
 }
+
+
+
+
+
 
 void IO::getPersonalPage(string &commandline){
     if(!utms.isLoggedIn() || utms.userIsAdmin()){
@@ -183,6 +197,11 @@ void IO::getMyCourses(string &commandline){
     utms.viewMyCourses(output);
 }
 
+
+
+
+
+
 void IO::postLogin(string &commandline){
     if(utms.isLoggedIn())
             throw runtime_error(PERMISSIONDENIED);
@@ -206,9 +225,13 @@ void IO::postPost(string &commandline){
             throw runtime_error(PERMISSIONDENIED);
     string title = findGetValue(TITLE_FLAG, commandline);
     string message = findGetValue(MESSAGE_FLAG, commandline);
+    string image_path = EMPTYPIC;
+    if(stringContainsSeperateWord(IMAGE_FLAG, commandline))
+        image_path = findGetValue(IMAGE_FLAG, commandline);
+    
     if( !isempty(commandline) )
         throw runtime_error(BADREQUEST);
-    utms.addPost( title, message );
+    utms.addPost( title, message, image_path );
 }
 
 void IO::postConnect(string &commandline){
@@ -233,6 +256,31 @@ void IO::postCourseOffer(string &commandline){
         throw runtime_error(BADREQUEST);
     utms.courseOffer(course_id, professor_id, capacity, time, exame_date, class_numebr );
 }
+
+void IO::postProfilePhoto(string &commandline){
+    if(!utms.isLoggedIn() || utms.userIsAdmin())
+        throw runtime_error(PERMISSIONDENIED);
+    string profile_photo_path = findGetValue(PHOTO_FLAG, commandline);
+    utms.setProfilePhoto(profile_photo_path);
+}
+
+void IO::postCoursePost(string &commandline){
+    if(!utms.isLoggedIn() || utms.userIsAdmin())
+        throw runtime_error(PERMISSIONDENIED);
+    int offered_course_id = getNatrualNumb(findGetValue(ID_FLAG, commandline));
+    string title = findGetValue(TITLE_FLAG, commandline);
+    string message = findGetValue(MESSAGE_FLAG, commandline);
+    
+    string image_path = EMPTYPIC;
+    if(stringContainsSeperateWord(IMAGE_FLAG, commandline))
+        image_path = findGetValue(IMAGE_FLAG, commandline);
+    
+    utms.addCoursePost(offered_course_id, title, message, image_path);
+}
+
+
+
+
 
 
 void IO::deletePost(string &commandline){

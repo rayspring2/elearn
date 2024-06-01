@@ -19,12 +19,17 @@ private:
     static const string CONNECT_STR;
     static const string NOTIFICATION_STR;
     static const string MYCOURSES_STR;
+    static const string PROFILE_PHOTO_STR;
+    static const string COURSE_POST_STR;
 
     static const string ID_FLAG;
+    static const string PHOTO_FLAG;
     static const string POSTID_FLAG;
     static const string PASSWORD_FLAG;
     static const string TITLE_FLAG;
     static const string MESSAGE_FLAG;
+    static const string IMAGE_FLAG;
+
     static const string COURSE_ID_FLAG;
     static const string PROFESSOR_ID_FLAG;
     static const string CAPACITY_FLAG;
@@ -34,8 +39,10 @@ private:
 
 private:
     System utms;
-    const vector<string> getcommands = {COURSES_STR, PERSONALPAGE_STR, POST_STR, NOTIFICATION_STR, MYCOURSES_STR };
-    const vector<string> postcommands = {LOGIN_STR, LOGOUT_STR, POST_STR, CONNECT_STR, COURSE_OFFER_STR };
+    const vector<string> getcommands = {COURSES_STR, PERSONALPAGE_STR, POST_STR,
+     NOTIFICATION_STR, MYCOURSES_STR };
+    const vector<string> postcommands = {LOGIN_STR, LOGOUT_STR, POST_STR,
+     CONNECT_STR, COURSE_OFFER_STR, PROFILE_PHOTO_STR, COURSE_POST_STR };
     const vector<string> deletecommands = {POST_STR, MYCOURSES_STR};
     const vector<string> putcommands = {MYCOURSES_STR};
     vector<string> output;   
@@ -56,6 +63,9 @@ private:
     void postPost(string &commandline);
     void postConnect(string &commandline);
     void postCourseOffer(string &commandline);
+    void postProfilePhoto(string &commandline);
+    void postCoursePost(string &commandline);
+
 
     void deletePost(string &commandline);
     void deleteMycourse(string &commandline);

@@ -9,6 +9,7 @@ protected:
     int id;
     string name;
     string password;
+    string profile_photo_path = EMPTYPIC;
     vector<Post*> posts;
     vector<Notification*> notifications;
     vector<User*>  connections;
@@ -18,7 +19,7 @@ public:
     Post* findPost(int id);
     bool idIsEqualTo(int id_2);
     bool PasswordisEqualTo( string password_2);
-    void addNewPost(string title, string message);
+    void addNewPost(string title, string message, string image_path);
     void sendNotification(string type);
     void sendNotification(Notification* new_notif);
     void sendNotification(int id, string name, string type);
@@ -32,7 +33,8 @@ public:
     void viewNotifications(vector<string> &output);
     void addNotification( Notification* notif);
     void printAllPosts(vector<string> &output);
-
+    
+    void setProfilePhoto(string profile_photo);
     
 
 };

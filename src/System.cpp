@@ -55,15 +55,16 @@ void System::readCourseData(ifstream &course_file){
 void System::readProfessorData(ifstream &professor_file){
     string line;
     getline( professor_file, line );
-    vector<vector<string>> input;
     
     while(getline(professor_file , line)) {
-        input = readCSVLine( line );
-
-        int major_id = stoi(input[2][0]);
+        int id = getNatrualNumb(divString(line, COMMA));
+        string name = divString(line, COMMA);
+        int major_id = getNatrualNumb(divString(line, COMMA));
         Major* major = findMajor(major_id);
-        Professor* new_professor = new Professor( stoi( input[0][0] ), input[1][0],
-        major, input[3][0], input[4][0] );
+        string position = divString(line, COMMA);
+        string password =  divString(line, COMMA);
+        
+        Professor* new_professor = new Professor( id, name, major, position, password );
         addUser(new_professor);
     }
 }
@@ -72,17 +73,14 @@ void System::readProfessorData(ifstream &professor_file){
 void System::readStudentData(ifstream &student_file){
     string line;
     getline( student_file, line );
-    vector<vector<string>> input;
     
     while(getline(student_file , line)) {
-
-        input = readCSVLine( line );
-        int id = stoi( input[0][0] );
-        string name = input[1][0];
-        int major_id = stoi(input[2][0]);
+        int id = getNatrualNumb(divString(line, COMMA));
+        string name = divString(line, COMMA);
+        int major_id = getNatrualNumb(divString(line, COMMA));
         Major* major = findMajor(major_id);
-        int semester = stoi(input[3][0]);
-        string password = input[4][0];
+        int semester = getNatrualNumb(divString(line, COMMA));
+        string password =  divString(line, COMMA);
 
         Student* new_student = new Student(id, name, major, semester, password );
         addUser(new_student);
@@ -152,8 +150,8 @@ void System::printCourse(int id, vector<string> &output){
 } 
 
 
-void System::addPost( string title, string message){
-    current_user->addNewPost(title, message);
+void System::addPost( string title, string message, string image_path){
+    current_user->addNewPost(title, message, image_path);
 }
 void System::deletePost(int id){
     current_user->deletePost(id);
@@ -237,7 +235,8 @@ Course* System::findCourse(int id){
 void System::addStudentCourse(int course_id){
     Student* current_student = dynamic_cast<Student*>(current_user);
     OfferedCourse* offered_course = findOfferedCourse(course_id);
-    current_student->addCourse(offered_course);     
+    current_student->addCourse(offered_course);
+    offered_course->addParticipant(current_student->getId());     
 }
 
 OfferedCourse* System::findOfferedCourse(int course_id){
@@ -251,11 +250,27 @@ OfferedCourse* System::findOfferedCourse(int course_id){
 
 void System::deleteCourse(int id){
     Student* current_student = dynamic_cast<Student*>(current_user);
+    OfferedCourse* course = findOfferedCourse(id);
     current_student->deleteCourse(id);
+    course->deleteParticipant(current_student->getId());
+    
 }
 
 void System::viewMyCourses(vector<string> &output){
     Student* current_student = dynamic_cast<Student*>(current_user);
     current_student->viewCourses(output);
 }
+
+
+void System::setProfilePhoto(string profile_photo_path){
+    current_user->setProfilePhoto(profile_photo_path);
+}
+
+void System::addCoursePost(int offered_course_id, string title, 
+string message, string image_path){
+    
+    OfferedCourse* course = findOfferedCourse(offered_course_id);
+    course->addPost(current_user->getId(), title, message, image_path);
+}
+
 

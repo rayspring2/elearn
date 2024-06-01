@@ -7,10 +7,10 @@ bool User::idIsEqualTo(int id_2){
 bool User::PasswordisEqualTo( string password_2){
     return password == password_2;
 }
-void User::addNewPost(string title, string message){
+void User::addNewPost(string title, string message, string image_path){
     cnt_posts++;
     int id = cnt_posts;
-    Post* new_post = new Post(id, title, message );
+    Post* new_post = new Post(id, title, message, image_path );
     posts.push_back(new_post);
     sendNotification(NEW_POST_STR);
 }
@@ -83,4 +83,8 @@ void User::printAllPosts(vector<string> &output){
     for( int i = posts.size()-1 ; i>=0; i-- ){
         output.push_back(posts[i]->getShortPrint());
     }
+}
+
+void User::setProfilePhoto(string profile_photo){
+    profile_photo_path = profile_photo;
 }
