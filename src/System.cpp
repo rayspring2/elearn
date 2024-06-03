@@ -1,6 +1,9 @@
 #include "System.hpp"
 const string System::NEW_COURSE_OFFERING_STR = "New Course Offering";
-
+const string System::TA_REQUEST_NOTIF_STR = "Your request to be a teaching assistant has been ";
+const string System::ACCEPTED_STR = "accepted";
+const string System::REJECTED_STR = "rejected";
+const string System::NEW_COURSE_POST_STR = "New Course Post";
 System::System(){
     addUser(admin);
 }
@@ -221,15 +224,15 @@ void System::courseOffer(int course_id, int professor_id,int capacity, Time time
         throw runtime_error(PERMISSIONDENIED);
 
 
-    if(!course->majorHas(professor->getMajorId())){
+    if(!course->majorHas(professor->getMajorId()))
         throw runtime_error(PERMISSIONDENIED);
-    }
+    
 
     OfferedCourse* new_offered_course = new OfferedCourse(offered_courses.size() + 1, course, professor->getId() ,
     professor->getName(), capacity, time, exame_date, class_numebr);
-    if( prevCourseshasConflictWith(new_offered_course)){
+    if( prevCourseshasConflictWith(new_offered_course))
         throw runtime_error(PERMISSIONDENIED);
-    }
+    
     offered_courses.push_back(new_offered_course);
     professor->addCourse(new_offered_course);
     admin->sendNotification(professor->getId(), professor->getName(), NEW_COURSE_OFFERING_STR);
@@ -261,7 +264,7 @@ void System::addStudentCourse(int course_id){
     Student* current_student = dynamic_cast<Student*>(current_user);
     OfferedCourse* offered_course = findOfferedCourse(course_id);
     current_student->addCourse(offered_course);
-    offered_course->addParticipant(current_student->getId());     
+    offered_course->addStudent(current_student->getId());     
 }
 
 OfferedCourse* System::findOfferedCourse(int course_id){
@@ -293,9 +296,14 @@ void System::setProfilePhoto(string profile_photo_path){
 
 void System::addCoursePost(int offered_course_id, string title, 
 string message, string image_path){
-    
     OfferedCourse* course = findOfferedCourse(offered_course_id);
+    
     course->addPost(current_user->getId(), title, message, image_path);
+    vector<int> participant_ids = course->getParticipantIds();
+    for(auto i : participant_ids){
+        User* user = findUser(i);
+        user->addNotification(course->createNotification(NEW_COURSE_POST_STR));
+    }
 }
 
 void System::viewCourseChannel(int course_id, vector<string> &output){
@@ -313,18 +321,34 @@ void System::addTAForm(int course_id, string message){
     if(!course->isAParticipant(current_user->getId()))
         throw runtime_error(PERMISSIONDENIED);
     Professor* professor = dynamic_cast<Professor*>(current_user);
-    professor->addTAForm(course, message);
-     
+    professor->addTAForm(course, message);    
 }
 
-void System::closeTAForm(int id){
+vector<string> System::getApplicantsPrint(int form_id){
     Professor* professor = dynamic_cast<Professor*>(current_user);
-    TAFormPost* ta_form = professor->findTaForm(id);
-    deletePost(id);
+    TAFormPost* ta_form = professor->findTaForm(form_id);
+    return ta_form->getApplicantsPrints();
 }
 
-void System::applyAcceptedTa(vector<bool> applicants_acceptance_status){
+void System::applyAcceptedTa(vector<bool> applicants_acceptance_status, int form_id){
+    Professor* professor = dynamic_cast<Professor*>(current_user);
+    TAFormPost* ta_form = professor->findTaForm(form_id);
     
+    OfferedCourse* offered_course = findOfferedCourse(ta_form->getCourseId());
+    vector<int> ta_applicant_ids = ta_form->getApplicantids();
+    string message = TA_REQUEST_NOTIF_STR;
+    for(int i = 0; i < ta_applicant_ids.size(); i++){
+        if(applicants_acceptance_status[i]){
+            offered_course->addTA(ta_applicant_ids[i]);
+            message += ACCEPTED_STR;
+        }
+        else{
+            message += REJECTED_STR;
+        }
+        User* user = findUser(ta_applicant_ids[i]);
+        user->addNotification(offered_course->createNotification(message));
+    } 
+    deletePost(form_id);
 }
 
 void System::addTaRequest(int professor_id, int form_id){

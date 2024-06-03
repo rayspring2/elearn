@@ -59,7 +59,7 @@ void Professor::addTAForm(OfferedCourse* offered_course, string message){
     Course* course = offered_course->getCourse();
     string professor_info = getPrint();
     string course_info = offered_course->getDetailedPrint();
-    TAFormPost* new_ta_form = new TAFormPost(course_info, course->getName(), cnt_posts, message, course->getPrequisite());
+    TAFormPost* new_ta_form = new TAFormPost(course_info, course->getName(), course->getId(), cnt_posts, message, course->getPrequisite());
     posts.push_back(new_ta_form);
     sendNotification(NEW_FORM_STR);
 }
@@ -76,11 +76,3 @@ TAFormPost* Professor::findTaForm(int id){
         throw runtime_error(NOTFOUND);
 }
 
-Post* User::findPost(int id){
-    auto it = find_if(posts.begin(), posts.end(), [id]( Post* &p ){
-        return p->getId() == id;
-    });
-    if(it == posts.end())
-        throw runtime_error(NOTFOUND);
-    return *it;
-}

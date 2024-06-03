@@ -45,6 +45,15 @@
 		"utility": "cpp",
 		"istream": "cpp",
 		"limits": "cpp",
-		"streambuf": "cpp"
+		"streambuf": "cpp",
+		"forward_list": "cpp",
+		"list": "cpp",
+		"unordered_set": "cpp",
+		"format": "cpp",
+		"ranges": "cpp",
+		"span": "cpp",
+		"stacktrace": "cpp",
+		"regex": "cpp",
+		"valarray": "cpp"
 	}
 }

@@ -8,7 +8,7 @@ protected:
 	string picpath = EMPTYPIC;
 public:
 	Post(int id, string title, string message, string picpath=EMPTYPIC);
-	string getShortPrint();
+	virtual string getShortPrint();
 	virtual string print();
 	int getId();
 	string getTitle();

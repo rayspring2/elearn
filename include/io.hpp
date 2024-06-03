@@ -41,6 +41,9 @@ private:
     static const string CLASS_NUMBER_FLAG;
     static const string FORM_ID_FLAG;
 
+
+    static const string ACCEPT_STR;
+    static const string REJECT_STR;
 private:
     System utms;
     const vector<string> getcommands = {COURSES_STR, PERSONALPAGE_STR, POST_STR,

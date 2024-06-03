@@ -21,6 +21,11 @@
 class System{
 private:
     static const string NEW_COURSE_OFFERING_STR;
+    static const string TA_REQUEST_NOTIF_STR;
+    static const string ACCEPTED_STR;
+    static const string REJECTED_STR;
+    static const string NEW_COURSE_POST_STR;
+
 
 private:
     Admin* admin = new Admin();
@@ -77,8 +82,8 @@ public:
     void ViewCourseChannelPost(int course_id, int post_id, vector<string> &output);
     
     void addTAForm(int course_id, string message);
-    void closeTAForm(int id);
     void addTaRequest(int professor_id, int form_id);
-    void applyAcceptedTa(vector<bool> applicants_acceptance_status);
+    vector<string> getApplicantsPrint(int id);
+    void applyAcceptedTa(vector<bool> applicants_acceptance_status, int form_id);
 
 };

@@ -2,21 +2,36 @@
 
 OfferedCourse::OfferedCourse(int id, Course* course, int professor_id, 
 string professor_name, int capacity,Time time, Date exame_date, int class_numebr):
+
 id(id), course(course), professor_id(professor_id), professor_name(professor_name), 
-capacity(capacity), time(time), exame_date(exame_date), class_numebr(class_numebr){
-    addParticipant(professor_id);
+capacity(capacity), time(time), exame_date(exame_date), class_numebr(class_numebr)  {
+
+    addProfessor(professor_id);
 }
 
 void OfferedCourse::addStudent(int id){
-    participants.push_back({id, role});
+    participants.push_back(Participant(id, STUDENT ));
 }
 void OfferedCourse::addProfessor(int id){
-    
+    participants.push_back(Participant(id, PROFESSOR ));
 }
 void OfferedCourse::addTA(int id){
-    
+    participants.push_back(Participant(id, TA ));
 }
 
+bool OfferedCourse::isTA(int id){
+    auto it = find_if(participants.begin(), participants.end(), [id](Participant &p){
+        return p.id == id;
+    });
+    return (*it).role == TA;
+}
+
+bool OfferedCourse::isProfessor(int id){
+    auto it = find_if(participants.begin(), participants.end(), [id](Participant &p){
+        return p.id == id;
+    });
+    return (*it).role == PROFESSOR;
+}
 int OfferedCourse::getProfessorId(){
     return professor_id;
 }
@@ -31,6 +46,10 @@ bool OfferedCourse::hasExamDayConflict(OfferedCourse* course){
 
 int OfferedCourse::getId(){
     return id;
+}
+
+string OfferedCourse::getName(){
+    return course->getName();
 }
 
 Course* OfferedCourse::getCourse(){
@@ -56,9 +75,11 @@ void OfferedCourse::deleteParticipant(int id){
 
 void OfferedCourse::addPost(int sender_id, string title, 
 string message, string image_path){
-    if(!isAParticipant(sender_id)){
+    if(!isAParticipant(sender_id))
         throw runtime_error(PERMISSIONDENIED);
-    }
+    if(!isTA(sender_id) && !isProfessor(sender_id))
+        throw runtime_error(PERMISSIONDENIED);
+        
     cnt_channel_posts++;
     ChannelPost * new_channel_post = new ChannelPost(sender_id, cnt_channel_posts, title, message, image_path );
     channel_posts.push_back(new_channel_post);
@@ -74,7 +95,8 @@ bool OfferedCourse::isAParticipant(int id){
 
 string OfferedCourse::getChannelPrint(vector<User*> &users){
     string outstr = getDetailedPrint();
-    for(ChannelPost* p : channel_posts ){
+    for( int i = channel_posts.size() - 1; i >= 0  ; i-- ){
+        ChannelPost* p = channel_posts[i];
         int sender_id = p->getSenderId();
         auto user = find_if(users.begin(), users.end(), [sender_id](User* &u){
            return u->getId() == sender_id; 
@@ -97,7 +119,7 @@ string OfferedCourse::getChannelPostPrint(int post_id, vector<User*> &users){
     
     outstr += to_string(post->getId()) + SPACE +
     (*user)->getName() + SPACE +
-    QUATATION + post->getTitle() + QUATATION +
+    QUATATION + post->getTitle() + QUATATION + SPACE +
     QUATATION + post->getMessage() + QUATATION + NEXTLINE;
     
     return outstr;
@@ -110,6 +132,20 @@ ChannelPost* OfferedCourse::findPost(int post_id){
     
     return *it;
 }
+
+Notification* OfferedCourse::createNotification(string message){
+    return new Notification(course->getId(), course->getName(), message);
+}
+
+vector<int> OfferedCourse::getParticipantIds(){
+    vector<int> output;
+    for(Participant p : participants){
+        output.push_back(p.id);
+    }
+    return output;
+}
+
+
 
 
 

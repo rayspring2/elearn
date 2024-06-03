@@ -38,6 +38,8 @@ const string IO::CLASS_NUMBER_FLAG = "class_number";
 const string IO::EXAM_DATE_FLAG = "exam_date";
 const string IO::FORM_ID_FLAG = "form_id";
 
+const string IO::ACCEPT_STR = "accept";
+const string IO::REJECT_STR = "reject";
 
 IO::IO(char* argv[]){
     utms.readData(argv);
@@ -222,7 +224,7 @@ void IO::getCourseChannel(string &commandline){
     if(!utms.isLoggedIn() || utms.userIsAdmin())
         throw runtime_error(PERMISSIONDENIED);
     int id = getWholeNumb(findGetValue(ID_FLAG, commandline));
-    if(!isempty(commandline))
+    if(isempty(commandline))
         utms.viewCourseChannel(id, output);    
     else{
         int post_id = getNatrualNumb(findGetValue(POSTID_FLAG, commandline));
@@ -335,7 +337,23 @@ void IO::postCloseTAForm(string &commandline){
     int ta_form_id = getNatrualNumb(findGetValue(ID_FLAG, commandline));
     if( !isempty(commandline) )
         throw runtime_error(BADREQUEST);
-    utms.closeTAForm(ta_form_id);
+    vector<string> requests = utms.getApplicantsPrint(ta_form_id);
+    
+    printOutput();
+    vector<bool> acceptance_status;
+    while(!requests.empty()){
+        cout << requests[0];
+        string input;
+        cin >> input;
+        if(input == ACCEPT_STR || input == REJECT_STR){
+            requests.erase(requests.begin());
+            if(input == ACCEPT_STR)
+                acceptance_status.push_back(true);
+            else
+                acceptance_status.push_back(false);
+        }
+    }
+    utms.applyAcceptedTa(acceptance_status, ta_form_id);
 }
 
 void IO::postTaRequest(string &commandline){

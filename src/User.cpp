@@ -80,7 +80,7 @@ void User::viewNotifications(vector<string> &output){
 }
 
 void User::printAllPosts(vector<string> &output){
-    for( int i = posts.size()-1 ; i>=0; i-- ){
+    for( int i = posts.size() - 1 ; i >= 0; i-- ){
         output.push_back(posts[i]->getShortPrint());
     }
 }
