@@ -25,4 +25,4 @@ clean:
 	rm -rf $(OBJDIR)/*.o $(EXECUTABLE)
 
 run: $(EXECUTABLE)
-	./$(EXECUTABLE) majors.csv courses.csv teachers.csv students.csv
+	./$(EXECUTABLE) majors.csv courses.csv professors.csv students.csv

@@ -47,7 +47,7 @@ private:
 private:
     System utms;
     const vector<string> getcommands = {COURSES_STR, PERSONALPAGE_STR, POST_STR,
-    NOTIFICATION_STR, MYCOURSES_STR, COURSE_CHANNEL_STR };
+    NOTIFICATION_STR, MYCOURSES_STR, COURSE_CHANNEL_STR, COURSE_POST_STR };
     
     const vector<string> postcommands = {LOGIN_STR, LOGOUT_STR, POST_STR,
     CONNECT_STR, COURSE_OFFER_STR, PROFILE_PHOTO_STR,
@@ -60,7 +60,9 @@ private:
     void postCmd(string &commandline, string command);
     void deleteCmd(string &commandline, string command);
     void putCmd(string &commandline, string command); 
+    
     void printOutput();
+    void print(string s);
 
     void getCourse(string &commandline);
     void getPersonalPage(string &commandline);
@@ -68,7 +70,7 @@ private:
     void getNotification(string &commandline);
     void getMyCourses(string &commandline);
     void getCourseChannel(string &commandline);
-
+    void getCoursePost(string &commandline);
     
     void postLogin(string &commandline);
     void postLogout(string &commandline);

@@ -55,17 +55,14 @@ void IO::run(){
                 throw runtime_error(BADREQUEST);
             if(cmd_type == GET)
                 getCmd(commandline, command);
-            else{
-                if(cmd_type == PUT)
-                    putCmd(commandline, command);
-                else if(cmd_type == POST)
-                    postCmd(commandline, command);
-                else if(cmd_type == DELETE)
-                    deleteCmd(commandline, command);
-                else
-                    throw runtime_error(BADREQUEST);
-                output.push_back(OK);
-            }
+            else if(cmd_type == PUT)
+                putCmd(commandline, command);
+            else if(cmd_type == POST)
+                postCmd(commandline, command);
+            else if(cmd_type == DELETE)
+                deleteCmd(commandline, command);
+            else
+                throw runtime_error(BADREQUEST);   
         }
         catch(const runtime_error& e){
             output.push_back(e.what());
@@ -82,6 +79,10 @@ void IO::printOutput(){
     output.clear(); 
 }
 
+void IO::print(string s){
+    output.push_back(s);
+    printOutput();
+}
 
 void IO::getCmd(string &commandline, string command){
     if(find(getcommands.begin(), getcommands.end(), command ) == getcommands.end())
@@ -104,8 +105,9 @@ void IO::getCmd(string &commandline, string command){
     
     else if(command == COURSE_CHANNEL_STR)
         getCourseChannel(commandline);
-        
     
+    else if(command == COURSE_POST_STR)
+        getCoursePost(commandline);
 }
 
 
@@ -142,8 +144,10 @@ void IO::postCmd(string &commandline, string command){
     
     else if(command == TA_REQUEST_STR)
         postTaRequest(commandline);
-    
-    
+
+    if(command != CLOSE_TA_FORM_STR)
+        output.push_back(OK);
+
 }
 
 void IO::deleteCmd(string &commandline, string command){
@@ -155,6 +159,8 @@ void IO::deleteCmd(string &commandline, string command){
     
     else if(command == MYCOURSES_STR)
           deleteMycourse(commandline); 
+    
+    output.push_back(OK);
 }
 
 void IO::putCmd(string &commandline, string command){
@@ -163,6 +169,8 @@ void IO::putCmd(string &commandline, string command){
     
     if(command == MYCOURSES_STR )
         putMyCourse(commandline);
+    
+    output.push_back(OK);
 }
 
 
@@ -224,14 +232,19 @@ void IO::getCourseChannel(string &commandline){
     if(!utms.isLoggedIn() || utms.userIsAdmin())
         throw runtime_error(PERMISSIONDENIED);
     int id = getWholeNumb(findGetValue(ID_FLAG, commandline));
-    if(isempty(commandline))
-        utms.viewCourseChannel(id, output);    
-    else{
-        int post_id = getNatrualNumb(findGetValue(POSTID_FLAG, commandline));
-        if(!isempty(commandline))
-            throw runtime_error(BADREQUEST);
-        utms.ViewCourseChannelPost(id, post_id, output);
-    }
+    if(!isempty(commandline))
+        throw runtime_error(BADREQUEST);
+    utms.viewCourseChannel(id, output);    
+}
+
+void IO::getCoursePost(string &commandline){
+    if(!utms.isLoggedIn() || utms.userIsAdmin())
+        throw runtime_error(PERMISSIONDENIED);
+    int id = getWholeNumb(findGetValue(ID_FLAG, commandline));
+    int post_id = getNatrualNumb(findGetValue(POSTID_FLAG, commandline));
+    if(!isempty(commandline))
+        throw runtime_error(BADREQUEST);
+    utms.ViewCourseChannelPost(id, post_id, output);
 }
 
 
@@ -337,14 +350,14 @@ void IO::postCloseTAForm(string &commandline){
     int ta_form_id = getNatrualNumb(findGetValue(ID_FLAG, commandline));
     if( !isempty(commandline) )
         throw runtime_error(BADREQUEST);
-    vector<string> requests = utms.getApplicantsPrint(ta_form_id);
+    vector<string> requests = utms.getApplicantsPrint(ta_form_id, output);
     
     printOutput();
     vector<bool> acceptance_status;
     while(!requests.empty()){
-        cout << requests[0];
+        print(requests[0]);
         string input;
-        cin >> input;
+        getline(cin, input);
         if(input == ACCEPT_STR || input == REJECT_STR){
             requests.erase(requests.begin());
             if(input == ACCEPT_STR)

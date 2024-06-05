@@ -1,8 +1,8 @@
 #include "System.hpp"
 const string System::NEW_COURSE_OFFERING_STR = "New Course Offering";
 const string System::TA_REQUEST_NOTIF_STR = "Your request to be a teaching assistant has been ";
-const string System::ACCEPTED_STR = "accepted";
-const string System::REJECTED_STR = "rejected";
+const string System::ACCEPTED_STR = "accepted.";
+const string System::REJECTED_STR = "rejected.";
 const string System::NEW_COURSE_POST_STR = "New Course Post";
 System::System(){
     addUser(admin);
@@ -300,7 +300,9 @@ string message, string image_path){
     
     course->addPost(current_user->getId(), title, message, image_path);
     vector<int> participant_ids = course->getParticipantIds();
-    for(auto i : participant_ids){
+    for(int i : participant_ids){
+        if( i == current_user->getId())
+            continue;
         User* user = findUser(i);
         user->addNotification(course->createNotification(NEW_COURSE_POST_STR));
     }
@@ -308,10 +310,14 @@ string message, string image_path){
 
 void System::viewCourseChannel(int course_id, vector<string> &output){
     OfferedCourse* course = findOfferedCourse(course_id);
+    if(!course->isAParticipant(current_user->getId()))
+        throw runtime_error(PERMISSIONDENIED);
     output.push_back(course->getChannelPrint(users));
 }
 void System::ViewCourseChannelPost(int course_id, int post_id, vector<string> &output){
     OfferedCourse* course = findOfferedCourse(course_id);
+    if(!course->isAParticipant(current_user->getId()))
+        throw runtime_error(PERMISSIONDENIED);
     output.push_back(course->getChannelPostPrint(post_id, users));
 
 }
@@ -324,20 +330,19 @@ void System::addTAForm(int course_id, string message){
     professor->addTAForm(course, message);    
 }
 
-vector<string> System::getApplicantsPrint(int form_id){
+vector<string> System::getApplicantsPrint(int form_id, vector<string> &output){
     Professor* professor = dynamic_cast<Professor*>(current_user);
     TAFormPost* ta_form = professor->findTaForm(form_id);
-    return ta_form->getApplicantsPrints();
+    return ta_form->getApplicantsPrints(output);
 }
 
 void System::applyAcceptedTa(vector<bool> applicants_acceptance_status, int form_id){
     Professor* professor = dynamic_cast<Professor*>(current_user);
     TAFormPost* ta_form = professor->findTaForm(form_id);
-    
     OfferedCourse* offered_course = findOfferedCourse(ta_form->getCourseId());
     vector<int> ta_applicant_ids = ta_form->getApplicantids();
-    string message = TA_REQUEST_NOTIF_STR;
     for(int i = 0; i < ta_applicant_ids.size(); i++){
+        string message = TA_REQUEST_NOTIF_STR;
         if(applicants_acceptance_status[i]){
             offered_course->addTA(ta_applicant_ids[i]);
             message += ACCEPTED_STR;

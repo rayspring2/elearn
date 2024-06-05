@@ -129,12 +129,13 @@ ChannelPost* OfferedCourse::findPost(int post_id){
     auto it = find_if(channel_posts.begin(), channel_posts.end(), [post_id](ChannelPost* &c){
        return c->getId() == post_id ; 
     });
-    
+    if(it == channel_posts.end())
+        throw runtime_error(NOTFOUND);
     return *it;
 }
 
 Notification* OfferedCourse::createNotification(string message){
-    return new Notification(course->getId(), course->getName(), message);
+    return new Notification(id, course->getName(), message);
 }
 
 vector<int> OfferedCourse::getParticipantIds(){

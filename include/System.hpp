@@ -83,7 +83,7 @@ public:
     
     void addTAForm(int course_id, string message);
     void addTaRequest(int professor_id, int form_id);
-    vector<string> getApplicantsPrint(int id);
+    vector<string> getApplicantsPrint(int id, vector<string> &output);
     void applyAcceptedTa(vector<bool> applicants_acceptance_status, int form_id);
 
 };

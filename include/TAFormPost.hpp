@@ -24,7 +24,7 @@ public:
 	string course_name, int course_id, int post_id, string message, int min_semester);
 	string print();
 	void addApplicant(int id, string name, int semester);
-	vector<string> getApplicantsPrints();
+	vector<string> getApplicantsPrints(vector<string> &ouput);
 	vector<int> getApplicantids();
 	int getCourseId();
 	string getShortPrint();
