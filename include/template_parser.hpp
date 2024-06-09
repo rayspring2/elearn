@@ -6,9 +6,9 @@
 #include <map>
 #include <string>
 
-#include "../server/server.hpp"
-#include "../utils/request.hpp"
-#include "../utils/utilities.hpp"
+#include "server.hpp"
+#include "request.hpp"
+#include "utilities.hpp"
 
 namespace SysCmd {
 #ifdef _WIN32

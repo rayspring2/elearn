@@ -4,7 +4,7 @@
 #include <string>
 #include <unordered_map>
 
-#include "../utils/utilities.hpp"
+#include "utilities.hpp"
 
 class Response {
 public:

@@ -5,10 +5,10 @@
 #include <string>
 #include <vector>
 
-#include "../utils/include.hpp"
-#include "../utils/request.hpp"
-#include "../utils/response.hpp"
-#include "../utils/template_parser.hpp"
+#include "include.hpp"
+#include "request.hpp"
+#include "response.hpp"
+#include "template_parser.hpp"
 #include "route.hpp"
 
 #ifdef _WIN32

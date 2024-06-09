@@ -13,8 +13,8 @@
 #include <map>
 #include <sstream>
 
-#include "../utils/strutils.hpp"
-#include "../utils/utilities.hpp"
+#include "strutils.hpp"
+#include "utilities.hpp"
 
 #ifdef _WIN32
 #ifndef _WIN32_WINNT

@@ -3,7 +3,7 @@
 
 #include <string>
 
-#include "../utils/request.hpp"
+#include "request.hpp"
 
 class Response;
 class RequestHandler;
