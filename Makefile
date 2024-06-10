@@ -1,11 +1,11 @@
 
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Wextra -Wall -I./include #-fsanitize=address -fsanitize=undefined
+CXXFLAGS = -std=c++20 -Wall -g -Wextra -Wall -I./include  #-fsanitize=address -fsanitize=undefined
 
 
 SRCDIR = src
 OBJDIR = obj
-#BINDIR = .
+
 EXECUTABLE = utms.out #$(BINDIR)/
 MEDIA_PATH = ./files/
 

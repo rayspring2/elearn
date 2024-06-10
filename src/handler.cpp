@@ -8,13 +8,18 @@ void SystemHandler::setSystem(System in_system){
 
 
 Response* LoginHandler::callback(Request* req) {
-    std::string username = req->getBodyParam("username");
-    std::string password = req->getBodyParam("password");
-    if (username == "root") {
-        throw Server::Exception("Remote root access has been disabled.");
-    }
-    std::cout << "username: " << username << ",\tpassword: " << password << std::endl;
-    Response* res = Response::redirect("/rand");
-    res->setSessionId("SID");
-    return res;
+	Response* res;
+	try{
+		int id = getWholeNumb(req->getBodyParam("username"));
+		std::string password = req->getBodyParam("password");
+		system.login(id, password);
+		res = Response::redirect("/loggedin");
+		
+		res->setSessionId(to_string(id));
+	}
+	catch(runtime_error &e){
+		// cout << e.what() << endl;
+		// res->setBody()
+	}
+	return res;
 }
