@@ -1,28 +1,39 @@
-
+# Compiler
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -g -Wextra -Wall -I./include  #-fsanitize=address -fsanitize=undefined
 
+# Compiler flags
+CXXFLAGS = -std=c++20 -Wall -g -Wextra -Wall -I./include
 
-SRCDIR = src
-OBJDIR = obj
+# Directories
+SRC_DIRS = src server utils
+OBJ_DIR = obj
+BIN_DIR = bin
 
-EXECUTABLE = utms.out #$(BINDIR)/
-MEDIA_PATH = ./files/
+# Executable name
+TARGET = utms.out
 
-SOURCES := $(wildcard $(SRCDIR)/*.cpp)
-OBJECTS := $(patsubst $(SRCDIR)/%.cpp, $(OBJDIR)/%.o, $(SOURCES))
+# Source files
+SRCS = $(wildcard $(addsuffix /*.cpp, $(SRC_DIRS)))
 
-all: $(EXECUTABLE)
+# Object files
+OBJS = $(SRCS:%.cpp=$(OBJ_DIR)/%.o)
 
-$(EXECUTABLE): $(OBJECTS)
-	$(CXX) $(CXXFLAGS) -o $@ $^ 
+# Default target
+all: $(TARGET)
 
-$(OBJDIR)/%.o: $(SRCDIR)/%.cpp $(wildcard $(SRCDIR)/*.hpp)
-	mkdir -p $(OBJDIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@ -I$(MEDIA_PATH)
+# Link
+$(TARGET): $(OBJS)
+	@mkdir -p $(BIN_DIR)
+	$(CXX) $(CXXFLAGS) -o $@ $^
 
+# Compile
+$(OBJ_DIR)/%.o: %.cpp $(wildcard $(SRC_DIRS)/*.hpp)
+	@mkdir -p $(dir $@)
+	$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+# Clean
 clean:
-	rm -rf $(OBJDIR)/*.o $(EXECUTABLE)
+	rm -rf $(OBJ_DIR) $(BIN_DIR)/$(TARGET)
 
-run: $(EXECUTABLE)
-	./$(EXECUTABLE) majors.csv courses.csv professors.csv students.csv
+run: $(TARGET)
+	./$(TARGET) majors.csv courses.csv professors.csv students.csv

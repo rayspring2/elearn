@@ -1,7 +1,7 @@
 #pragma once
 #include "Global.hpp"
 #include "System.hpp"
-#include "server.hpp"
+#include "../server/server.hpp"
 
 class SystemHandler: public RequestHandler{
 protected:
