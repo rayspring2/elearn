@@ -16,4 +16,9 @@ public:
     Response* callback(Request*) override;
 };
 
+class addPostHandler : public SystemHandler {
+public:
+    Response* callback(Request*) override;
+};
+
 

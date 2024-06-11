@@ -31,6 +31,8 @@ vector<vector<string>> readCSVLine( string line ){
 
 string divString( string &input , char delim, char message_delim){
     string x = "";
+    input.erase(std::remove(input.begin(), input.end(), '\r'), input.end());
+
     input = input + delim;
     while( !input.empty()){
         if(input[0] == SPACE)

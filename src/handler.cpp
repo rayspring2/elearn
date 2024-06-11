@@ -8,18 +8,25 @@ void SystemHandler::setSystem(System in_system){
 
 
 Response* LoginHandler::callback(Request* req) {
-	Response* res;
+	Response* res = new Response();
 	try{
 		int id = getWholeNumb(req->getBodyParam("username"));
 		std::string password = req->getBodyParam("password");
 		system.login(id, password);
-		res = Response::redirect("/loggedin");
 		
+		res->setBody("Successful");
 		res->setSessionId(to_string(id));
 	}
 	catch(runtime_error &e){
-		// cout << e.what() << endl;
-		// res->setBody()
+		res = new Response(Response::Status::badRequest);
+		res->setBody("Failed");
 	}
 	return res;
 }
+
+Response* addPostHandler::callback(Request* req) {
+	
+}
+
+
+
