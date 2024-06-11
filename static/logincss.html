@@ -24,7 +24,7 @@
     <script>
             document.getElementById('myForm').addEventListener('submit', async function(event) {
                 event.preventDefault();
-            var url = "/login"; 
+            var url = "/login";
             var data = new FormData(this);
     
             const response = await fetch(url, {
@@ -38,8 +38,8 @@
                 document.getElementById('result').innerHTML = text;
             }
             if(status === 200 ){
-                document.getElementById('result').innerHTML = "Logged in successfully!";
-                window.location.href = "/loggedin";
+                document.getElementById('result').innerHTML = text;
+                window.location.href = "/personal_page";
             }
         });
         </script>
