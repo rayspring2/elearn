@@ -85,5 +85,11 @@ public:
     void addTaRequest(int professor_id, int form_id);
     vector<string> getApplicantsPrint(int id, vector<string> &output);
     void applyAcceptedTa(vector<bool> applicants_acceptance_status, int form_id);
+    
+    
+    int getUserid();
+    string getUserName();
+    string getUserMajor();
+
 
 };

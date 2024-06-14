@@ -33,4 +33,5 @@ public:
     void addCourse(OfferedCourse* course);
     void addTAForm(OfferedCourse* course, string message);
     TAFormPost* findTaForm(int id);
+    string getMajorName();
 };

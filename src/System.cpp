@@ -368,4 +368,25 @@ void System::addTaRequest(int professor_id, int form_id){
     ta_form->addApplicant(student->getId(), student->getName(), student->getSemester());
 }
 
+int System::getUserid(){
+    return current_user->getId();
+}
+
+string System::getUserName(){
+    return current_user->getName();
+}
+
+string System::getUserMajor(){
+    if(isAdmin(current_user) or !isLoggedIn())
+        throw runtime_error(BADREQUEST);
+    if(isStudent(current_user)){
+        Student* st = dynamic_cast<Student*>(current_user);
+        return st->getMajorName();
+    }
+    else{
+        Professor* prof = dynamic_cast<Professor*>(current_user);
+        return prof->getMajorName();
+    }
+}
+
 

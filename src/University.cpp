@@ -18,6 +18,7 @@ void University::mapServerPaths(Server& server) {
     server.get("/admin_home", new ShowPage("static/admin_home.html"));
     server.get("/professor_home", new ShowPage("static/professor_home.html"));
     server.get("/student_home", new ShowPage("static/student_home.html"));
+    server.get("/student_home/user", new studentGetinfoHandler());
     
     
     server.get("/up", new ShowPage("static/upload_form.html"));

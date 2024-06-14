@@ -66,3 +66,7 @@ void Student::viewCourses(vector<string> &output){
     }
 }
 
+string Student::getMajorName(){
+    return major->getName();
+}
+

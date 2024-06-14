@@ -25,5 +25,11 @@ public:
     Response* callback(Request*) override;
 };
 
+class studentGetinfoHandler : public SystemHandler {
+public:
+    Response* callback(Request*) override;
+};
+
+
 
 

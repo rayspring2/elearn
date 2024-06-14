@@ -76,3 +76,7 @@ TAFormPost* Professor::findTaForm(int id){
         throw runtime_error(NOTFOUND);
 }
 
+string Professor::getMajorName(){
+    return major->getName();
+}
+

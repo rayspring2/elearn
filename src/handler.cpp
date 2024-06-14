@@ -47,5 +47,29 @@ Response* addPostHandler::callback(Request* req) {
 	
 }
 
+Response* studentGetinfoHandler::callback(Request* req) {
+	try{
+		ofstream file("output.txt");
+		file << "11111111111" << endl;
+		Response* res = new Response();
+		int id = system.getUserid();
+		file << id<< endl;
+		string name = system.getUserName();
+		file << name << endl;
+		string major = system.getUserMajor();
+		file << major << endl;
+		string body = "{ \"id\": \"" + to_string(id) + "\", \"name\": \"" +name + "\", \"major\": \"" + major + "\" }\n";
+		//             "{ \"code\": \"500\", \"message\": \"" + msg + "\" }\n"
+		res->setBody("{ \"id\": \"500\", \"name\": \" heyname\", \"major\" : \"CE\" }\n");
+		//file << "{ \"code\": \"500\", \"message\": \"" + "msg" + "\" }\n" << endl ;
+		file << body << endl;
+		file <<"2222" << endl;
+	}
+	catch(runtime_error &e){
+		Response* res = new Response(Response::Status::badRequest);
+		res->setBody("Please login first");
+	}	
+}
+
 
 

@@ -21,4 +21,5 @@ public:
     void addCourse(OfferedCourse* offered_course);
     void deleteCourse(int id);
     void viewCourses(vector<string> &output);
+    string getMajorName();
 };
