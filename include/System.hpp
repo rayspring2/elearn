@@ -76,7 +76,7 @@ public:
     bool userIsProfessor();
     bool userIsAdmin();
 
-    void setProfilePhoto(string profile_photo_path);
+    void setUserProfilePhoto(string profile_photo_path);
     void addCoursePost(int offered_course_id, string title, string message, string image_path);
     void viewCourseChannel(int course_id, vector<string> &output);
     void ViewCourseChannelPost(int course_id, int post_id, vector<string> &output);

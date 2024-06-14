@@ -315,7 +315,7 @@ void IO::postProfilePhoto(string &commandline){
     string profile_photo_path = findGetValue(PHOTO_FLAG, commandline);
     if( !isempty(commandline) )
         throw runtime_error(BADREQUEST);
-    utms.setProfilePhoto(profile_photo_path);
+    utms.setUserProfilePhoto(profile_photo_path);
 }
 
 void IO::postCoursePost(string &commandline){

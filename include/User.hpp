@@ -4,12 +4,13 @@
 class User{
 private:
     static const string NEW_POST_STR;
+    static string DEFAULT_PROFILE;
 protected:
     int cnt_posts = 0;
     int id;
     string name;
     string password;
-    string profile_photo_path_url = EMPTYPIC;
+    string profile_photo_path_url = DEFAULT_PROFILE;
     vector<Post*> posts;
     vector<Notification*> notifications;
     vector<User*>  connections;

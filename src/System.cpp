@@ -290,7 +290,7 @@ void System::viewMyCourses(vector<string> &output){
 }
 
 
-void System::setProfilePhoto(string profile_photo_path){
+void System::setUserProfilePhoto(string profile_photo_path){
     current_user->setProfilePhotoUrl(profile_photo_path);
 }
 

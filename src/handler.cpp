@@ -56,7 +56,10 @@ Response* studentGetinfoHandler::callback(Request* req) {
 		string name = system.getUserName();
 		string major = system.getUserMajor();
 		string profilephoto_url = system.getUserProfilePhotoUrl(user_id);
-		string body = "{ \"profilephoto\":\"" + profilephoto_url + "\" , \"id\": \"" + to_string(id) + "\", \"name\": \"" +name + "\", \"major\": \"" + major + "\" }\n";
+		string body = "{  \"id\": \"" + to_string(id) 
+				 + "\", \"name\": \"" + name 
+				 + "\", \"major\": \"" + major + "\" }\n";
+		
 		res->setBody(body);
 	}
 	catch(runtime_error &e){
@@ -68,9 +71,19 @@ Response* studentGetinfoHandler::callback(Request* req) {
 
 
 Response* UploadHandler::callback(Request* req) {
-    std::string name = req->getBodyParam("file_name");
-    std::string file = req->getBodyParam("file");
+    string name = "pic//" + req->getSessionId()+".png";
+    string file = req->getBodyParam("file");
+	system.setUserProfilePhoto(name);
     utils::writeToFile(file, name);
-    Response* res = Response::redirect("/");
+    Response* res = Response::redirect("/personal_page");
     return res;
+}
+
+Response* profileImageHandler::callback(Request* req){
+	int user_id = getWholeNumb(req->getSessionId());
+	string profilephoto_url = system.getUserProfilePhotoUrl(user_id);
+
+    ShowFile file(profilephoto_url, "image/png");
+	return file.callback(req);
+    
 }

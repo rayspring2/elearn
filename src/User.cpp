@@ -1,5 +1,7 @@
 #include "User.hpp"
 const string User::NEW_POST_STR = "New Post";
+string User::DEFAULT_PROFILE = "pic/profile_default.png";
+
 User::User(int id, string name, string password) : id(id), name(name), password(password) {}
 bool User::idIsEqualTo(int id_2){
     return id == id_2;

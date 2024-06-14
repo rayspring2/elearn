@@ -35,6 +35,10 @@ public:
     Response* callback(Request*) override;
 };
 
+class profileImageHandler : public SystemHandler {
+public:
+    Response* callback(Request*) override;
 
+};
 
 
