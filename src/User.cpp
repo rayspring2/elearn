@@ -85,6 +85,10 @@ void User::printAllPosts(vector<string> &output){
     }
 }
 
-void User::setProfilePhoto(string profile_photo){
-    profile_photo_path = profile_photo;
+void User::setProfilePhotoUrl(string profile_photo){
+    profile_photo_path_url = profile_photo;
+}
+
+string User::getProfilePhotoUrl(){
+    return profile_photo_path_url;
 }

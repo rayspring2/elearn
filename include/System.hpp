@@ -90,6 +90,7 @@ public:
     int getUserid();
     string getUserName();
     string getUserMajor();
+    string getUserProfilePhotoUrl(int id );
 
 
 };

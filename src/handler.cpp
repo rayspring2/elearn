@@ -48,27 +48,24 @@ Response* addPostHandler::callback(Request* req) {
 }
 
 Response* studentGetinfoHandler::callback(Request* req) {
+	Response* res;
 	try{
-		ofstream file("output.txt");
-		file << "11111111111" << endl;
-		Response* res = new Response();
+		int user_id = getWholeNumb(req->getSessionId());
+		res = new Response();
 		int id = system.getUserid();
-		file << id<< endl;
 		string name = system.getUserName();
-		file << name << endl;
 		string major = system.getUserMajor();
-		file << major << endl;
-		string body = "{ \"id\": \"" + to_string(id) + "\", \"name\": \"" +name + "\", \"major\": \"" + major + "\" }\n";
-		//             "{ \"code\": \"500\", \"message\": \"" + msg + "\" }\n"
-		res->setBody("{ \"id\": \"500\", \"name\": \" heyname\", \"major\" : \"CE\" }\n");
-		//file << "{ \"code\": \"500\", \"message\": \"" + "msg" + "\" }\n" << endl ;
+		string profilephoto_url = system.getUserProfilePhotoUrl(user_id);
+		string body = "{ \"profilephoto\":\"" + profilephoto_url + "\" , \"id\": \"" + to_string(id) + "\", \"name\": \"" +name + "\", \"major\": \"" + major + "\" }\n";
+		ofstream file("1.txt");
 		file << body << endl;
-		file <<"2222" << endl;
+		res->setBody(body);
 	}
 	catch(runtime_error &e){
-		Response* res = new Response(Response::Status::badRequest);
+		res = new Response(Response::Status::badRequest);
 		res->setBody("Please login first");
 	}	
+	return res;
 }
 
 

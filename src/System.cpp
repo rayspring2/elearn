@@ -291,7 +291,7 @@ void System::viewMyCourses(vector<string> &output){
 
 
 void System::setProfilePhoto(string profile_photo_path){
-    current_user->setProfilePhoto(profile_photo_path);
+    current_user->setProfilePhotoUrl(profile_photo_path);
 }
 
 void System::addCoursePost(int offered_course_id, string title, 
@@ -387,6 +387,10 @@ string System::getUserMajor(){
         Professor* prof = dynamic_cast<Professor*>(current_user);
         return prof->getMajorName();
     }
+}
+
+string System::getUserProfilePhotoUrl(int id ){
+    return current_user->getProfilePhotoUrl();
 }
 
 

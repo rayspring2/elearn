@@ -9,7 +9,7 @@ protected:
     int id;
     string name;
     string password;
-    string profile_photo_path = EMPTYPIC;
+    string profile_photo_path_url = EMPTYPIC;
     vector<Post*> posts;
     vector<Notification*> notifications;
     vector<User*>  connections;
@@ -34,7 +34,7 @@ public:
     void addNotification( Notification* notif);
     void printAllPosts(vector<string> &output);
     
-    void setProfilePhoto(string profile_photo);
-    
+    void setProfilePhotoUrl(string profile_photo);
+    string getProfilePhotoUrl();
 
 };

@@ -24,6 +24,7 @@ this is a student's page -->
 <body>
     <h1>User Information</h1>
     <div id="user-info">
+        <img id="profilephoto" src="/profile_default.png" alt="profile photo"><br>
         <p>Name: <span id="name"></span></p>
         <p>ID: <span id="id"></span></p>
         <p>Major: <span id="major"></span></p>
@@ -33,11 +34,13 @@ this is a student's page -->
         // Function to fetch user data
         async function fetchUserData() {
             try {
-                const response = await fetch('student_home/user');
+                const response = await fetch('/student_home/user');
                 if (!response.ok) {
                     throw new Error('Not authenticated');
                 }
                 const userData = await response.json();
+                if(userData.profilephoto)
+                    document.getElementById('profilephoto').src = userData.profilephoto;
                 document.getElementById('name').innerText = userData.name;
                 document.getElementById('id').innerText = userData.id;
                 document.getElementById('major').innerText = userData.major;
