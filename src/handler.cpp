@@ -57,8 +57,6 @@ Response* studentGetinfoHandler::callback(Request* req) {
 		string major = system.getUserMajor();
 		string profilephoto_url = system.getUserProfilePhotoUrl(user_id);
 		string body = "{ \"profilephoto\":\"" + profilephoto_url + "\" , \"id\": \"" + to_string(id) + "\", \"name\": \"" +name + "\", \"major\": \"" + major + "\" }\n";
-		ofstream file("1.txt");
-		file << body << endl;
 		res->setBody(body);
 	}
 	catch(runtime_error &e){
@@ -69,4 +67,10 @@ Response* studentGetinfoHandler::callback(Request* req) {
 }
 
 
-
+Response* UploadHandler::callback(Request* req) {
+    std::string name = req->getBodyParam("file_name");
+    std::string file = req->getBodyParam("file");
+    utils::writeToFile(file, name);
+    Response* res = Response::redirect("/");
+    return res;
+}

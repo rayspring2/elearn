@@ -30,6 +30,11 @@ public:
     Response* callback(Request*) override;
 };
 
+class UploadHandler : public SystemHandler {
+public:
+    Response* callback(Request*) override;
+};
+
 
 
 

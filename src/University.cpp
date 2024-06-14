@@ -23,7 +23,7 @@ void University::mapServerPaths(Server& server) {
     server.get("/profile_default.png", new ShowImage("pic/profile_default.png"));
     
     server.get("/up", new ShowPage("static/upload_form.html"));
-    // server.post("/up", new UploadHandler());
+    server.post("/up", new UploadHandler());
     // server.get("/colors", new ColorHandler("template/colors.html"));
     server.get("/music", new ShowPage("static/music.html"));
     server.get("/music/moonlight.mp3", new ShowFile("static/moonlight.mp3", "audio/mpeg"));

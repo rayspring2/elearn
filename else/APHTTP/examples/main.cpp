@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-#include "server.hpp"
+#include "../server/server.hpp"
 #include "handlers.hpp"
 
 void mapServerPaths(Server& server) {
