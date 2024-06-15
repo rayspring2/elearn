@@ -57,7 +57,11 @@ Course* OfferedCourse::getCourse(){
 }
 
 string OfferedCourse::getShortPrint(){
-    string outstr = to_string(id) + SPACE + course->getName() + SPACE + to_string(capacity) + SPACE + professor_name + NEXTLINE;
+    string outstr = "<div class='course'>" 
+                    "<h2>" + course->getName() + "</h2>"
+                    "<p><strong>capacity : </strong>" + to_string(capacity) + "</p>"
+                    "<p><strong> id : </strong>" +  professor_name + "</p>"
+                    "</div>";
     return outstr;
 }
 string OfferedCourse::getDetailedPrint(){

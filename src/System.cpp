@@ -124,12 +124,15 @@ void System::login(int id, string password){
     current_user = user;
 }
 
-void System::printCourseList(vector<string> &output){
+string System::printCourseList(){
+    string out = EMPTYLIST;
     if(offered_courses.empty())
-        throw runtime_error(EMPTYLIST);
+        return out;
+    out = "";
     for( OfferedCourse * c : offered_courses ){
-        output.push_back(c->getShortPrint());
+        out += c->getShortPrint();
     }
+    return out;
 }
 bool System::userIsStudent(){
     if(dynamic_cast<Student*>(current_user))
@@ -393,4 +396,19 @@ string System::getUserProfilePhotoUrl(int id ){
     return current_user->getProfilePhotoUrl();
 }
 
+vector<Post*> System::getUserPosts(){
+    return current_user->getPosts();
+}
+
+int System::getUserNextPostId(){
+    return current_user->nextPostId();
+}
+
+Post* System::findUserPost(int id){
+    vector<Post*> posts = getUserPosts();
+    auto it = find_if(posts.begin(), posts.end(),[id](Post* &p){
+        return p->getId() == id;
+    });
+    return *it;
+}
 

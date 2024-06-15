@@ -21,7 +21,13 @@ void University::mapServerPaths(Server& server) {
     server.get("/student_home/user", new studentGetinfoHandler());
     server.get("/profile_photo", new profileImageHandler());
 
-    server.get("/profile_default.png", new ShowImage("pic/profile_default.png"));
+    server.get("/posts", new showPostsHandler());
+    server.get("/addpost", new ShowPage("static/addpost.html"));
+    server.post("/post_upload", new postUploadHandler());
+    server.get("/post", new showPostbyIdHandler());
+    server.get("/student_home/show_offered_course", new ShowPage("static/offered_courses.html"));
+    server.get("/student_home/show_offered_course/courses", new showOfferedCoursesHandler());
+    
     
     server.get("/up", new ShowPage("static/upload_form.html"));
     server.post("/up", new UploadHandler());

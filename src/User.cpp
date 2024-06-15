@@ -94,3 +94,11 @@ void User::setProfilePhotoUrl(string profile_photo){
 string User::getProfilePhotoUrl(){
     return profile_photo_path_url;
 }
+
+vector<Post*> User::getPosts(){
+    return posts;
+}
+
+int User::nextPostId(){
+    return cnt_posts + 1;
+}

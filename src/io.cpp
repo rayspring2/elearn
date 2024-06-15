@@ -182,7 +182,7 @@ void IO::getCourse(string &commandline){
             throw runtime_error(PERMISSIONDENIED);
 
     if(isempty(commandline))   
-        utms.printCourseList(output);
+        utms.printCourseList();
     else{
         int id = getNatrualNumb(findGetValue(ID_FLAG, commandline));
         if(!isempty(commandline))

@@ -41,4 +41,26 @@ public:
 
 };
 
+class showPostsHandler : public SystemHandler {
+public:
+    Response* callback(Request*) override;
 
+};
+
+class postUploadHandler : public SystemHandler {
+public:
+    Response* callback(Request*) override;
+
+};
+
+class showPostbyIdHandler : public SystemHandler {
+public:
+    Response* callback(Request*) override;
+
+};
+
+class showOfferedCoursesHandler : public SystemHandler {
+public:
+    Response* callback(Request*) override;
+
+};

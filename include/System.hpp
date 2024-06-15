@@ -60,7 +60,7 @@ public:
     bool isLoggedIn();
     void login(int id, string password);
     void logout();
-    void printCourseList(vector<string> &output);
+    string printCourseList();
     void printCourse(int id, vector<string> &output); 
 
     void deletePost(int id);
@@ -91,6 +91,7 @@ public:
     string getUserName();
     string getUserMajor();
     string getUserProfilePhotoUrl(int id );
-
-
+    vector<Post*> getUserPosts();
+    int getUserNextPostId();
+    Post* findUserPost(int id);
 };

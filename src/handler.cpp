@@ -44,7 +44,14 @@ Response* showPersonalPageHandler::callback(Request* req){
 }
 
 Response* addPostHandler::callback(Request* req) {
-	
+	Response* res;
+	try{
+		// int 
+	}
+	catch(runtime_error &e){
+		
+	}
+
 }
 
 Response* studentGetinfoHandler::callback(Request* req) {
@@ -71,7 +78,7 @@ Response* studentGetinfoHandler::callback(Request* req) {
 
 
 Response* UploadHandler::callback(Request* req) {
-    string name = "pic//" + req->getSessionId()+".png";
+    string name = "pic/" + req->getSessionId()+".png";
     string file = req->getBodyParam("file");
 	system.setUserProfilePhoto(name);
     utils::writeToFile(file, name);
@@ -87,3 +94,49 @@ Response* profileImageHandler::callback(Request* req){
 	return file.callback(req);
     
 }
+
+Response* showPostsHandler::callback(Request* req){
+	vector<Post*> posts = system.getUserPosts();
+	string body = "";
+	for(auto p : posts){
+		body +=  "<div class='post'>";
+        body += "<div class='post-title'>"+ p->getTitle() +"</div>";
+		body += "<div class='post-message'>" + p->getMessage() + "</div>";
+		if(p->hasImage()){
+            body += "<img src=\"/post?post-id="
+			+ to_string(p->getId()) + "\" alt='Post Image'>";
+		}
+		body += "</div>";
+	}
+	Response* res = new Response();
+
+	res->setBody(body);
+	return res;
+}
+
+Response* postUploadHandler::callback(Request* req){
+	string name = "pic/" + req->getSessionId()+ "_post_" + to_string(system.getUserNextPostId()) +".png";
+    string file = req->getBodyParam("file");
+	string title = req->getBodyParam("title");
+	string message = req->getBodyParam("message");
+	system.addPost(title, message, name);
+    utils::writeToFile(file, name);
+    Response* res = Response::redirect("/personal_page");
+    return res;
+}
+
+Response* showPostbyIdHandler::callback(Request* req){	
+	int post_id = getNatrualNumb(req->getQueryParam("post-id"));
+	Post* post = system.findUserPost(post_id);
+	ShowFile file(post->getPicPath(), "image/png");
+	return file.callback(req);
+}
+
+Response* showOfferedCoursesHandler::callback(Request* req){	
+	Response* res = new Response();
+	res->setBody(system.printCourseList());
+	return res;
+}
+
+
+

@@ -13,4 +13,6 @@ public:
 	int getId();
 	string getTitle();
 	string getMessage();
+	string getPicPath();
+	bool hasImage();
 };

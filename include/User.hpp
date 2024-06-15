@@ -37,5 +37,6 @@ public:
     
     void setProfilePhotoUrl(string profile_photo);
     string getProfilePhotoUrl();
-
+    vector<Post*> getPosts();
+    int nextPostId();
 };

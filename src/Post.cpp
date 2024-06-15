@@ -19,3 +19,11 @@ string Post::getTitle(){
 string Post::getMessage(){
 	return message;
 }
+
+string Post::getPicPath(){
+	return picpath;
+}
+
+bool Post::hasImage(){
+	return  picpath != EMPTYPIC;
+}
