@@ -28,7 +28,10 @@ void University::mapServerPaths(Server& server) {
     server.get("/student_home/show_offered_course", new ShowPage("static/offered_courses.html"));
     server.get("/student_home/show_offered_course/courses", new showOfferedCoursesHandler());
     
-    
+    server.get("/addcourse", new ShowPage("static/addcourse.html"));
+    server.post("/addcourse", new addCourseHandler());
+
+
     server.get("/up", new ShowPage("static/upload_form.html"));
     server.post("/up", new UploadHandler());
     // server.get("/colors", new ColorHandler("template/colors.html"));

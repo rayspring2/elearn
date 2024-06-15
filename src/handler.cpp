@@ -14,7 +14,7 @@ Response* LoginHandler::callback(Request* req) {
 		std::string password = req->getBodyParam("password");
 		system.login(id, password);
 		res = new Response();
-		res->setBody("Successful");
+		res->setBody(OK);
 		res->setSessionId(to_string(id));
 	}
 	catch(runtime_error &e){
@@ -137,6 +137,28 @@ Response* showOfferedCoursesHandler::callback(Request* req){
 	res->setBody(system.printCourseList());
 	return res;
 }
+
+
+Response* addCourseHandler::callback(Request* req){	
+	Response* res;
+	try{
+		res = new Response();
+		int course_id = getNatrualNumb(req->getBodyParam("course_id"));
+		int professor_id = getNatrualNumb(req->getBodyParam("professor_id"));
+		int capacity = getNatrualNumb(req->getBodyParam("capacity"));
+		Time time(req->getBodyParam("time"));
+		string exame_date = req->getBodyParam("exame_date");
+		int class_numb = getNatrualNumb(req->getBodyParam("class_number"));
+		res->setBody(OK);
+		system.courseOffer(course_id, professor_id, capacity , time, exame_date, class_numb );
+	}
+	catch(runtime_error &e){
+		res = new Response(Response::Status::badRequest);
+		res->setBody(BADREQUEST);
+	}
+	return res;
+}
+
 
 
 

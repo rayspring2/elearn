@@ -64,3 +64,9 @@ public:
     Response* callback(Request*) override;
 
 };
+
+class addCourseHandler : public SystemHandler {
+public:
+    Response* callback(Request*) override;
+
+};
