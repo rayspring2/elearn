@@ -25,8 +25,8 @@ void University::mapServerPaths(Server& server) {
     server.get("/addpost", new ShowPage("static/addpost.html"));
     server.post("/post_upload", new postUploadHandler());
     server.get("/post", new showPostbyIdHandler());
-    server.get("/student_home/show_offered_course", new ShowPage("static/offered_courses.html"));
-    server.get("/student_home/show_offered_course/courses", new showOfferedCoursesHandler());
+    server.get("/show_offered_course", new ShowPage("static/offered_courses.html"));
+    server.get("/show_offered_course/courses", new showOfferedCoursesHandler());
     
     server.get("/student_home/show_mycourses", new ShowPage("static/student_courses.html"));
     server.get("/student_home/show_mycourses/courses", new showStudentCourseHandler());
@@ -51,6 +51,8 @@ void University::mapServerPaths(Server& server) {
     server.post("/up", new UploadHandler());
     
     server.post("/logout" , new logoutHandler());
+
+
 }
 
 void University::run(){

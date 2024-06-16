@@ -1,32 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login Form</title>
+    <link rel="stylesheet" href="css/logincss.css">
     <style>
-        .error {
+        /* styles.css */
+
+        /* General Styles */
+        body {
+            background: linear-gradient(to bottom, rgba(0, 23, 34, 0.9), rgba(0, 23, 34, 0.9));
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            font-size: 3em;
+            margin: 0.5em 0;
+            color: #00ccff;
+        }
+
+        .login-container {
+            background-color: lightblue;
+            padding: 1%;
+            max-width: 300px;
+            border-radius: 3px;
+            margin: auto;
+            margin-top: 2em;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-container h2 {
+            margin-bottom: 15px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+        }
+
+        input[type="submit"] {
+            background-color: #00ccff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0099cc;
+        }
+
+        #result {
+            margin-top: 1em;
             color: red;
         }
     </style>
 </head>
+
 <body style="text-align: center;">
     <h1>AP HTTP</h1>
     <section style="background-color: lightblue; padding: 1%; max-width: 300px; border-radius: 3px; margin: auto; ">
-      <h2>Login</h2>
-      <form action="/login" method="post" id="myForm">
-        <input name="username" type="text" placeholder="Username" style="display: block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
-        <input name="password" type="password" placeholder="Password" style="display: block; margin: auto; margin-bottom: 30px; padding: 5px; width: 94%;">
-        <input type="submit" style="display: block; width: 100%; padding: 7px;" value="Login">
-      </form>
+        <h2>Login</h2>
+        <form action="/login" method="post" id="myForm">
+            <input name="username" type="text" placeholder="Username"
+                style="display: block; margin: auto; margin-bottom: 10px; padding: 5px; width: 94%;">
+            <input name="password" type="password" placeholder="Password"
+                style="display: block; margin: auto; margin-bottom: 30px; padding: 5px; width: 94%;">
+            <input type="submit" style="display: block; width: 100%; padding: 7px;" value="Login">
+        </form>
     </section>
     <div id="result"></div>
     <script>
-            document.getElementById('myForm').addEventListener('submit', async function(event) {
-                event.preventDefault();
+        document.getElementById('myForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
             var url = "/login";
             var data = new FormData(this);
-    
+
             const response = await fetch(url, {
                 method: 'POST',
                 body: data
@@ -37,15 +103,14 @@
             if (status === 400) {
                 document.getElementById('result').innerHTML = text;
             }
-            if(status === 200 ){
+            if (status === 200) {
                 document.getElementById('result').innerHTML = text;
                 window.location.href = "/personal_page";
             }
         });
-        </script>
-  </body>
+    </script>
+</body>
 
 
 
 </html>
-

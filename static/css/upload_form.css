@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Upload Form</title>
-  <link="stylesheet" href="css/upload_form.css">
-  <style>
-    /* styles.css */
+/* styles.css */
 
 /* Reset some default styles */
 * {
@@ -63,19 +54,3 @@ input[type="submit"]:hover {
     background-color: #0056b3;
 }
 
-
-  </style>
-</head>
-
-<body style="text-align: center;">
-  <h1>AP HTTP</h1>
-  <section>
-    <h2>Upload</h2>
-    <form action="/up" method="post" enctype="multipart/form-data">
-      <input type="file" name="file">
-      <input type="submit" value="Upload">
-    </form>
-  </section>
-</body>
-
-</html>

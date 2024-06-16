@@ -1,0 +1,76 @@
+/* styles.css */
+
+/* General Styles */
+body {
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 51, 102, 0.9));
+    color: #ffffff;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styles */
+h1 {
+    font-size: 3em;
+    margin: 0.5em 0;
+    color: #00ccff;
+}
+
+/* Section Styles */
+section {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    margin: 2em auto;
+    padding: 2em;
+    width: 80%;
+    max-width: 600px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+input[type="text"] {
+    border: none;
+    border-radius: 5px;
+    padding: 0.5em;
+    margin: 1em 0;
+    width: 80%;
+    max-width: 300px;
+    font-size: 1em;
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+}
+
+input[type="submit"] {
+    background: #00ccff;
+    border: none;
+    border-radius: 5px;
+    color: #000000;
+    padding: 0.5em 2em;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+input[type="submit"]:hover {
+    background: #0099cc;
+}
+
+/* Result Styles */
+#result {
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    margin: 2em auto;
+    padding: 2em;
+    width: 80%;
+    max-width: 600px;
+    color: #ff4500;
+    font-size: 1.2em;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}

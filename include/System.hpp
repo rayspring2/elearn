@@ -100,5 +100,5 @@ public:
     string getUserProfilePhotoUrl(int user_id );
     vector<Post*> getUserPosts(int user_id);
     int getUserNextPostId();
-    Post* findUserPost(int id);
+    Post* findUserPost(int user_id, int post_id);
 };

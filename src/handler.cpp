@@ -49,8 +49,10 @@ Response* showPersonalPageHandler::callback(Request* req){
 Response* studentGetinfoHandler::callback(Request* req) {
 	Response* res;
 	try{
-		if(!system.isLoggedIn())
-			throw runtime_error(PERMISSIONDENIED);
+		if(!system.isLoggedIn()){
+			res = Response::redirect("/login");
+			return res;
+		}
 		int user_id = getWholeNumb(req->getSessionId());
 		res = new Response();
 		int id = system.getUserid(user_id);
@@ -64,13 +66,17 @@ Response* studentGetinfoHandler::callback(Request* req) {
 	}
 	catch(runtime_error &e){
 		res = new Response(Response::Status::unauthorized);
-		res->setBody("Please login first");
+		res->setBody(e.what());
 	}	
 	return res;
 }
 
 
 Response* UploadHandler::callback(Request* req) {
+	if(!system.isLoggedIn()){
+			Response* res = Response::redirect("/login");
+			return res;
+	}
     string name = "pic/" + req->getSessionId()+".png";
     string file = req->getBodyParam("file");
 	system.setUserProfilePhoto(name);
@@ -80,6 +86,10 @@ Response* UploadHandler::callback(Request* req) {
 }
 
 Response* profileImageHandler::callback(Request* req){
+	if(!system.isLoggedIn()){
+			Response* res = Response::redirect("/login");
+			return res;
+	}
 	int user_id = getWholeNumb(req->getSessionId());
 	string profilephoto_url = system.getUserProfilePhotoUrl(user_id);
 
@@ -89,6 +99,11 @@ Response* profileImageHandler::callback(Request* req){
 }
 
 Response* showPostsHandler::callback(Request* req){
+	if(!system.isLoggedIn()){
+		Response* res = Response::redirect("/login");
+		return res;
+	}
+	
 	int user_id;
 	if(req->getQueryParam("user_id").empty())
 		user_id = getWholeNumb(req->getSessionId());
@@ -102,8 +117,8 @@ Response* showPostsHandler::callback(Request* req){
         body += "<div class='post-title'>"+ p->getTitle() +"</div>";
 		body += "<div class='post-message'>" + p->getMessage() + "</div>";
 		if(p->hasImage()){
-            body += "<img src=\"/post?post-id="
-			+ to_string(p->getId()) + "\" alt='Post Image'>";
+            body += "<img src=\"/post?post_id="
+			+ to_string(p->getId()) + "&user_id="+ to_string(user_id) + "\" alt='Post Image'>";
 		}
 		body += "</div>";
 	}
@@ -114,6 +129,11 @@ Response* showPostsHandler::callback(Request* req){
 }
 
 Response* postUploadHandler::callback(Request* req){
+	if(!system.isLoggedIn()){
+			Response* res = Response::redirect("/login");
+			return res;
+	}
+
 	string name = "pic/" + req->getSessionId()+ "_post_" + to_string(system.getUserNextPostId()) +".png";
     string file = req->getBodyParam("file");
 	string title = req->getBodyParam("title");
@@ -125,8 +145,13 @@ Response* postUploadHandler::callback(Request* req){
 }
 
 Response* showPostbyIdHandler::callback(Request* req){	
-	int post_id = getNatrualNumb(req->getQueryParam("post-id"));
-	Post* post = system.findUserPost(post_id);
+	if(!system.isLoggedIn()){
+			Response* res = Response::redirect("/login");
+			return res;
+	}
+	int user_id =  getWholeNumb(req->getQueryParam("user_id"));
+	int post_id = getNatrualNumb(req->getQueryParam("post_id"));
+	Post* post = system.findUserPost(user_id, post_id);
 	ShowFile file(post->getPicPath(), "image/png");
 	return file.callback(req);
 }
@@ -139,6 +164,10 @@ Response* showOfferedCoursesHandler::callback(Request* req){
 
 
 Response* addCourseHandler::callback(Request* req){	
+	if(!system.userIsAdmin()){
+			Response* res = Response::redirect("/login");
+			return res;
+	}
 	Response* res;
 	try{
 		res = new Response();
@@ -153,15 +182,13 @@ Response* addCourseHandler::callback(Request* req){
 	}
 	catch(runtime_error &e){
 		res = new Response(Response::Status::badRequest);
-		res->setBody(BADREQUEST);
+		res->setBody(e.what());
 	}
 	return res;
 }
 
 Response* logoutHandler::callback(Request* req){	
 	Response* res = new Response();
-	if(!system.isLoggedIn())
-		throw runtime_error(BADREQUEST);
 	system.logout();
 	res->setSessionId("");
 	res = Response::redirect("/login");
@@ -171,7 +198,8 @@ Response* logoutHandler::callback(Request* req){
 Response* showStudentCourseHandler::callback(Request* req){	
 	try{
 		if(!system.userIsStudent()){
-			throw runtime_error(PERMISSIONDENIED);
+			Response* res = Response::redirect("/login");
+			return res;
 		}
 		Response* res = new Response();
 		res->setBody(system.viewMyCourses());
@@ -184,6 +212,10 @@ Response* showStudentCourseHandler::callback(Request* req){
 }
 
 Response* deleteCourseHandler::callback(Request* req){
+	if(!system.isLoggedIn()){
+		Response* res = Response::redirect("/login");
+		return res;
+	}
 	Response* res; 	
 	try{
 		res = new Response();
@@ -197,6 +229,10 @@ Response* deleteCourseHandler::callback(Request* req){
 }
 
 Response* addStudentCourseHandler::callback(Request* req){
+	if(!system.isLoggedIn()){
+		Response* res = Response::redirect("/login");
+		return res;
+	}
 	Response* res; 	
 	try{
 		res = new Response();
@@ -211,6 +247,10 @@ Response* addStudentCourseHandler::callback(Request* req){
 }
 
 Response* findUserHandler::callback(Request* req){
+	if(!system.isLoggedIn()){
+		Response* res = Response::redirect("/login");
+		return res;
+	}
 	Response* res;
 	try{
 		res = new Response();
@@ -290,7 +330,6 @@ Response* getAdminPageInfoHandler::callback(Request* req){
 		string body = "{  \"id\": \"" + to_string(id) 
 				 + "\", \"name\": \"" + name  + "\" }\n";
 		res->setBody(body);
-		cerr <<"2222\n\n\n\n\n" <<endl;
 	}
 	catch(runtime_error &e){
 		res = new Response(Response::Status::badRequest);

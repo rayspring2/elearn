@@ -444,10 +444,10 @@ int System::getUserNextPostId(){
     return current_user->nextPostId();
 }
 
-Post* System::findUserPost(int id){
-    vector<Post*> posts = getUserPosts(current_user->getId());
-    auto it = find_if(posts.begin(), posts.end(),[id](Post* &p){
-        return p->getId() == id;
+Post* System::findUserPost(int user_id, int post_id){
+    vector<Post*> posts = getUserPosts(user_id);
+    auto it = find_if(posts.begin(), posts.end(),[post_id](Post* &p){
+        return p->getId() == post_id;
     });
     return *it;
 }
