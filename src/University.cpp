@@ -38,6 +38,14 @@ void University::mapServerPaths(Server& server) {
     server.post("/addcourse", new addCourseHandler());
 
     server.post("/find_user", new findUserHandler());
+    server.get("/student_view_page", new ShowPage("static/student_view_page.html"));
+    server.get("/student_view_page/user_info", new getStudentPageInfoHandler());
+
+    server.get("/professor_view_page", new ShowPage("static/professor_view_page.html"));
+    server.get("/professor_view_page/user_info", new getProfessorPageInfoHandler());
+
+    server.get("/admin_view_page", new ShowPage("static/admin_view_page.html"));
+    server.get("/admin_view_page/user_info", new getAdminPageInfoHandler());
 
     server.get("/up", new ShowPage("static/upload_form.html"));
     server.post("/up", new UploadHandler());

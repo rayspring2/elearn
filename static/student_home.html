@@ -71,16 +71,13 @@ this is a student's page -->
         
         async function fetchUserPosts() {
             // try {
-                console.log("11111111");
                 const response = await fetch('/posts');
                 if (!response.ok) {
-                    console.log("here");
                     //throw new Error('Not authenticated');
                 }
                 const posts = await response.text();
                 if(posts){
                     document.getElementById('posts-container').innerHTML = posts;
-                    console.log("222");
                 }
                 
             // } 

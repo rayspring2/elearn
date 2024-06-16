@@ -95,3 +95,21 @@ public:
     Response* callback(Request*) override;
 
 };
+
+class getStudentPageInfoHandler : public SystemHandler{
+public:
+    Response* callback(Request*) override;
+
+};
+
+class getProfessorPageInfoHandler : public SystemHandler{
+public:
+    Response* callback(Request*) override;
+
+};
+
+class getAdminPageInfoHandler : public SystemHandler{
+public:
+    Response* callback(Request*) override;
+
+};

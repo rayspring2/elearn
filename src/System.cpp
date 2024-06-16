@@ -151,6 +151,26 @@ bool System::userIsAdmin(){
     return 0;
 }
 
+bool System::userIsStudent(int user_id){
+    User* user = findUser(user_id);
+    if(dynamic_cast<Student*>(user))
+        return 1;
+    return 0;
+
+}
+bool System::userIsProfessor(int user_id){
+    User* user = findUser(user_id);
+    if(dynamic_cast<Professor*>(user))
+        return 1;
+    return 0;
+}
+bool System::userIsAdmin(int user_id){
+    User* user = findUser(user_id);
+    if(dynamic_cast<Admin*>(user))
+        return 1;
+    return 0;
+}
+
 
 bool System::isStudent(User* user){
     if(dynamic_cast<Student*>(user))
@@ -396,13 +416,28 @@ string System::getUserMajor(int user_id){
     }
 }
 
+int System::getStudentSemester(int user_id){
+    User* user = findUser(user_id);
+    if(Student* student = dynamic_cast<Student*>(user))
+        return student->getSemester();
+    throw runtime_error(PERMISSIONDENIED);
+}
+
+string System::getProfessorPos(int user_id){
+    User* user = findUser(user_id);
+    if(Professor* student = dynamic_cast<Professor*>(user))
+        return student->getPositionAsString();
+    throw runtime_error(PERMISSIONDENIED);
+}
+
 string System::getUserProfilePhotoUrl(int user_id ){
     User* user = findUser(user_id);
     return user->getProfilePhotoUrl();
 }
 
-vector<Post*> System::getUserPosts(){
-    return current_user->getPosts();
+vector<Post*> System::getUserPosts(int user_id){
+    User* user = findUser(user_id);
+    return user->getPosts();
 }
 
 int System::getUserNextPostId(){
@@ -410,7 +445,7 @@ int System::getUserNextPostId(){
 }
 
 Post* System::findUserPost(int id){
-    vector<Post*> posts = getUserPosts();
+    vector<Post*> posts = getUserPosts(current_user->getId());
     auto it = find_if(posts.begin(), posts.end(),[id](Post* &p){
         return p->getId() == id;
     });

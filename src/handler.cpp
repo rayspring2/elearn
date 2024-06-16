@@ -89,7 +89,13 @@ Response* profileImageHandler::callback(Request* req){
 }
 
 Response* showPostsHandler::callback(Request* req){
-	vector<Post*> posts = system.getUserPosts();
+	int user_id;
+	if(req->getQueryParam("user_id").empty())
+		user_id = getWholeNumb(req->getSessionId());
+	else
+		user_id = getWholeNumb(req->getQueryParam("user_id"));
+	
+	vector<Post*> posts = system.getUserPosts(user_id);
 	string body = "";
 	for(auto p : posts){
 		body +=  "<div class='post'>";
@@ -205,20 +211,92 @@ Response* addStudentCourseHandler::callback(Request* req){
 }
 
 Response* findUserHandler::callback(Request* req){
-	Response* res; 	
+	Response* res;
 	try{
 		res = new Response();
-		int course_id = getNatrualNumb(req->getBodyParam("course_id"));
-		system.addStudentCourse(course_id);
+		int userid = getWholeNumb(req->getBodyParam("userId"));
+		if(system.userIsAdmin(userid))
+			res = Response::redirect("/admin_view_page?userid=" + to_string(userid));
+		if(system.userIsProfessor(userid))
+			res = Response::redirect("/professor_view_page?userid=" + to_string(userid));
+		if(system.userIsStudent(userid))
+			res = Response::redirect("/student_view_page?userid=" + to_string(userid));
 	}
 	catch(runtime_error &e){
 		res = new Response(Response::Status::badRequest);
-		res->setBody("Please login first");
+		res->setBody(e.what());
 	}
 	return res;
 }
 
 
+Response* getStudentPageInfoHandler::callback(Request* req){
+	Response* res;
+	try{
+		res = new Response();
+		int user_id = getNatrualNumb(req->getQueryParam("user_id"));
+		
+		int id = user_id;
+		string name = system.getUserName(user_id);
+		string major = system.getUserMajor(user_id);
+		int semester = system.getStudentSemester(user_id);
+		string body = "{  \"id\": \"" + to_string(id) 
+				 + "\", \"name\": \"" + name 
+				 + "\", \"semester\": \"" + to_string(semester)
+				 + "\", \"major\": \"" + major + "\" }\n";
+		
+		res->setBody(body);
+	}
+	catch(runtime_error &e){
+		res = new Response(Response::Status::badRequest);
+		res->setBody(e.what());
+	}
+	return res;
+}
 
+
+Response* getProfessorPageInfoHandler::callback(Request* req){
+	Response* res;
+	try{
+		res = new Response();
+		int user_id = getNatrualNumb(req->getQueryParam("user_id"));
+		
+		int id = user_id;
+		string name = system.getUserName(user_id);
+		string major = system.getUserMajor(user_id);
+		string posisition = system.getProfessorPos(user_id);
+		string body = "{  \"id\": \"" + to_string(id) 
+				 + "\", \"name\": \"" + name 
+				 + "\", \"position\": \"" + posisition
+				 + "\", \"major\": \"" + major + "\" }\n";
+		
+		res->setBody(body);
+	}
+	catch(runtime_error &e){
+		res = new Response(Response::Status::badRequest);
+		res->setBody(e.what());
+	}
+	return res;
+}
+
+Response* getAdminPageInfoHandler::callback(Request* req){
+	Response* res;
+	try{
+		res = new Response();
+		int user_id = getWholeNumb(req->getQueryParam("user_id"));
+		
+		int id = user_id;
+		string name = system.getUserName(user_id);
+		string body = "{  \"id\": \"" + to_string(id) 
+				 + "\", \"name\": \"" + name  + "\" }\n";
+		res->setBody(body);
+		cerr <<"2222\n\n\n\n\n" <<endl;
+	}
+	catch(runtime_error &e){
+		res = new Response(Response::Status::badRequest);
+		res->setBody(e.what());
+	}
+	return res;
+}
 
 

@@ -76,6 +76,10 @@ public:
     bool userIsProfessor();
     bool userIsAdmin();
 
+    bool userIsStudent(int user_id);
+    bool userIsProfessor(int user_id);
+    bool userIsAdmin(int user_id);
+
     void setUserProfilePhoto(string profile_photo_path);
     void addCoursePost(int offered_course_id, string title, string message, string image_path);
     void viewCourseChannel(int course_id, vector<string> &output);
@@ -90,8 +94,11 @@ public:
     int getUserid(int user_id);
     string getUserName(int user_id);
     string getUserMajor(int user_id);
+    int getStudentSemester(int user_id);
+    string getProfessorPos(int user_id);
+
     string getUserProfilePhotoUrl(int user_id );
-    vector<Post*> getUserPosts();
+    vector<Post*> getUserPosts(int user_id);
     int getUserNextPostId();
     Post* findUserPost(int id);
 };
