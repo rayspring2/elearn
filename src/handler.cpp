@@ -27,6 +27,8 @@ Response* LoginHandler::callback(Request* req) {
 Response* showPersonalPageHandler::callback(Request* req){
 	Response* res;
 	try{
+		if(!system.isLoggedIn())
+			throw runtime_error(PERMISSIONDENIED);
 		if(system.userIsAdmin()){
 			res = Response::redirect("/admin_home");
 		}
@@ -38,31 +40,22 @@ Response* showPersonalPageHandler::callback(Request* req){
 		}
 	}
 	catch(runtime_error &e){
-		
+		res= Response::redirect("/login");
 	}
 	return res;
 }
 
-Response* addPostHandler::callback(Request* req) {
-	Response* res;
-	try{
-		// int 
-	}
-	catch(runtime_error &e){
-		
-	}
-
-}
 
 Response* studentGetinfoHandler::callback(Request* req) {
 	Response* res;
 	try{
+		if(!system.isLoggedIn())
+			throw runtime_error(PERMISSIONDENIED);
 		int user_id = getWholeNumb(req->getSessionId());
 		res = new Response();
-		int id = system.getUserid();
-		string name = system.getUserName();
-		string major = system.getUserMajor();
-		string profilephoto_url = system.getUserProfilePhotoUrl(user_id);
+		int id = system.getUserid(user_id);
+		string name = system.getUserName(user_id);
+		string major = system.getUserMajor(user_id);
 		string body = "{  \"id\": \"" + to_string(id) 
 				 + "\", \"name\": \"" + name 
 				 + "\", \"major\": \"" + major + "\" }\n";
@@ -70,7 +63,7 @@ Response* studentGetinfoHandler::callback(Request* req) {
 		res->setBody(body);
 	}
 	catch(runtime_error &e){
-		res = new Response(Response::Status::badRequest);
+		res = new Response(Response::Status::unauthorized);
 		res->setBody("Please login first");
 	}	
 	return res;
@@ -158,6 +151,73 @@ Response* addCourseHandler::callback(Request* req){
 	}
 	return res;
 }
+
+Response* logoutHandler::callback(Request* req){	
+	Response* res = new Response();
+	if(!system.isLoggedIn())
+		throw runtime_error(BADREQUEST);
+	system.logout();
+	res->setSessionId("");
+	res = Response::redirect("/login");
+	return res;
+}
+
+Response* showStudentCourseHandler::callback(Request* req){	
+	try{
+		if(!system.userIsStudent()){
+			throw runtime_error(PERMISSIONDENIED);
+		}
+		Response* res = new Response();
+		res->setBody(system.viewMyCourses());
+		return res;
+	}
+	catch(runtime_error &e){
+		Response* res = Response::redirect("/personal_page");
+		return res;
+	}
+}
+
+Response* deleteCourseHandler::callback(Request* req){
+	Response* res; 	
+	try{
+		res = new Response();
+		int course_id = getNatrualNumb(req->getBodyParam("course_id"));
+		system.deleteCourse(course_id);
+	}
+	catch(runtime_error &e){
+		res = new Response(Response::Status::badRequest);
+	}
+	return res;
+}
+
+Response* addStudentCourseHandler::callback(Request* req){
+	Response* res; 	
+	try{
+		res = new Response();
+		int course_id = getNatrualNumb(req->getBodyParam("course_id"));
+		system.addStudentCourse(course_id);
+	}
+	catch(runtime_error &e){
+		res = new Response(Response::Status::badRequest);
+		res->setBody(e.what());
+	}
+	return res;
+}
+
+Response* findUserHandler::callback(Request* req){
+	Response* res; 	
+	try{
+		res = new Response();
+		int course_id = getNatrualNumb(req->getBodyParam("course_id"));
+		system.addStudentCourse(course_id);
+	}
+	catch(runtime_error &e){
+		res = new Response(Response::Status::badRequest);
+		res->setBody("Please login first");
+	}
+	return res;
+}
+
 
 
 

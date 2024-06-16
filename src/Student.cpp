@@ -58,12 +58,15 @@ OfferedCourse* Student::findCourse(int id){
     return *it;
 }
 
-void Student::viewCourses(vector<string> &output){
+string Student::viewCourses(){
+    string out = EMPTYLIST;
     if(courses.empty())
-        throw runtime_error(EMPTYLIST);
+        return out;
+    out = "";
     for(auto c : courses){
-        output.push_back(c->getDetailedPrint());
+        out += c->getShortPrint();
     }
+    return out;
 }
 
 string Student::getMajorName(){

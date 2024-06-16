@@ -20,6 +20,6 @@ public:
     int getSemester();
     void addCourse(OfferedCourse* offered_course);
     void deleteCourse(int id);
-    void viewCourses(vector<string> &output);
+    string viewCourses();
     string getMajorName();
 };

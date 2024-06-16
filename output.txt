@@ -1,6 +1,0 @@
-810102888
-Andrew
-Mechanical Engineering
-{ "id": "810102888", "name": "Andrew", "major": "Mechanical Engineering" }
-
-2222

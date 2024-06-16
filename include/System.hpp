@@ -71,7 +71,7 @@ public:
     void courseOffer(int course_id, int professor_id,int capacity, Time time, Date exame_date, int class_numebr);
     void addStudentCourse(int course_id);
     void deleteCourse(int id);
-    void viewMyCourses(vector<string> &output);
+    string viewMyCourses();
     bool userIsStudent();
     bool userIsProfessor();
     bool userIsAdmin();
@@ -87,10 +87,10 @@ public:
     void applyAcceptedTa(vector<bool> applicants_acceptance_status, int form_id);
     
     
-    int getUserid();
-    string getUserName();
-    string getUserMajor();
-    string getUserProfilePhotoUrl(int id );
+    int getUserid(int user_id);
+    string getUserName(int user_id);
+    string getUserMajor(int user_id);
+    string getUserProfilePhotoUrl(int user_id );
     vector<Post*> getUserPosts();
     int getUserNextPostId();
     Post* findUserPost(int id);

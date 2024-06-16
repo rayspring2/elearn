@@ -287,9 +287,9 @@ void System::deleteCourse(int id){
     
 }
 
-void System::viewMyCourses(vector<string> &output){
+string System::viewMyCourses(){
     Student* current_student = dynamic_cast<Student*>(current_user);
-    current_student->viewCourses(output);
+    return current_student->viewCourses();
 }
 
 
@@ -371,29 +371,34 @@ void System::addTaRequest(int professor_id, int form_id){
     ta_form->addApplicant(student->getId(), student->getName(), student->getSemester());
 }
 
-int System::getUserid(){
-    return current_user->getId();
+int System::getUserid(int user_id){
+    User* user = findUser(user_id);
+    return user->getId();
 }
 
-string System::getUserName(){
-    return current_user->getName();
+string System::getUserName(int user_id){
+    User* user = findUser(user_id);
+    return user->getName();
 }
 
-string System::getUserMajor(){
-    if(isAdmin(current_user) or !isLoggedIn())
+string System::getUserMajor(int user_id){
+    User* user = findUser(user_id);
+
+    if(isAdmin(user))
         throw runtime_error(BADREQUEST);
-    if(isStudent(current_user)){
-        Student* st = dynamic_cast<Student*>(current_user);
+    if(isStudent(user)){
+        Student* st = dynamic_cast<Student*>(user);
         return st->getMajorName();
     }
     else{
-        Professor* prof = dynamic_cast<Professor*>(current_user);
+        Professor* prof = dynamic_cast<Professor*>(user);
         return prof->getMajorName();
     }
 }
 
-string System::getUserProfilePhotoUrl(int id ){
-    return current_user->getProfilePhotoUrl();
+string System::getUserProfilePhotoUrl(int user_id ){
+    User* user = findUser(user_id);
+    return user->getProfilePhotoUrl();
 }
 
 vector<Post*> System::getUserPosts(){

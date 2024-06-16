@@ -30,12 +30,23 @@ this is a student's page -->
         <p>Name: <span id="name"></span></p>
         <p>ID: <span id="id"></span></p>
         <p>Major: <span id="major"></span></p>
+        <form action="/logout" method="POST">
+            <button type="submit">Logout</button>
+        </form>
     </div>
     <div>
+        
+        <form action="/find_user" method="POST">
+            <input type="text" name="userId" placeholder="Enter User ID" required>
+            <input type="submit" value="Search">
+        </form>
+        
         <a href="/addpost"> add post</a><br>
         <a href="/student_home/show_offered_course"> show offered courses</a><br>
-        <a href="/find_user">find user</a><br>
-        <a href="/student_home/students_course"> student's courses</a><br>
+        <a href="/student_home/show_mycourses"> show my courses</a><br>
+        <a href="/student_home/delete_course"> delete course</a><br>
+        <a href="/student_home/add_course"> add course</a><br>
+        
     </div>
 
     <div id="posts-container"></div>

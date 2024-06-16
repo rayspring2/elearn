@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Post Form</title>
+</head>
+
+<body style="text-align: center;">
+    <h1>AP HTTP</h1>
+    <section>
+        <h2>Upload</h2>
+        <form action="/student_home/delete_course" method="post" enctype="multipart/form-data" id="myForm">
+            <input name="course_id" type="text" placeholder="course id">
+            <input type="submit" value="Upload">
+        </form>
+    </section>
+    <div id="result"></div>
+    <script>
+        document.getElementById('myForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+            var url = "/student_home/delete_course";
+            var data = new FormData(this);
+
+            const response = await fetch(url, {
+                method: 'POST',
+                body: data
+            });
+            var status = response.status;
+            var text = await response.text();
+            console.log(text);
+            if (status === 400) {
+                document.getElementById('result').innerHTML = text;
+            }
+            if (status === 200) {
+                document.getElementById('result').innerHTML = text;
+                window.location.href = "/personal_page";
+            }
+        });
+    </script>
+
+</body>
+
+</html>

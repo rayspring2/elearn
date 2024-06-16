@@ -225,7 +225,7 @@ void IO::getMyCourses(string &commandline){
         throw runtime_error(PERMISSIONDENIED);
     if(!isempty(commandline))
         throw runtime_error(BADREQUEST); 
-    utms.viewMyCourses(output);
+    utms.viewMyCourses();
 }
 
 void IO::getCourseChannel(string &commandline){

@@ -20,10 +20,6 @@ class showPersonalPageHandler : public SystemHandler{
 public:
     Response* callback(Request*) override;
 };
-class addPostHandler : public SystemHandler {
-public:
-    Response* callback(Request*) override;
-};
 
 class studentGetinfoHandler : public SystemHandler {
 public:
@@ -66,6 +62,35 @@ public:
 };
 
 class addCourseHandler : public SystemHandler {
+public:
+    Response* callback(Request*) override;
+
+};
+
+class logoutHandler : public SystemHandler{
+public:
+    Response* callback(Request*) override;
+
+};
+
+class showStudentCourseHandler : public SystemHandler{
+public:
+    Response* callback(Request*) override;
+
+};
+class deleteCourseHandler : public SystemHandler{
+public:
+    Response* callback(Request*) override;
+
+};
+
+class addStudentCourseHandler : public SystemHandler{
+public:
+    Response* callback(Request*) override;
+
+};
+
+class findUserHandler : public SystemHandler{
 public:
     Response* callback(Request*) override;
 

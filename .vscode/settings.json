@@ -107,5 +107,10 @@
 		"stack": "cpp",
 		"version": "cpp",
 		"*.rh": "cpp"
-	}
+		
+	},
+	"workbench.colorCustomizations": {
+        "editor.foldBackground": "#44444444" // Customize the color code as per your preference
+    }
+	
 }

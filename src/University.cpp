@@ -28,15 +28,21 @@ void University::mapServerPaths(Server& server) {
     server.get("/student_home/show_offered_course", new ShowPage("static/offered_courses.html"));
     server.get("/student_home/show_offered_course/courses", new showOfferedCoursesHandler());
     
+    server.get("/student_home/show_mycourses", new ShowPage("static/student_courses.html"));
+    server.get("/student_home/show_mycourses/courses", new showStudentCourseHandler());
+    server.get("/student_home/delete_course", new ShowPage("static/delete_course.html"));
+    server.post("/student_home/delete_course", new deleteCourseHandler());
+    server.get("/student_home/add_course", new ShowPage("static/add_student_course.html"));
+    server.post("/student_home/add_course", new addStudentCourseHandler());
     server.get("/addcourse", new ShowPage("static/addcourse.html"));
     server.post("/addcourse", new addCourseHandler());
 
+    server.post("/find_user", new findUserHandler());
 
     server.get("/up", new ShowPage("static/upload_form.html"));
     server.post("/up", new UploadHandler());
-    // server.get("/colors", new ColorHandler("template/colors.html"));
-    server.get("/music", new ShowPage("static/music.html"));
-    server.get("/music/moonlight.mp3", new ShowFile("static/moonlight.mp3", "audio/mpeg"));
+    
+    server.post("/logout" , new logoutHandler());
 }
 
 void University::run(){

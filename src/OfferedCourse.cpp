@@ -59,8 +59,11 @@ Course* OfferedCourse::getCourse(){
 string OfferedCourse::getShortPrint(){
     string outstr = "<div class='course'>" 
                     "<h2>" + course->getName() + "</h2>"
+                    "<p><strong> id : </strong>" +  to_string(id) + "</p>"
                     "<p><strong>capacity : </strong>" + to_string(capacity) + "</p>"
-                    "<p><strong> id : </strong>" +  professor_name + "</p>"
+                    "<p><strong> professor : </strong>" +  professor_name + "</p>"
+                    "<p><strong> class time : </strong>" +  time.getPrint() + "</p>"
+                    "<p><strong> exam date : </strong>" +  exame_date.getPrint() + "</p>"
                     "</div>";
     return outstr;
 }

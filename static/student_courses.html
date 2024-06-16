@@ -13,9 +13,10 @@
 
     <div id="courses-container"></div>
     <script>
+        // Function to fetch user data
         async function fetchUserCourses() {
             // try {
-                const response = await fetch("/student_home/show_offered_course/courses");
+                const response = await fetch("/student_home/show_mycourses/courses");
                 if (!response.ok) {
                     console.log("here");
                     //throw new Error('Not authenticated');
